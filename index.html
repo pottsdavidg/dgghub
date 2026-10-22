@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Ground Game Hub</title>
+<title>Ground Game App Suite</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Staatliches&family=Roboto+Condensed:wght@400;500;700&family=Alexandria:wght@900&family=Roboto+Mono:wght@500&display=swap">
@@ -55,7 +55,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .slogan .r{color:var(--red)}
 .auth-brand p{max-width:44ch;font-size:18px;margin:0;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 .auth-form{display:flex;align-items:center;justify-content:center;padding-block:40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.auth-card{width:100%;max-width:440px;display:flex;flex-direction:column;gap:18px}
+.auth-card{width:100%;max-width:480px;display:flex;flex-direction:column;gap:18px}
 .seg{display:flex;border:2px solid var(--ink)}
 .seg button{flex:1;border:0;background:transparent;padding:10px;font:700 15px var(--head);text-transform:uppercase;letter-spacing:.06em}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
@@ -76,6 +76,19 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .btn.sm{padding:7px 11px;font-size:13px}
 .btn.ghost{box-shadow:none;border-color:var(--line)}
 .btn.block{width:100%;padding:14px}
+.launch-h{display:flex;flex-direction:column;gap:6px}
+.launch-h h2{font:400 clamp(40px,5vw,56px)/.9 var(--display);letter-spacing:.02em}
+.launch-h p{margin:0;color:var(--muted)}
+.apps{display:flex;flex-direction:column;gap:12px}
+.appbtn{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;text-align:left;border:2px solid var(--ink);background:var(--surface);padding:14px 16px;border-radius:2px;box-shadow:4px 4px 0 var(--shadow);transition:transform .08s,box-shadow .08s}
+.appbtn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue)}
+.appbtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.appbtn .n{font:400 30px/1 var(--display);color:var(--red);width:30px;text-align:center}
+.appbtn b{display:block;font:400 28px/1 var(--display);letter-spacing:.03em}
+.appbtn small{display:block;color:var(--muted);font-size:14px;line-height:1.35;margin-top:4px}
+.appbtn svg{width:22px;height:22px;color:var(--link)}
+.bar{height:8px;background:var(--line);border-radius:1px;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
 .demo-note{font-size:13px;color:var(--muted);border-left:3px solid var(--yellow);padding-left:10px}
 
 /* ===== SHELL ===== */
@@ -336,6 +349,7 @@ star:'<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.
 bell:'<path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/>',
 ext:'<path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>',
 back:'<path d="M15 18l-6-6 6-6"/>',
+pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>',
 x:'<path d="M18 6L6 18M6 6l12 12"/>',
 pin:'<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
 cal:'<rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/>',
@@ -437,71 +451,70 @@ const RACES=[
  {id:'m4',name:'Franklin Co. Commission',base:71,trend:[66,67,68,69,70,69,70,71,72,71,71]},
 ];
 
+const EOS=[
+ {id:'EO-26-031',t:'Federal Workforce Return-to-Office Requirements',ag:'OPM',d:'Oct 14, 2026',st:'In effect',cls:'green',cases:0},
+ {id:'EO-26-029',t:'Election Equipment Certification Review',ag:'EAC, DHS',d:'Oct 2, 2026',st:'Challenged',cls:'yel',cases:2},
+ {id:'EO-26-024',t:'Disaster Relief Grant Eligibility Changes',ag:'FEMA',d:'Aug 21, 2026',st:'Enjoined',cls:'red',cases:3},
+ {id:'EO-26-019',t:'Rural Broadband Permitting Streamlining',ag:'Commerce, Interior',d:'Jul 9, 2026',st:'In effect',cls:'green',cases:0},
+ {id:'EO-26-012',t:'Student Loan Servicer Oversight',ag:'Education',d:'May 28, 2026',st:'Revoked',cls:'',cases:1},
+ {id:'EO-26-007',t:'Public Lands Energy Leasing Expansion',ag:'Interior',d:'Apr 3, 2026',st:'Challenged',cls:'yel',cases:4},
+];
+const AGENDA=[
+ ['Elections',[['Centralize voter roll maintenance standards','In progress',55],['Revise mail ballot deadlines guidance','Blocked',20],['Expand poll observer access rules','Implemented',100]]],
+ ['Federal workforce',[['Reclassify policy-influencing positions','In progress',70],['Relocate agency headquarters','Proposed',5],['Consolidate inspector general offices','Blocked',30]]],
+ ['Environment & energy',[['Expand leasing on federal lands','Implemented',100],['Rescind vehicle emissions standards','In progress',60]]],
+ ['Education',[['Shift grant programs to block grants','Proposed',10],['Restructure student aid administration','In progress',40]]],
+];
+const AGCLS={'Implemented':'green','In progress':'blue','Blocked':'red','Proposed':''};
 /* ---------- state ---------- */
-const S={tier:'citizen',mode:'signin',pickTier:'citizen',view:'home',param:null,donate:true,amt:10,repLvl:'federal',billF:'all',billQ:'',ver:2,wikiQ:'',race:'m1',youth:0,swing:0};
+const S={tier:'citizen',mode:'signin',pickTier:'citizen',view:'home',param:null,donate:true,amt:10,repLvl:'federal',billF:'all',billQ:'',ver:2,wikiQ:'',eoF:'all',race:'m1',youth:0,swing:0};
 try{const t=localStorage.getItem('dgg-tier');if(t)S.pickTier=t}catch(e){}
 
 const $=s=>document.querySelector(s);
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600)}
 
-/* ---------- auth ---------- */
+/* ---------- landing ---------- */
+const APPS=[
+ ['wiki','The Blue Book','book','Community-edited encyclopedia of the online voices shaping politics.'],
+ ['exec','ExecuTracker','pen','Executive orders and actions, their status, and the legal challenges against them.'],
+ ['leg','LegisTracker','track','Watchlists, priorities, and hearing calendars for federal and state bills.'],
+ ['courts','Court Tracker','scale','Litigation on voting, housing, and open government, with docket alerts.'],
+ ['agenda','Agenda Tracker','check','Item-by-item progress on a published policy agenda across agencies.'],
+];
 function renderAuth(){
- const su=S.mode==='signup';
  $('#auth').innerHTML=`
  <section class="auth-brand">
   <div class="brandcopy">
    <div class="slogan"><span class="r">Vote</span> loud,<br><span class="r">Lead</span> louder</div>
-   <p>Your government in one place: registration, representatives, bills, and ballots. Plus the tools our organizers use to win.</p>
+   <p>The tools Digital Ground Game organizers use to track power and win campaigns, all in one place.</p>
   </div>
  </section>
  <section class="auth-form">
-  <form class="auth-card" id="authform" novalidate>
-   <div class="seg" role="group" aria-label="Sign in or create account">
-    <button type="button" data-mode="signin" aria-pressed="${!su}">Sign in</button>
-    <button type="button" data-mode="signup" aria-pressed="${su}">Create account</button>
-   </div>
-   <div class="label">Account type</div>
-   <div class="tiers">
-    <button type="button" class="tier" data-tier="citizen" aria-pressed="${S.pickTier==='citizen'}"><b>Citizen</b><span class="price">Free · donor supported</span><small>Registration, representatives, bills, ballots, and your voting history.</small></button>
-    <button type="button" class="tier" data-tier="organizer" aria-pressed="${S.pickTier==='organizer'}"><b>Organizer</b><span class="price">$12 / month</span><small>Everything in Citizen plus the legislation, court, influencer, and forecasting trackers.</small></button>
-   </div>
-   ${su?`<div class="field"><label class="label" for="f-name">Full name</label><input id="f-name" value="Jordan Ellis"></div>
-   <div class="field"><label class="label" for="f-zip">Home ZIP code</label><input id="f-zip" value="43201" inputmode="numeric"></div>`:''}
-   <div class="field"><label class="label" for="f-email">Email</label><input id="f-email" type="email" value="jordan.ellis@example.org"></div>
-   <div class="field"><label class="label" for="f-pw">Password</label><input id="f-pw" type="password" value="demo-password"></div>
-   <button class="btn primary block" type="submit">${su?'Create account':'Sign in'} as ${S.pickTier==='citizen'?'Citizen':'Organizer'}</button>
-   <p class="demo-note">Prototype: any email and password work. Every name, bill, and figure inside is sample data.</p>
-  </form>
+  <div class="auth-card">
+   <div class="launch-h"><span class="label">Digital Ground Game</span><h2>The App Suite</h2><p>Pick an app to open it.</p></div>
+   <div class="apps">${APPS.map(([v,n,i,d],k)=>`<button class="appbtn" data-open="${v}"><span class="n">${k+1}</span><span><b>${n}</b><small>${d}</small></span>${ic('back').replace('<svg','<svg style="transform:rotate(180deg)"')}</button>`).join('')}</div>
+   <p class="demo-note">Preview build. Each app shows sample data; the live apps connect through their own links.</p>
+  </div>
  </section>`;
- $('#auth').querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;renderAuth()});
- $('#auth').querySelectorAll('[data-tier]').forEach(b=>b.onclick=()=>{S.pickTier=b.dataset.tier;renderAuth()});
- $('#authform').onsubmit=e=>{e.preventDefault();S.tier=S.pickTier;try{localStorage.setItem('dgg-tier',S.tier)}catch(x){}
-  $('#auth').hidden=true;$('#app').hidden=false;S.view='home';renderApp();toast(S.mode==='signup'?'Account created. Welcome, Jordan.':'Signed in as '+(S.tier==='citizen'?'Citizen':'Organizer'));};
+ $('#auth').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{$('#auth').hidden=true;$('#app').hidden=false;go(b.dataset.open)});
 }
 
 /* ---------- shell ---------- */
-const NAV=[
- ['Your government',[['home','Dashboard','home'],['register','Voter registration','badge'],['ballot','My ballot','ballot'],['reps','Representatives','users'],['bills','Bills & laws','doc'],['history','Voting history','history']]],
- ['Organizer suite',[['leg','Legislation tracker','track'],['courts','Court tracker','scale'],['wiki','Influencer wiki','book'],['models','Prediction models','chart']]],
- ['Account',[['plans','Plans & giving','heart']]],
-];
-const ORG=['leg','courts','wiki','models'];
-const parentOf={rep:'reps',bill:'bills',article:'wiki'};
-
+const parentOf={article:'wiki'};
+function home(){$('#app').hidden=true;$('#auth').hidden=false;renderAuth();window.scrollTo(0,0)}
 function renderApp(){
  const cur=parentOf[S.view]||S.view;
  $('#app').innerHTML=`
  <aside class="side" id="side">
-  <div class="side-head patwrap tilebg dark"><img class="side-logo" src="logo-white.png" alt="Digital Ground Game"><div class="label" style="color:#9a9ca6;margin-top:18px">Ground Game Hub</div></div>
-  <nav aria-label="Main">${NAV.map(([g,items])=>`<div class="navgroup">${g}${g==='Organizer suite'?'<span class="pro">PRO</span>':''}</div>`+items.map(([v,l,i])=>`<button class="navbtn" data-go="${v}" ${cur===v?'aria-current="page"':''}>${ic(i)}${l}${ORG.includes(v)&&S.tier==='citizen'?ic('lock','lk'):''}</button>`).join('')).join('')}</nav>
-  <div class="side-foot"><div class="avatar">${USER.initials}</div><div class="who"><b>${USER.name}</b><span>${S.tier==='citizen'?'Citizen · Free':'Organizer · Pro'}</span></div><button class="iconbtn" id="signout" aria-label="Sign out" title="Sign out">${ic('logout')}</button></div>
+  <button class="side-head patwrap tilebg dark" id="logohome" style="border:0;text-align:left;color:inherit;background-color:transparent;width:100%" aria-label="Back to all apps"><img class="side-logo" src="logo-white.png" alt="Digital Ground Game"><div class="label" style="color:#9a9ca6;margin-top:18px">App Suite</div></button>
+  <nav aria-label="Apps"><div class="navgroup">Apps</div>${APPS.map(([v,l,i])=>`<button class="navbtn" data-go="${v}" ${cur===v?'aria-current="page"':''}>${ic(i)}${l}</button>`).join('')}</nav>
+  <div class="side-foot"><button class="navbtn" id="allapps" style="width:100%">${ic('back')}All apps</button></div>
  </aside>
  <div class="scrim" id="scrim"></div>
  <div class="main">
   <header class="topbar">
    <button class="iconbtn menubtn" id="menubtn" aria-label="Open menu">${ic('menu')}</button>
-   <label class="search">${ic('search')}<input id="gsearch" placeholder="Search bills, officials, cases…" aria-label="Search"></label>
-   <div class="viewas"><span>Preview as</span><div class="seg" role="group" aria-label="Preview tier"><button data-tierswap="citizen" aria-pressed="${S.tier==='citizen'}">Citizen</button><button data-tierswap="organizer" aria-pressed="${S.tier==='organizer'}">Organizer</button></div></div>
+   <label class="search">${ic('search')}<input id="gsearch" placeholder="Search The Blue Book…" aria-label="Search The Blue Book"></label>
   </header>
   <main class="content" id="content">${VIEWS[S.view]()}</main>
  </div>`;
@@ -512,13 +525,12 @@ function go(v,p=null){S.view=v;S.param=p;renderApp()}
 function bind(){
  const app=$('#app');
  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go,b.dataset.p||null));
- app.querySelectorAll('[data-tierswap]').forEach(b=>b.onclick=()=>{S.tier=b.dataset.tierswap;renderApp();toast('Previewing the '+(S.tier==='citizen'?'Citizen':'Organizer')+' experience')});
  app.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>toast(b.dataset.toast));
- $('#signout').onclick=()=>{$('#app').hidden=true;$('#auth').hidden=false;S.mode='signin';renderAuth()};
+ $('#allapps').onclick=home;$('#logohome').onclick=home;
  const side=$('#side'),scrim=$('#scrim');
  $('#menubtn').onclick=()=>{side.classList.add('open');scrim.classList.add('open')};
  scrim.onclick=()=>{side.classList.remove('open');scrim.classList.remove('open')};
- $('#gsearch').onkeydown=e=>{if(e.key==='Enter'){S.billQ=e.target.value;S.billF='all';go('bills')}};
+ $('#gsearch').onkeydown=e=>{if(e.key==='Enter'){S.wikiQ=e.target.value;go('wiki')}};
  (HOOKS[S.view]||(()=>{}))();
 }
 
@@ -528,13 +540,7 @@ const crumb=(v,l)=>`<button class="crumb" data-go="${v}">${ic('back')}${l}</butt
 const party=p=>`<span class="party ${p}" title="${{D:'Democrat',R:'Republican',I:'Independent',N:'Nonpartisan'}[p]}">${p==='N'?'NP':p}</span>`;
 const pipe=s=>`<div class="pipe" aria-label="${STAGES[s]}">${STAGES.map((_,i)=>`<i class="${i<=s?'on':''}"></i>`).join('')}</div>`;
 const modbar=(name,host)=>`<div class="modbar"><span class="dot"></span><b class="label" style="color:#fff">Connected module</b><span>${name}</span><code>${host}</code><button class="btn sm" data-toast="Would open the full ${name} app in a new tab">${ic('ext')}Open full app</button></div>`;
-function gate(view,title,inner){
- if(S.tier==='organizer')return inner;
- return `<div class="locked"><div class="ghost" aria-hidden="true">${inner}</div><div class="lockcard"><div>
-  <span class="chip yel">${ic('star')}Organizer suite</span><h2>${title} is for organizers</h2>
-  <p>Organizer accounts fund our in-house tools and unlock the legislation, court, influencer, and forecasting trackers.</p>
-  <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="upgrade">Upgrade · $12/mo</button><button class="btn ghost" data-go="plans">Compare plans</button></div></div></div></div>`;
-}
+function gate(view,title,inner){return inner}
 
 /* ---------- views ---------- */
 const VIEWS={
@@ -690,17 +696,45 @@ history(){
  </tbody></table></div></section>`;
 },
 
+exec(){
+ const list=EOS.filter(e=>S.eoF==='all'||e.st===S.eoF);
+ const n=st=>EOS.filter(e=>e.st===st).length;
+ return `${head('ExecuTracker','Executive orders and actions, the agencies carrying them out, and the lawsuits against them.','<span class="sample">Sample orders</span>')}
+ ${modbar('ExecuTracker','executracker.digitalgroundgame.org')}
+ <div class="grid g4">
+  <div class="panel stat"><span class="label">Tracked this year</span><span class="v tab-nums">${EOS.length}</span><span class="s">Orders and memoranda</span></div>
+  <div class="panel stat"><span class="label">In effect</span><span class="v ok tab-nums">${n('In effect')}</span><span class="s">Being implemented now</span></div>
+  <div class="panel stat"><span class="label">Challenged</span><span class="v tab-nums">${n('Challenged')+n('Enjoined')}</span><span class="s">${n('Enjoined')} blocked by a court</span></div>
+  <div class="panel stat"><span class="label">Linked cases</span><span class="v tab-nums">${EOS.reduce((a,e)=>a+e.cases,0)}</span><span class="s">Synced with Court Tracker</span></div>
+ </div>
+ <div class="filters">${['all','In effect','Challenged','Enjoined','Revoked'].map(k=>`<button class="fbtn" data-eof="${k}" aria-pressed="${S.eoF===k}">${k==='all'?'All':k}</button>`).join('')}</div>
+ <section class="panel"><div class="tbl-wrap"><table><thead><tr><th>Order</th><th>Title</th><th>Agencies</th><th>Signed</th><th>Status</th><th>Cases</th></tr></thead><tbody>
+ ${list.map(e=>`<tr class="click" data-toast="Would open ${e.id} with full text, agency actions, and litigation"><td class="mono" style="font-size:13px;white-space:nowrap">${e.id}</td><td style="min-width:240px"><b>${e.t}</b></td><td>${e.ag}</td><td class="tab-nums" style="white-space:nowrap">${e.d}</td><td><span class="chip ${e.cls}">${e.st}</span></td><td class="tab-nums">${e.cases||'—'}</td></tr>`).join('')}
+ </tbody></table></div></section>`;
+},
+agenda(){
+ const all=AGENDA.flatMap(([,it])=>it),tot=all.length,c=st=>all.filter(i=>i[1]===st).length;
+ const avg=Math.round(all.reduce((a,i)=>a+i[2],0)/tot);
+ return `${head('Agenda Tracker','Progress on each item of a published policy agenda, scored from agency actions, rules, and court rulings.','<span class="sample">Sample agenda</span>')}
+ ${modbar('Agenda Tracker','agendatracker.digitalgroundgame.org')}
+ <section class="panel panel-b" style="display:flex;flex-direction:column;gap:12px">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><span class="label">Overall progress</span><span class="disp tab-nums" style="font-size:40px">${avg}%</span></div>
+  <div class="bar" style="height:14px"><i style="width:${c('Implemented')/tot*100}%;background:var(--green)"></i><i style="width:${c('In progress')/tot*100}%;background:var(--blue)"></i><i style="width:${c('Blocked')/tot*100}%;background:var(--red)"></i><i style="width:${c('Proposed')/tot*100}%;background:var(--muted)"></i></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">${['Implemented','In progress','Blocked','Proposed'].map(k=>`<span class="chip ${AGCLS[k]}">${c(k)} ${k}</span>`).join('')}</div>
+ </section>
+ <div class="grid g2">${AGENDA.map(([area,items])=>`<section class="panel"><div class="panel-h"><h2 style="font-size:16px">${area}</h2><span class="label">${items.length} items</span></div><div class="rows">${items.map(([t,st,p])=>`<button class="row" style="grid-template-columns:1fr auto" data-toast="Would open the evidence log for this item"><span style="display:flex;flex-direction:column;gap:8px;min-width:0"><span class="t" style="font-size:15px">${t}</span><span class="bar"><i style="width:${p}%;background:${st==='Blocked'?'var(--red)':st==='Implemented'?'var(--green)':'var(--blue)'}"></i></span></span><span class="chip ${AGCLS[st]}">${st}</span></button>`).join('')}</div></section>`).join('')}</div>`;
+},
 leg(){
  const cols=['Introduced','In committee','Passed one chamber','Awaiting signature'];
- const inner=`${modbar('Legislation Tracker','tracker.digitalgroundgame.org')}
+ const inner=`${modbar('LegisTracker','legistracker.digitalgroundgame.org')}
  <div class="grid g4">
   <div class="panel stat"><span class="label">Watchlist</span><span class="v tab-nums">${LEG.length}</span><span class="s">Bills across federal + Ohio</span></div>
   <div class="panel stat"><span class="label">High priority</span><span class="v tab-nums" style="color:var(--red)">3</span><span class="s">Need action this month</span></div>
   <div class="panel stat"><span class="label">Hearings</span><span class="v tab-nums">2</span><span class="s">Scheduled in next 14 days</span></div>
   <div class="panel stat"><span class="label">Testimony</span><span class="v tab-nums">14</span><span class="s">Members signed up to testify</span></div>
  </div>
- <div class="kanban">${cols.map((c,i)=>{const it=LEG.filter(l=>l.c===i);return `<div class="kcol"><h3>${c}<span>${it.length}</span></h3>${it.map(l=>`<button class="kcard ${l.p}" data-toast="Would open ${l.id} in the Legislation Tracker"><span class="id">${l.id}</span><b>${l.t}</b><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">${l.tag}</span>${l.p==='hi'?'<span class="chip red">High</span>':''}</span><span class="d" style="font-size:13px;color:var(--muted)">${l.note}</span></button>`).join('')}</div>`}).join('')}</div>`;
- return `${head('Legislation tracker','Your organization\'s watchlist, priorities, and testimony calendar.','<button class="btn primary" data-toast="Would open the add-bill dialog">+ Add bill</button>')}${gate('leg','The legislation tracker',inner)}`;
+ <div class="kanban">${cols.map((c,i)=>{const it=LEG.filter(l=>l.c===i);return `<div class="kcol"><h3>${c}<span>${it.length}</span></h3>${it.map(l=>`<button class="kcard ${l.p}" data-toast="Would open ${l.id} in LegisTracker"><span class="id">${l.id}</span><b>${l.t}</b><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">${l.tag}</span>${l.p==='hi'?'<span class="chip red">High</span>':''}</span><span class="d" style="font-size:13px;color:var(--muted)">${l.note}</span></button>`).join('')}</div>`}).join('')}</div>`;
+ return `${head('LegisTracker','Your organization\'s watchlist, priorities, and testimony calendar.','<button class="btn primary" data-toast="Would open the add-bill dialog">+ Add bill</button>')}${gate('leg','The legislation tracker',inner)}`;
 },
 
 courts(){
@@ -713,21 +747,20 @@ courts(){
   <div class="tl"><div class="when">Nov 5, 2026</div><div class="what">Ruling expected on motion to dismiss, Midwest Tenants Union</div></div>
   <div class="tl"><div class="when">Nov 12, 2026</div><div class="what">Oral argument, Ohio Fair Districts Coalition v. State Redistricting Board</div></div>
  </div></div></section>`;
- return `${head('Court tracker','Litigation that affects voting, housing, and open government in the states we work in.','<span class="sample">Sample cases</span>')}${gate('courts','The court tracker',inner)}`;
+ return `${head('Court Tracker','Litigation that affects voting, housing, and open government in the states we work in.','<span class="sample">Sample cases</span>')}${gate('courts','The court tracker',inner)}`;
 },
 
 wiki(){
  const q=S.wikiQ.toLowerCase(),list=WIKI.filter(w=>!q||(w.name+w.h+w.topics).toLowerCase().includes(q));
- const inner=`${modbar('Influencer Wiki','wiki.digitalgroundgame.org')}
+ const inner=`${modbar('The Blue Book','bluebook.digitalgroundgame.org')}
  <div class="filters"><label class="search" style="max-width:380px;display:flex">${ic('search')}<input id="wikiq" value="${S.wikiQ}" placeholder="Search creators, handles, topics" aria-label="Search the wiki"></label><span class="label" style="margin-left:auto">1,284 articles · 312 editors</span></div>
  <div class="wikigrid">${list.map(w=>`<button class="wcard" data-go="article" data-p="${w.id}"><div class="h"><div class="avatar" style="background:${w.c};${w.c==='#FFC800'?'color:#242424':''}">${w.ini}</div><div><b>${w.name}</b><span>${w.h}</span></div></div><p>${w.blurb}</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip blue">${w.reach} reach</span><span class="chip">${w.lean}</span></div></button>`).join('')}</div>`;
- return `${head('Influencer wiki','A community-edited reference on the online voices shaping political conversation, with sourced claims and accuracy records.','<span class="sample">Fictional profiles</span>')}${gate('wiki','The influencer wiki',inner)}`;
+ return `${head('The Blue Book','A community-edited reference on the online voices shaping political conversation, with sourced claims and accuracy records.','<span class="sample">Fictional profiles</span>')}${gate('wiki','The influencer wiki',inner)}`;
 },
 
 article(){
  const w=WIKI.find(x=>x.id===S.param)||WIKI[0];
- if(S.tier!=='organizer'){S.view='wiki';return VIEWS.wiki()}
- return `${head(w.name,w.h,`<button class="btn" data-toast="Would open the editor with revision history">Edit article</button>`,crumb('wiki','Influencer wiki'))}
+  return `${head(w.name,w.h,`<button class="btn" data-toast="Would open the editor with revision history">Edit article</button>`,crumb('wiki','The Blue Book'))}
  <div class="article">
   <article class="panel panel-b">
    <p><b>${w.name}</b> (${w.h}) is a political content creator active on ${w.plat}. ${w.blurb}<span class="cite">[1]</span></p>
@@ -794,6 +827,7 @@ function commonHooks(){
  const h=$('#hidedonate');if(h)h.onclick=()=>{S.donate=false;renderApp()};
 }
 const HOOKS={
+ exec(){document.querySelectorAll('[data-eof]').forEach(b=>b.onclick=()=>{S.eoF=b.dataset.eof;renderApp()})},
  home:commonHooks,plans:commonHooks,leg:commonHooks,courts:commonHooks,
  register(){$('#lookup').onsubmit=e=>{e.preventDefault();const n=($('#lk-first').value+' '+$('#lk-last').value).trim()||'That voter';toast(`${n}: Active registration found in ${$('#lk-state').value} (sample result)`)}},
  reps(){document.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>{S.repLvl=b.dataset.lvl;renderApp()})},
