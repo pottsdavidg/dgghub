@@ -48,13 +48,16 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .wm span{display:block}.wm span:nth-child(2){margin-left:.55em}.wm span:nth-child(3){margin-left:1.1em}
 
 /* ===== AUTH ===== */
-#auth{min-height:100%;display:grid;grid-template-columns:1.1fr 1fr}
-.auth-brand{background:var(--blue) url(massive-tile.webp) center/cover no-repeat;color:var(--white);padding-block:48px 56px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:32px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;min-height:100%}
+#auth{min-height:100%;display:flex;justify-content:center;background:var(--blue) url(massive-tile.webp) center/cover no-repeat}
+.strip{width:70%;min-height:100%;display:flex;flex-direction:column;border-left:2px solid var(--black);border-right:2px solid var(--black);box-shadow:0 0 0 1px rgba(0,0,0,.15),0 0 60px rgba(0,0,0,.35)}
+.auth-brand{color:var(--white);display:flex;justify-content:center;text-align:center;width:100%;background:var(--black);padding:48px 24px}
+.auth-brand::before{display:none}
+.auth-brand .mlogo{display:none}
 .auth-brand .brandcopy{display:flex;flex-direction:column;align-items:center;gap:18px;max-width:100%;padding:28px clamp(20px,4vw,40px);border-radius:24px;background:rgba(136,148,198,.21);-webkit-backdrop-filter:blur(18px) saturate(155%);backdrop-filter:blur(18px) saturate(155%);border:1px solid rgba(255,255,255,.31);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 16px 36px rgba(0,0,0,.24)}
 .slogan{font-family:var(--display);font-size:clamp(48px,6vw,84px);line-height:.9;text-shadow:4px 4px 0 var(--black)}
 .slogan .r{color:var(--red)}
 .auth-brand p{max-width:44ch;font-size:18px;margin:0;text-shadow:0 1px 2px rgba(0,0,0,.35)}
-.auth-form{display:flex;align-items:center;justify-content:center;padding-block:40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.auth-form{flex:1;width:100%;display:flex;justify-content:center;background:var(--bg);padding:36px 32px calc(40px + env(safe-area-inset-bottom,0px))}
 .auth-card{width:100%;max-width:480px;display:flex;flex-direction:column;gap:18px}
 .seg{display:flex;border:2px solid var(--ink)}
 .seg button{flex:1;border:0;background:transparent;padding:10px;font:700 15px var(--head);text-transform:uppercase;letter-spacing:.06em}
@@ -298,8 +301,16 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--surface2)}
 
 @media (max-width:1100px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.article{grid-template-columns:1fr}.infobox{order:-1}}
 @media (max-width:900px){
-  #auth{grid-template-columns:1fr}
-  .auth-brand{min-height:auto;padding-block:36px 300px;justify-content:flex-start;padding-right:max(16px,env(safe-area-inset-right,0px));padding-left:max(16px,env(safe-area-inset-left,0px));background-size:max(100%,760px) auto;background-position:center bottom -200px}
+  #auth{background:var(--bg)}
+  .strip{width:100%;border:0;box-shadow:none}
+  .auth-brand{background:var(--blue);margin:0;padding-block:28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));justify-content:space-evenly;align-items:center;gap:12px;text-align:left}
+  .auth-brand::before{display:block;opacity:.22;background-size:700px}
+  .auth-brand .brandcopy{align-items:flex-start;gap:8px;padding:14px 16px;border-radius:16px;flex:none;max-width:60%}
+  .auth-brand .slogan{font-size:clamp(30px,8vw,46px);text-shadow:3px 3px 0 var(--black)}
+  .auth-brand p{font-size:13px;line-height:1.35;max-width:30ch}
+  .auth-brand .mlogo{display:flex;flex:0 1 150px;justify-content:center;align-items:center;min-width:0}
+  .auth-brand .mlogo img{width:100%;max-width:150px;height:auto;filter:drop-shadow(3px 3px 0 var(--black))}
+  .auth-form{max-width:none;border:0;box-shadow:none;padding:28px max(16px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
   #app{grid-template-columns:1fr}
   .side{position:fixed;left:0;top:0;bottom:0;width:272px;z-index:30;transform:translateX(-100%);transition:transform .2s;padding-top:env(safe-area-inset-top,0px);padding-left:env(safe-area-inset-left,0px);height:100%}
   .side.open{transform:none}
@@ -483,11 +494,13 @@ const APPS=[
 ];
 function renderAuth(){
  $('#auth').innerHTML=`
- <section class="auth-brand">
+ <div class="strip">
+ <section class="auth-brand patwrap tilebg">
   <div class="brandcopy">
    <div class="slogan"><span class="r">Vote</span> loud,<br><span class="r">Lead</span> louder</div>
    <p>The tools Digital Ground Game organizers use to track power and win campaigns, all in one place.</p>
   </div>
+  <div class="mlogo"><img src="logo-white.png" alt="Digital Ground Game"></div>
  </section>
  <section class="auth-form">
   <div class="auth-card">
@@ -495,7 +508,8 @@ function renderAuth(){
    <div class="apps">${APPS.map(([v,n,i,d],k)=>`<button class="appbtn" data-open="${v}"><span class="n">${k+1}</span><span><b>${n}</b><small>${d}</small></span>${ic('back').replace('<svg','<svg style="transform:rotate(180deg)"')}</button>`).join('')}</div>
    <p class="demo-note">Preview build. Each app shows sample data; the live apps connect through their own links.</p>
   </div>
- </section>`;
+ </section>
+ </div>`;
  $('#auth').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{$('#auth').hidden=true;$('#app').hidden=false;go(b.dataset.open)});
 }
 
