@@ -1,0 +1,837 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Ground Game Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Staatliches&family=Roboto+Condensed:wght@400;500;700&family=Alexandria:wght@900&family=Roboto+Mono:wght@500&display=swap">
+<style>
+/* Layout: fixed brand sidebar (Impact Black + isometric wordmark) beside a light working canvas; organizer suite gated by tier. */
+:root{
+  --blue:#1144FF; --red:#FF0F43; --yellow:#FFC800; --white:#FBFCFF; --black:#242424;
+  --bg:#EEF1FA; --surface:#FBFCFF; --surface2:#F4F6FD; --ink:#242424; --muted:#596079; --line:#DCE1F0;
+  --link:#1144FF; --blueSoft:#E3EAFF; --redSoft:#FFE3EA; --yellowSoft:#FFF4CC; --greenSoft:#DDF5E6; --green:#13824A;
+  --shadow:#242424;
+  --display:"Staatliches","Bebas Neue",Impact,"Arial Narrow",sans-serif;
+  --head:"Roboto Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Roboto Condensed","Helvetica Neue",Arial,sans-serif;
+  --wordmark:"Alexandria","Arial Black",Impact,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#18191D; --surface:#242424; --surface2:#2C2D32; --ink:#FBFCFF; --muted:#A6ABBE; --line:#3A3C44;
+  --link:#7C98FF; --blueSoft:#1D2754; --redSoft:#4A1622; --yellowSoft:#40360F; --greenSoft:#163A27; --green:#5FD394; --shadow:#000; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#18191D; --surface:#242424; --surface2:#2C2D32; --ink:#FBFCFF; --muted:#A6ABBE; --line:#3A3C44;
+  --link:#7C98FF; --blueSoft:#1D2754; --redSoft:#4A1622; --yellowSoft:#40360F; --greenSoft:#163A27; --green:#5FD394; --shadow:#000; color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--body)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+a{color:var(--link)}
+h1,h2,h3{margin:0;text-wrap:balance}
+.disp{font-family:var(--display);font-weight:400;letter-spacing:.02em;line-height:.95}
+.label{font:700 12px/1 var(--head);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.mono{font-family:var(--mono)}
+.tab-nums{font-variant-numeric:tabular-nums}
+
+/* isometric pattern + wordmark */
+.patwrap{position:relative;overflow:hidden;isolation:isolate}
+.pat{position:absolute;top:50%;left:50%;width:2600px;transform:translate(-50%,-50%) rotate(-30deg) skewX(30deg) scaleY(.866);
+  font:900 44px/1.02 var(--wordmark);color:rgba(255,255,255,.13);white-space:nowrap;pointer-events:none;z-index:-1;user-select:none}
+.pat.dark{color:rgba(255,255,255,.05)}
+.tilebg::before{content:"";position:absolute;inset:0;z-index:-1;background:url(pattern-tile.png) center/700px repeat;mix-blend-mode:screen;opacity:.22;pointer-events:none}
+.pat div:nth-child(3n+2){margin-left:-180px}.pat div:nth-child(3n){margin-left:-360px}
+.wm{display:inline-block;font:900 var(--wms,30px)/.86 var(--wordmark);color:var(--white);transform:rotate(-30deg) skewX(30deg) scaleY(.866);
+  text-shadow:.07em .07em 0 var(--wmshadow,var(--blue))}
+.wm span{display:block}.wm span:nth-child(2){margin-left:.55em}.wm span:nth-child(3){margin-left:1.1em}
+
+/* ===== AUTH ===== */
+#auth{min-height:100%;display:grid;grid-template-columns:1.1fr 1fr}
+.auth-brand{background:var(--blue) url(massive-tile.webp) center/cover no-repeat;color:var(--white);padding-block:48px 56px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:32px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;min-height:100%}
+.auth-brand .brandcopy{display:flex;flex-direction:column;align-items:center;gap:18px;max-width:100%;padding:28px clamp(20px,4vw,40px);border-radius:24px;background:rgba(136,148,198,.21);-webkit-backdrop-filter:blur(18px) saturate(155%);backdrop-filter:blur(18px) saturate(155%);border:1px solid rgba(255,255,255,.31);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 16px 36px rgba(0,0,0,.24)}
+.slogan{font-family:var(--display);font-size:clamp(48px,6vw,84px);line-height:.9;text-shadow:4px 4px 0 var(--black)}
+.slogan .r{color:var(--red)}
+.auth-brand p{max-width:44ch;font-size:18px;margin:0;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.auth-form{display:flex;align-items:center;justify-content:center;padding-block:40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.auth-card{width:100%;max-width:440px;display:flex;flex-direction:column;gap:18px}
+.seg{display:flex;border:2px solid var(--ink)}
+.seg button{flex:1;border:0;background:transparent;padding:10px;font:700 15px var(--head);text-transform:uppercase;letter-spacing:.06em}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field input,.field select{border:2px solid var(--line);background:var(--surface);padding:11px 12px;border-radius:2px}
+.field input:focus{border-color:var(--blue);outline:0}
+.tiers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tier{border:2px solid var(--line);background:var(--surface);text-align:left;padding:14px;display:flex;flex-direction:column;gap:6px;position:relative}
+.tier[aria-pressed="true"]{border-color:var(--blue);box-shadow:5px 5px 0 var(--blue)}
+.tier b{font:400 24px/1 var(--display)}
+.tier small{color:var(--muted);font-size:14px;line-height:1.35}
+.tier .price{font:700 13px var(--head);text-transform:uppercase;letter-spacing:.05em;color:var(--link)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2px solid var(--ink);background:var(--surface);padding:10px 16px;font:700 15px/1 var(--head);text-transform:uppercase;letter-spacing:.06em;border-radius:2px;box-shadow:3px 3px 0 var(--shadow);transition:transform .08s,box-shadow .08s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--shadow)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:var(--white)}
+.btn.red{background:var(--red);border-color:var(--red);color:var(--white)}
+.btn.sm{padding:7px 11px;font-size:13px}
+.btn.ghost{box-shadow:none;border-color:var(--line)}
+.btn.block{width:100%;padding:14px}
+.demo-note{font-size:13px;color:var(--muted);border-left:3px solid var(--yellow);padding-left:10px}
+
+/* ===== SHELL ===== */
+#app{display:grid;grid-template-columns:256px 1fr;min-height:100%}
+.side{background:var(--black);color:var(--white);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side-head{padding:30px 20px 34px;border-bottom:1px solid #3a3a3a}
+.side-head .side-logo{display:block;width:170px;height:auto;filter:drop-shadow(3px 3px 0 var(--blue))}
+.tilebg.dark::before{opacity:.09;background-size:520px}
+.side nav{display:flex;flex-direction:column;padding:12px 10px;gap:2px;flex:1}
+.navgroup{font:700 11px var(--head);letter-spacing:.12em;text-transform:uppercase;color:#9a9ca6;padding:16px 10px 6px;display:flex;align-items:center;gap:8px}
+.pro{background:var(--yellow);color:var(--black);font:700 10px/1 var(--head);padding:3px 5px;letter-spacing:.08em}
+.navbtn{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#d9dbe4;padding:9px 10px;text-align:left;font:500 16px var(--head);border-radius:2px;position:relative}
+.navbtn svg{width:18px;height:18px;flex:none}
+.navbtn:hover{background:#2f2f2f;color:#fff}
+.navbtn[aria-current="page"]{background:var(--blue);color:#fff}
+.navbtn .lk{margin-left:auto;width:14px;height:14px;opacity:.6}
+.side-foot{padding:14px 16px;border-top:1px solid #3a3a3a;display:flex;align-items:center;gap:10px}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:700 14px var(--head);background:var(--red);color:#fff;flex:none}
+.side-foot .who{min-width:0;flex:1;line-height:1.2}
+.side-foot .who b{display:block;font:700 14px var(--head)}
+.side-foot .who span{font-size:12px;color:#9a9ca6}
+.iconbtn{border:0;background:transparent;color:inherit;padding:6px;display:grid;place-items:center;border-radius:2px}
+.iconbtn:hover{background:#3a3a3a}
+.iconbtn svg{width:18px;height:18px}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{display:flex;align-items:center;gap:12px;padding-block:12px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.menubtn{display:none;color:var(--ink)}
+.menubtn:hover{background:var(--surface2)}
+.search{flex:1;max-width:520px;display:flex;align-items:center;gap:8px;border:2px solid var(--line);padding:7px 10px;background:var(--surface2);border-radius:2px}
+.search input{border:0;background:transparent;flex:1;min-width:0;outline:0}
+.search svg{width:16px;height:16px;color:var(--muted)}
+.viewas{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.viewas .seg{border-width:2px}
+.viewas .seg button{padding:6px 10px;font-size:12px}
+.content{padding-block:28px 64px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));width:100%;max-width:1180px;display:flex;flex-direction:column;gap:24px}
+
+.pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pagehead h1{font:400 clamp(36px,4.5vw,52px)/.95 var(--display);letter-spacing:.02em}
+.pagehead p{margin:6px 0 0;color:var(--muted);max-width:62ch}
+.crumb{border:0;background:none;color:var(--link);font:700 13px var(--head);text-transform:uppercase;letter-spacing:.06em;padding:0;display:inline-flex;align-items:center;gap:4px;margin-bottom:8px}
+.crumb svg{width:14px;height:14px}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:2px}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.panel-h h2{font:700 18px var(--head);text-transform:uppercase;letter-spacing:.04em}
+.panel-b{padding:18px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.span2{grid-column:span 2}
+.chip{display:inline-flex;align-items:center;gap:5px;font:700 12px/1 var(--head);text-transform:uppercase;letter-spacing:.06em;padding:5px 8px;border-radius:2px;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.chip.blue{background:var(--blueSoft);color:var(--link)}
+.chip.red{background:var(--redSoft);color:var(--red)}
+.chip.yel{background:var(--yellowSoft);color:var(--ink)}
+.chip.green{background:var(--greenSoft);color:var(--green)}
+.chip svg{width:12px;height:12px}
+.party{width:24px;height:24px;display:inline-grid;place-items:center;font:700 12px var(--head);color:#fff;border-radius:2px;flex:none}
+.party.D{background:var(--blue)}.party.R{background:var(--red)}.party.I{background:var(--yellow);color:var(--black)}.party.N{background:var(--muted)}
+.sample{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--line);padding:3px 7px}
+
+/* hero countdown */
+.hero{background:var(--blue);color:var(--white);padding:28px;display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;border-radius:2px}
+.hero .big{font:400 clamp(72px,10vw,120px)/.8 var(--display);text-shadow:5px 5px 0 var(--black)}
+.hero .big small{display:block;font-size:.3em;line-height:1;margin-top:10px;text-shadow:none;letter-spacing:.06em}
+.hero h2{font:400 34px/1 var(--display);letter-spacing:.03em}
+.hero p{margin:6px 0 0;max-width:52ch;opacity:.92}
+.hero .btn{border-color:var(--black)}
+.stat{padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.stat .v{font:400 34px/1 var(--display);letter-spacing:.02em}
+.stat .s{font-size:14px;color:var(--muted);line-height:1.35}
+.stat .v.ok{color:var(--green)}
+
+.donate{border:2px solid var(--ink);background:var(--yellowSoft);padding:18px 20px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;position:relative}
+.donate h3{font:700 19px var(--head)}
+.donate p{margin:4px 0 0;font-size:15px;max-width:72ch}
+.amts{display:flex;gap:8px;flex-wrap:wrap}
+.amt{border:2px solid var(--ink);background:var(--surface);padding:8px 14px;font:700 15px var(--head)}
+.amt[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.close{position:absolute;top:6px;right:6px}
+.close svg{width:16px;height:16px}
+
+/* lists */
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:13px 18px;border-top:1px solid var(--line);background:none;border-left:0;border-right:0;border-bottom:0;text-align:left;width:100%}
+.rows>.row:first-child{border-top:0}
+button.row:hover{background:var(--surface2)}
+.row .t{font:700 16px/1.25 var(--head)}
+.row .d{font-size:14px;color:var(--muted);line-height:1.35}
+.row .ic{width:36px;height:36px;display:grid;place-items:center;border-radius:2px;background:var(--blueSoft);color:var(--link)}
+.row .ic svg{width:18px;height:18px}
+.row .ic.red{background:var(--redSoft);color:var(--red)}
+.row .ic.yel{background:var(--yellowSoft);color:var(--ink)}
+.kv{display:grid;grid-template-columns:minmax(120px,190px) 1fr;}
+.kv>div{padding:10px 0;border-top:1px solid var(--line)}
+.kv>div:nth-child(-n+2){border-top:0}
+.kv dt,.kv .k{color:var(--muted);font-size:14px}
+.kv .v{font-weight:500}
+
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--line);overflow-x:auto}
+.tabs button{border:0;background:none;padding:10px 14px;font:700 15px var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--red)}
+
+.repcard{display:flex;flex-direction:column;gap:12px;padding:18px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:2px}
+.repcard:hover{border-color:var(--blue);box-shadow:4px 4px 0 var(--blue)}
+.repcard .top{display:flex;gap:12px;align-items:center}
+.portrait{width:52px;height:52px;border-radius:2px;display:grid;place-items:center;font:400 24px var(--display);color:#fff;flex:none;background:var(--black)}
+.repcard b{font:700 18px/1.15 var(--head);display:block}
+.repcard .off{font-size:14px;color:var(--muted)}
+.repcard .meta{display:flex;gap:6px;flex-wrap:wrap}
+
+/* pipeline */
+.pipe{display:flex;gap:3px}
+.pipe i{flex:1;height:6px;background:var(--line);border-radius:1px}
+.pipe i.on{background:var(--blue)}
+.pipe i.fail{background:var(--red)}
+.pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.pipeline div{padding:10px 8px 8px;border-top:6px solid var(--line);font:700 12px/1.2 var(--head);text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.pipeline div.on{border-color:var(--blue);color:var(--ink)}
+.pipeline div.cur{border-color:var(--red);color:var(--ink)}
+.pipeline div small{display:block;font:400 12px var(--body);text-transform:none;letter-spacing:0;margin-top:3px;color:var(--muted)}
+
+.timeline{display:flex;flex-direction:column;position:relative;padding-left:22px}
+.timeline:before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl{position:relative;padding:0 0 18px}
+.tl:before{content:"";position:absolute;left:-21px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:3px solid var(--blue)}
+.tl.red:before{border-color:var(--red)}
+.tl .when{font:500 12px var(--mono);color:var(--muted)}
+.tl .what{font-weight:500}
+
+.diff{font:400 15px/1.6 var(--body);border:1px solid var(--line);background:var(--surface2);padding:14px 16px}
+.diff p{margin:0 0 10px}.diff p:last-child{margin:0}
+.diff del{background:var(--redSoft);color:var(--red);text-decoration:line-through}
+.diff ins{background:var(--greenSoft);color:var(--green);text-decoration:none}
+.diff .sec{font:500 12px var(--mono);color:var(--muted);margin-right:6px}
+
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font:700 12px var(--head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tr.click{cursor:pointer}tr.click:hover td{background:var(--surface2)}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fbtn{border:2px solid var(--line);background:var(--surface);padding:6px 12px;font:700 13px var(--head);text-transform:uppercase;letter-spacing:.05em;border-radius:2px}
+.fbtn[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+
+/* module chrome */
+.modbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--black);color:var(--white);padding:12px 16px;border-radius:2px}
+.modbar .dot{width:8px;height:8px;border-radius:50%;background:#2fd47a;box-shadow:0 0 0 3px rgba(47,212,122,.25)}
+.modbar code{font:500 13px var(--mono);color:#b9bdd0}
+.modbar .btn{margin-left:auto;box-shadow:none;border-color:var(--white);background:transparent;color:var(--white)}
+.kanban{display:grid;grid-template-columns:repeat(4,minmax(220px,1fr));gap:12px;overflow-x:auto;padding-bottom:4px}
+.kcol{background:var(--surface2);border:1px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.kcol h3{font:700 13px var(--head);text-transform:uppercase;letter-spacing:.07em;display:flex;justify-content:space-between;color:var(--muted);padding:2px 4px 4px}
+.kcard{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--blue);padding:10px 12px;display:flex;flex-direction:column;gap:6px;text-align:left}
+.kcard.hi{border-left-color:var(--red)}.kcard.md{border-left-color:var(--yellow)}
+.kcard b{font:700 15px/1.25 var(--head)}
+.kcard .id{font:500 12px var(--mono);color:var(--muted)}
+.kcard:hover{border-color:var(--blue)}
+
+.wikigrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.wcard{text-align:left;border:1px solid var(--line);background:var(--surface);padding:16px;display:flex;flex-direction:column;gap:10px;border-radius:2px}
+.wcard:hover{border-color:var(--blue);box-shadow:4px 4px 0 var(--blue)}
+.wcard .h{display:flex;gap:10px;align-items:center}
+.wcard .h b{font:700 17px/1.15 var(--head);display:block}
+.wcard .h span{font:500 12px var(--mono);color:var(--muted)}
+.wcard p{margin:0;font-size:14px;color:var(--muted);line-height:1.4}
+.article{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+.article h2{font:700 20px var(--head);border-bottom:1px solid var(--line);padding-bottom:6px;margin:22px 0 10px}
+.article p{max-width:68ch;margin:0 0 12px}
+.infobox{border:2px solid var(--ink);background:var(--surface)}
+.infobox .ttl{background:var(--black);color:var(--white);padding:10px 14px;font:400 22px var(--display);letter-spacing:.03em}
+.infobox .kv{padding:4px 14px 10px;grid-template-columns:110px 1fr;font-size:14px}
+.cite{font:500 11px var(--mono);color:var(--link);vertical-align:super}
+
+.chartbox svg{width:100%;height:auto;display:block}
+.slider{display:flex;flex-direction:column;gap:6px}
+.slider input{accent-color:var(--blue);width:100%}
+.slider .top{display:flex;justify-content:space-between;font-size:14px}
+.slider .top b{font-family:var(--mono);font-weight:500}
+.prob{display:flex;height:34px;border:2px solid var(--ink)}
+.prob div{display:flex;align-items:center;padding:0 10px;font:700 14px var(--head);color:#fff;white-space:nowrap;overflow:hidden;transition:width .3s}
+
+.locked{position:relative;overflow:hidden;border-radius:2px}
+.locked .ghost{filter:blur(5px);opacity:.55;pointer-events:none;user-select:none}
+.lockcard{position:absolute;inset:0;display:grid;place-items:center;padding:16px}
+.lockcard>div{background:var(--surface);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--blue);padding:24px;max-width:440px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.lockcard h2{font:400 32px/1 var(--display);letter-spacing:.02em}
+.lockcard p{margin:0;color:var(--muted)}
+
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.plan{background:var(--surface);border:2px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:14px}
+.plan.feat{border-color:var(--ink);box-shadow:7px 7px 0 var(--blue)}
+.plan h2{font:400 36px/1 var(--display);letter-spacing:.02em}
+.plan .pr{font:400 44px/1 var(--display)}
+.plan .pr small{font:500 15px var(--body);color:var(--muted)}
+.plan ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.plan li{display:flex;gap:8px;align-items:flex-start;font-size:15px}
+.plan li svg{width:18px;height:18px;flex:none;color:var(--green);margin-top:2px}
+.plan .btn{margin-top:auto}
+
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--black);color:var(--white);padding:12px 18px;border-left:5px solid var(--yellow);font:500 15px var(--head);opacity:0;transition:.2s;z-index:50;pointer-events:none;max-width:calc(100% - 32px)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.scrim{display:none}
+
+@media (max-width:1100px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.article{grid-template-columns:1fr}.infobox{order:-1}}
+@media (max-width:900px){
+  #auth{grid-template-columns:1fr}
+  .auth-brand{min-height:auto;padding-block:36px 300px;justify-content:flex-start;padding-right:max(16px,env(safe-area-inset-right,0px));padding-left:max(16px,env(safe-area-inset-left,0px));background-size:max(100%,760px) auto;background-position:center bottom -200px}
+  #app{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:0;bottom:0;width:272px;z-index:30;transform:translateX(-100%);transition:transform .2s;padding-top:env(safe-area-inset-top,0px);padding-left:env(safe-area-inset-left,0px);height:100%}
+  .side.open{transform:none}
+  .scrim.open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}
+  .menubtn{display:grid}
+  .g3,.g2{grid-template-columns:1fr}.span2{grid-column:auto}
+  .hero{grid-template-columns:1fr;gap:16px}
+  .plans{grid-template-columns:1fr}
+  .viewas>span{display:none}
+}
+@media (max-width:600px){
+  .g4{grid-template-columns:1fr 1fr}
+  .tiers{grid-template-columns:1fr}
+  .donate{grid-template-columns:1fr}
+  .pipeline{grid-template-columns:repeat(3,1fr)}
+  .kv{grid-template-columns:1fr}.kv>div:nth-child(odd){padding-bottom:0;}.kv>div:nth-child(even){border-top:0;padding-top:2px}
+  .search{display:none}
+  .content,.topbar{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div id="auth"></div>
+<div id="app" hidden></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ---------- icons ---------- */
+const P={
+home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
+check:'<path d="M20 6L9 17l-5-5"/>',
+badge:'<path d="M12 2l3 3h4v4l3 3-3 3v4h-4l-3 3-3-3H5v-4l-3-3 3-3V5h4z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+users:'<circle cx="9" cy="8" r="4"/><path d="M1 21v-1a7 7 0 0114 0v1"/><path d="M16 4a4 4 0 010 8M23 21v-1a7 7 0 00-5-6.7"/>',
+history:'<path d="M3 12a9 9 0 103-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 3"/>',
+doc:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/>',
+ballot:'<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8l1.5 1.5L12 7M8 15l1.5 1.5L12 14M14 8.5h3M14 15.5h3"/>',
+track:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/>',
+scale:'<path d="M12 3v18M5 21h14M3 7h18"/><path d="M6 7l-3 7a3 3 0 006 0zM18 7l-3 7a3 3 0 006 0z"/>',
+book:'<path d="M4 19.5A2.5 2.5 0 016.5 17H20V3H6.5A2.5 2.5 0 004 5.5z"/><path d="M4 19.5A2.5 2.5 0 006.5 22H20v-5"/>',
+chart:'<path d="M12 20V10M18 20V4M6 20v-4"/>',
+lock:'<rect x="4" y="11" width="16" height="10" rx="1"/><path d="M8 11V7a4 4 0 018 0v4"/>',
+heart:'<path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 000-7.8z"/>',
+logout:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',
+menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',
+search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+star:'<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
+bell:'<path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/>',
+ext:'<path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>',
+back:'<path d="M15 18l-6-6 6-6"/>',
+x:'<path d="M18 6L6 18M6 6l12 12"/>',
+pin:'<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
+cal:'<rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+gavel:'<path d="M14 13l-7.5 7.5a2.1 2.1 0 01-3-3L11 10"/><path d="M16 16l6-6M8 8l6-6M9 7l8 8M21 11l-8-8"/>',
+phone:'<path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"/>',
+};
+const ic=(n,c='')=>`<svg class="${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+const pattern=(cls='')=>`<div class="pat ${cls}" aria-hidden="true">${Array.from({length:40},()=>'<div>'+'DIGITAL GROUND GAME '.repeat(12)+'</div>').join('')}</div>`;
+const wordmark=()=>`<div class="wm" aria-label="Digital Ground Game"><span>DIGITAL</span><span>GROUND</span><span>GAME</span></div>`;
+
+/* ---------- sample data ---------- */
+const USER={first:'Jordan',name:'Jordan Ellis',initials:'JE',addr:'1420 Neil Ave, Columbus, OH 43201',county:'Franklin County',precinct:'Columbus 21-C',ward:'Ward 21'};
+const ELECTION=new Date('2026-11-03T06:30:00-05:00');
+const daysLeft=()=>Math.max(0,Math.ceil((ELECTION-new Date())/864e5));
+
+const REPS={
+ federal:[
+  {id:'r1',name:'Maria Delgado',ini:'MD',party:'D',office:'U.S. Senator',scope:'Ohio · Class I',term:'2025–2031',phone:'(202) 555-0141',committees:['Agriculture','Commerce, Science & Transportation'],score:'92% with party'},
+  {id:'r2',name:'Thomas Whitaker',ini:'TW',party:'R',office:'U.S. Senator',scope:'Ohio · Class III',term:'2023–2029',phone:'(202) 555-0178',committees:['Finance','Armed Services'],score:'89% with party'},
+  {id:'r3',name:'Andre Coleman',ini:'AC',party:'D',office:'U.S. Representative',scope:'Ohio District 3',term:'2025–2027',phone:'(202) 555-0119',committees:['Energy & Commerce'],score:'94% with party'},
+ ],
+ state:[
+  {id:'r4',name:'Karen Lindqvist',ini:'KL',party:'R',office:'Governor',scope:'State of Ohio',term:'2023–2027',phone:'(614) 555-0100',committees:['Executive'],score:'—'},
+  {id:'r5',name:'Priya Raman',ini:'PR',party:'D',office:'State Senator',scope:'Ohio Senate District 15',term:'2023–2027',phone:'(614) 555-0162',committees:['Education','Health'],score:'90% with party'},
+  {id:'r6',name:'Gregory Haines',ini:'GH',party:'R',office:'State Representative',scope:'Ohio House District 7',term:'2025–2027',phone:'(614) 555-0187',committees:['Finance','Government Oversight'],score:'86% with party'},
+ ],
+ local:[
+  {id:'r7',name:'Darnell Brooks',ini:'DB',party:'D',office:'Mayor',scope:'City of Columbus',term:'2024–2027',phone:'(614) 555-0122',committees:[],score:'—'},
+  {id:'r8',name:'Susan Okafor',ini:'SO',party:'D',office:'County Commissioner',scope:'Franklin County',term:'2025–2028',phone:'(614) 555-0133',committees:[],score:'—'},
+  {id:'r9',name:'Luis Ferreira',ini:'LF',party:'N',office:'City Council, District 4',scope:'Columbus City Council',term:'2024–2027',phone:'(614) 555-0156',committees:['Housing','Public Safety'],score:'Nonpartisan seat'},
+  {id:'r10',name:'Hannah Cho',ini:'HC',party:'N',office:'School Board Member',scope:'Columbus City Schools',term:'2023–2027',phone:'(614) 555-0171',committees:['Curriculum'],score:'Nonpartisan seat'},
+ ]};
+const ALLREPS=[...REPS.federal,...REPS.state,...REPS.local];
+
+const STAGES=['Introduced','Committee','Passed chamber','Passed 2nd chamber','To executive','Law'];
+const BILLS=[
+ {id:'hr2817',num:'H.R. 2817',lvl:'Federal',title:'Rural Broadband Access Act',stage:2,sponsor:'r3',updated:'Oct 20',topic:'Infrastructure',summary:'Funds last-mile broadband buildout in counties where fewer than 80% of households have 100 Mbps service, administered through state broadband offices.',follow:true},
+ {id:'s904',num:'S. 904',lvl:'Federal',title:'Voter Registration Modernization Act',stage:1,sponsor:'r1',updated:'Oct 17',topic:'Elections',summary:'Requires states to offer online registration and automatic registration at motor vehicle agencies, with an opt-out notice mailed within 30 days.',follow:true},
+ {id:'hb112',num:'HB 112',lvl:'Ohio',title:'Polling Place Accessibility Standards',stage:3,sponsor:'r6',updated:'Oct 15',topic:'Elections',summary:'Sets minimum accessibility standards for polling locations and requires boards of elections to publish compliance audits 60 days before each general election.',follow:false},
+ {id:'sb58',num:'SB 58',lvl:'Ohio',title:'Residential Tenant Notice Act',stage:1,sponsor:'r5',updated:'Oct 9',topic:'Housing',summary:'Extends written notice for rent increases on month-to-month leases from 30 to 60 days.',follow:true},
+ {id:'hr1450',num:'H.R. 1450',lvl:'Federal',title:'Small Farm Disaster Relief Extension',stage:5,sponsor:'r2',updated:'Sep 30',topic:'Agriculture',summary:'Extends emergency loan eligibility for farms under 500 acres affected by declared disasters through FY2028.',follow:false},
+ {id:'hb230',num:'HB 230',lvl:'Ohio',title:'School Meal Debt Relief Act',stage:0,sponsor:'r5',updated:'Oct 2',topic:'Education',summary:'Prohibits districts from sending student meal debt to collections and creates a state relief fund.',follow:false},
+];
+const BILLTL={
+ hr2817:[['Oct 20, 2026','Passed House, 251–178. Sent to the Senate.','red'],['Oct 14, 2026','Amendment 3 (manager’s amendment) adopted by voice vote.',''],['Jun 18, 2026','Reported favorably by Energy & Commerce, 32–19.',''],['Apr 3, 2026','Committee substitute adopted in subcommittee.',''],['Feb 12, 2026','Introduced and referred to Energy & Commerce.','']],
+};
+const DEFAULT_TL=[['Oct 2026','Latest action recorded.','red'],['Sep 2026','Committee hearing held.',''],['2026','Introduced and referred to committee.','']];
+
+const VOTES=[
+ ['H.R. 2817 Rural Broadband Access Act','Yea','Oct 20, 2026'],
+ ['H.Res. 611 Rule for H.R. 2817','Yea','Oct 14, 2026'],
+ ['H.R. 1450 Small Farm Disaster Relief','Yea','Sep 24, 2026'],
+ ['H.R. 1922 Postal Service Rate Freeze','Nay','Sep 11, 2026'],
+];
+
+const HISTORY=[
+ ['Nov 3, 2026','General Election','upcoming',''],
+ ['May 5, 2026','Primary Election','Voted','Early, in person'],
+ ['Nov 4, 2025','General Election','Voted','Mail-in absentee'],
+ ['Aug 5, 2025','Special Election','Did not vote',''],
+ ['May 6, 2025','Primary Election','Voted','Election Day'],
+ ['Nov 5, 2024','General Election','Voted','Early, in person'],
+ ['Mar 19, 2024','Primary Election','Voted','Election Day'],
+ ['Nov 7, 2023','General Election','Voted','Mail-in absentee'],
+ ['Aug 8, 2023','Special Election','Voted','Election Day'],
+ ['May 2, 2023','Primary Election','Did not vote',''],
+ ['Nov 8, 2022','General Election','Voted','Election Day'],
+];
+
+const LEG=[
+ {c:0,id:'HB 301',t:'Ballot Drop Box Restrictions',p:'hi',tag:'Elections',note:'Hearing Oct 28'},
+ {c:0,id:'SB 77',t:'Public Records Fee Cap',p:'md',tag:'Transparency',note:'3 cosponsors added'},
+ {c:1,id:'S. 904',t:'Voter Registration Modernization Act',p:'hi',tag:'Elections',note:'Markup scheduled'},
+ {c:1,id:'SB 58',t:'Residential Tenant Notice Act',p:'md',tag:'Housing',note:'Testimony window open'},
+ {c:1,id:'HB 230',t:'School Meal Debt Relief Act',p:'',tag:'Education',note:'No movement 21 days'},
+ {c:2,id:'H.R. 2817',t:'Rural Broadband Access Act',p:'md',tag:'Infrastructure',note:'Passed House Oct 20'},
+ {c:2,id:'HB 112',t:'Polling Place Accessibility Standards',p:'hi',tag:'Elections',note:'Senate committee next'},
+ {c:3,id:'H.R. 1450',t:'Small Farm Disaster Relief Extension',p:'',tag:'Agriculture',note:'Awaiting signature'},
+];
+const COURTS=[
+ {n:'Ohio Fair Districts Coalition v. State Redistricting Board',ct:'Ohio Supreme Court',iss:'Redistricting',st:'Oral argument',next:'Nov 12, 2026',cls:'yel'},
+ {n:'In re Franklin County Early Voting Hours',ct:'S.D. Ohio',iss:'Voting access',st:'TRO granted',next:'Oct 29, 2026',cls:'green'},
+ {n:'Citizens for Open Records v. City of Dayton',ct:'Ohio 2nd Dist. Court of Appeals',iss:'Public records',st:'Briefing',next:'Dec 3, 2026',cls:''},
+ {n:'Midwest Tenants Union v. Ohio Dept. of Commerce',ct:'Franklin County C.P.',iss:'Housing',st:'Motion to dismiss',next:'Nov 5, 2026',cls:''},
+ {n:'State ex rel. Harmon v. Board of Elections',ct:'Ohio Supreme Court',iss:'Ballot language',st:'Decided',next:'—',cls:'red'},
+];
+const WIKI=[
+ {id:'w1',name:'Marisol Vega',h:'@marisolexplains',ini:'MV',c:'#1144FF',plat:'TikTok, YouTube',reach:'2.4M',topics:'Election law, civics explainers',lean:'Center-left',claims:58,flag:2,blurb:'Former county elections clerk who breaks down ballot rules and voting deadlines in 60-second videos.'},
+ {id:'w2',name:'The Policy Wonk Pod',h:'@policywonkpod',ini:'PW',c:'#242424',plat:'Podcast, X',reach:'610K',topics:'Budget, healthcare policy',lean:'Center',claims:41,flag:1,blurb:'Weekly long-form podcast hosted by two former congressional budget staffers.'},
+ {id:'w3',name:'Dale Hutchins',h:'@dalehutchinslive',ini:'DH',c:'#FF0F43',plat:'Rumble, X, Facebook',reach:'1.1M',topics:'Energy, rural economy',lean:'Right',claims:73,flag:11,blurb:'Livestream commentator focused on farm policy and energy prices in the Midwest.'},
+ {id:'w4',name:'Civic Sunday',h:'@civicsunday',ini:'CS',c:'#13824A',plat:'Instagram, Threads',reach:'380K',topics:'Local government, turnout',lean:'Nonpartisan',claims:22,flag:0,blurb:'Graphic explainers on city council and school board decisions, published every Sunday.'},
+ {id:'w5',name:'Ray Bustamante',h:'@raybvotes',ini:'RB',c:'#FFC800',plat:'YouTube, Twitch',reach:'890K',topics:'Labor, gaming culture',lean:'Left',claims:35,flag:4,blurb:'Streamer who mixes political commentary with live gameplay and regular union-organizer interviews.'},
+ {id:'w6',name:'Heartland Ledger',h:'@heartlandledger',ini:'HL',c:'#596079',plat:'Substack, X',reach:'240K',topics:'State legislatures, taxes',lean:'Center-right',claims:49,flag:3,blurb:'Newsletter tracking statehouse tax bills across Ohio, Indiana, and Michigan.'},
+];
+const RACES=[
+ {id:'m1',name:'Ohio House District 7',base:47.5,trend:[39,41,40,43,44,43,45,46,45,47,47.5]},
+ {id:'m2',name:'Ohio Senate District 15',base:63,trend:[58,59,61,60,62,61,62,64,63,62,63]},
+ {id:'m3',name:'U.S. House, Ohio District 9',base:52,trend:[55,54,53,52,50,51,50,51,52,53,52]},
+ {id:'m4',name:'Franklin Co. Commission',base:71,trend:[66,67,68,69,70,69,70,71,72,71,71]},
+];
+
+/* ---------- state ---------- */
+const S={tier:'citizen',mode:'signin',pickTier:'citizen',view:'home',param:null,donate:true,amt:10,repLvl:'federal',billF:'all',billQ:'',ver:2,wikiQ:'',race:'m1',youth:0,swing:0};
+try{const t=localStorage.getItem('dgg-tier');if(t)S.pickTier=t}catch(e){}
+
+const $=s=>document.querySelector(s);
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600)}
+
+/* ---------- auth ---------- */
+function renderAuth(){
+ const su=S.mode==='signup';
+ $('#auth').innerHTML=`
+ <section class="auth-brand">
+  <div class="brandcopy">
+   <div class="slogan"><span class="r">Vote</span> loud,<br><span class="r">Lead</span> louder</div>
+   <p>Your government in one place: registration, representatives, bills, and ballots. Plus the tools our organizers use to win.</p>
+  </div>
+ </section>
+ <section class="auth-form">
+  <form class="auth-card" id="authform" novalidate>
+   <div class="seg" role="group" aria-label="Sign in or create account">
+    <button type="button" data-mode="signin" aria-pressed="${!su}">Sign in</button>
+    <button type="button" data-mode="signup" aria-pressed="${su}">Create account</button>
+   </div>
+   <div class="label">Account type</div>
+   <div class="tiers">
+    <button type="button" class="tier" data-tier="citizen" aria-pressed="${S.pickTier==='citizen'}"><b>Citizen</b><span class="price">Free · donor supported</span><small>Registration, representatives, bills, ballots, and your voting history.</small></button>
+    <button type="button" class="tier" data-tier="organizer" aria-pressed="${S.pickTier==='organizer'}"><b>Organizer</b><span class="price">$12 / month</span><small>Everything in Citizen plus the legislation, court, influencer, and forecasting trackers.</small></button>
+   </div>
+   ${su?`<div class="field"><label class="label" for="f-name">Full name</label><input id="f-name" value="Jordan Ellis"></div>
+   <div class="field"><label class="label" for="f-zip">Home ZIP code</label><input id="f-zip" value="43201" inputmode="numeric"></div>`:''}
+   <div class="field"><label class="label" for="f-email">Email</label><input id="f-email" type="email" value="jordan.ellis@example.org"></div>
+   <div class="field"><label class="label" for="f-pw">Password</label><input id="f-pw" type="password" value="demo-password"></div>
+   <button class="btn primary block" type="submit">${su?'Create account':'Sign in'} as ${S.pickTier==='citizen'?'Citizen':'Organizer'}</button>
+   <p class="demo-note">Prototype: any email and password work. Every name, bill, and figure inside is sample data.</p>
+  </form>
+ </section>`;
+ $('#auth').querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;renderAuth()});
+ $('#auth').querySelectorAll('[data-tier]').forEach(b=>b.onclick=()=>{S.pickTier=b.dataset.tier;renderAuth()});
+ $('#authform').onsubmit=e=>{e.preventDefault();S.tier=S.pickTier;try{localStorage.setItem('dgg-tier',S.tier)}catch(x){}
+  $('#auth').hidden=true;$('#app').hidden=false;S.view='home';renderApp();toast(S.mode==='signup'?'Account created. Welcome, Jordan.':'Signed in as '+(S.tier==='citizen'?'Citizen':'Organizer'));};
+}
+
+/* ---------- shell ---------- */
+const NAV=[
+ ['Your government',[['home','Dashboard','home'],['register','Voter registration','badge'],['ballot','My ballot','ballot'],['reps','Representatives','users'],['bills','Bills & laws','doc'],['history','Voting history','history']]],
+ ['Organizer suite',[['leg','Legislation tracker','track'],['courts','Court tracker','scale'],['wiki','Influencer wiki','book'],['models','Prediction models','chart']]],
+ ['Account',[['plans','Plans & giving','heart']]],
+];
+const ORG=['leg','courts','wiki','models'];
+const parentOf={rep:'reps',bill:'bills',article:'wiki'};
+
+function renderApp(){
+ const cur=parentOf[S.view]||S.view;
+ $('#app').innerHTML=`
+ <aside class="side" id="side">
+  <div class="side-head patwrap tilebg dark"><img class="side-logo" src="logo-white.png" alt="Digital Ground Game"><div class="label" style="color:#9a9ca6;margin-top:18px">Ground Game Hub</div></div>
+  <nav aria-label="Main">${NAV.map(([g,items])=>`<div class="navgroup">${g}${g==='Organizer suite'?'<span class="pro">PRO</span>':''}</div>`+items.map(([v,l,i])=>`<button class="navbtn" data-go="${v}" ${cur===v?'aria-current="page"':''}>${ic(i)}${l}${ORG.includes(v)&&S.tier==='citizen'?ic('lock','lk'):''}</button>`).join('')).join('')}</nav>
+  <div class="side-foot"><div class="avatar">${USER.initials}</div><div class="who"><b>${USER.name}</b><span>${S.tier==='citizen'?'Citizen · Free':'Organizer · Pro'}</span></div><button class="iconbtn" id="signout" aria-label="Sign out" title="Sign out">${ic('logout')}</button></div>
+ </aside>
+ <div class="scrim" id="scrim"></div>
+ <div class="main">
+  <header class="topbar">
+   <button class="iconbtn menubtn" id="menubtn" aria-label="Open menu">${ic('menu')}</button>
+   <label class="search">${ic('search')}<input id="gsearch" placeholder="Search bills, officials, cases…" aria-label="Search"></label>
+   <div class="viewas"><span>Preview as</span><div class="seg" role="group" aria-label="Preview tier"><button data-tierswap="citizen" aria-pressed="${S.tier==='citizen'}">Citizen</button><button data-tierswap="organizer" aria-pressed="${S.tier==='organizer'}">Organizer</button></div></div>
+  </header>
+  <main class="content" id="content">${VIEWS[S.view]()}</main>
+ </div>`;
+ bind();
+ window.scrollTo(0,0);
+}
+function go(v,p=null){S.view=v;S.param=p;renderApp()}
+function bind(){
+ const app=$('#app');
+ app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go,b.dataset.p||null));
+ app.querySelectorAll('[data-tierswap]').forEach(b=>b.onclick=()=>{S.tier=b.dataset.tierswap;renderApp();toast('Previewing the '+(S.tier==='citizen'?'Citizen':'Organizer')+' experience')});
+ app.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>toast(b.dataset.toast));
+ $('#signout').onclick=()=>{$('#app').hidden=true;$('#auth').hidden=false;S.mode='signin';renderAuth()};
+ const side=$('#side'),scrim=$('#scrim');
+ $('#menubtn').onclick=()=>{side.classList.add('open');scrim.classList.add('open')};
+ scrim.onclick=()=>{side.classList.remove('open');scrim.classList.remove('open')};
+ $('#gsearch').onkeydown=e=>{if(e.key==='Enter'){S.billQ=e.target.value;S.billF='all';go('bills')}};
+ (HOOKS[S.view]||(()=>{}))();
+}
+
+/* ---------- helpers ---------- */
+const head=(t,p,right='',crumb='')=>`<div class="pagehead"><div>${crumb}<h1>${t}</h1>${p?`<p>${p}</p>`:''}</div>${right}</div>`;
+const crumb=(v,l)=>`<button class="crumb" data-go="${v}">${ic('back')}${l}</button>`;
+const party=p=>`<span class="party ${p}" title="${{D:'Democrat',R:'Republican',I:'Independent',N:'Nonpartisan'}[p]}">${p==='N'?'NP':p}</span>`;
+const pipe=s=>`<div class="pipe" aria-label="${STAGES[s]}">${STAGES.map((_,i)=>`<i class="${i<=s?'on':''}"></i>`).join('')}</div>`;
+const modbar=(name,host)=>`<div class="modbar"><span class="dot"></span><b class="label" style="color:#fff">Connected module</b><span>${name}</span><code>${host}</code><button class="btn sm" data-toast="Would open the full ${name} app in a new tab">${ic('ext')}Open full app</button></div>`;
+function gate(view,title,inner){
+ if(S.tier==='organizer')return inner;
+ return `<div class="locked"><div class="ghost" aria-hidden="true">${inner}</div><div class="lockcard"><div>
+  <span class="chip yel">${ic('star')}Organizer suite</span><h2>${title} is for organizers</h2>
+  <p>Organizer accounts fund our in-house tools and unlock the legislation, court, influencer, and forecasting trackers.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="upgrade">Upgrade · $12/mo</button><button class="btn ghost" data-go="plans">Compare plans</button></div></div></div></div>`;
+}
+
+/* ---------- views ---------- */
+const VIEWS={
+home(){
+ const d=daysLeft(),org=S.tier==='organizer';
+ return `
+ ${head('Good evening, '+USER.first,`${USER.precinct} · ${USER.county}, Ohio`,'<span class="sample">Sample data</span>')}
+ ${!org&&S.donate?`<div class="donate"><button class="iconbtn close" id="hidedonate" aria-label="Dismiss">${ic('x')}</button><div><h3>Keep this hub free for every voter.</h3><p>No ads and no paywall on public information. If everyone reading this gave $3, we could cover a full year of data costs. Most people don't give, so if you can, please do.</p></div>
+  <div style="display:flex;flex-direction:column;gap:10px"><div class="amts">${[3,10,25,50].map(a=>`<button class="amt" data-amt="${a}" aria-pressed="${S.amt===a}">$${a}</button>`).join('')}</div><button class="btn red" id="give">${ic('heart')}Give $${S.amt}</button></div></div>`:''}
+ <section class="hero patwrap tilebg">
+  <div class="big tab-nums">${d}<small>days to go</small></div>
+  <div><h2>General Election · Tue, Nov 3</h2><p>Early in-person voting is open now at the Franklin County Board of Elections. Polls open 6:30 a.m. to 7:30 p.m. on Election Day. Bring a photo ID.</p></div>
+  <div style="display:flex;flex-direction:column;gap:10px"><button class="btn" data-go="ballot">See my ballot</button><button class="btn" data-go="register">Polling place</button></div>
+ </section>
+ <div class="grid g4">
+  <div class="panel stat"><span class="label">Registration</span><span class="v ok">Active</span><span class="s">Verified with the Ohio Secretary of State</span></div>
+  <div class="panel stat"><span class="label">Representatives</span><span class="v tab-nums">10</span><span class="s">Federal, state, and local officials for your address</span></div>
+  <div class="panel stat"><span class="label">Bills you follow</span><span class="v tab-nums">${BILLS.filter(b=>b.follow).length}</span><span class="s">1 moved this week</span></div>
+  <div class="panel stat"><span class="label">Turnout record</span><span class="v tab-nums">8 / 10</span><span class="s">Elections voted in since 2022</span></div>
+ </div>
+ <div class="grid g2">
+  <section class="panel"><div class="panel-h"><h2>What changed this week</h2><button class="btn sm ghost" data-go="bills">All bills</button></div><div class="rows">
+   <button class="row" data-go="bill" data-p="hr2817"><span class="ic">${ic('doc')}</span><span><span class="t">H.R. 2817 passed the House</span><br><span class="d">Rural Broadband Access Act · your representative voted Yea</span></span><span class="chip blue">Oct 20</span></button>
+   <button class="row" data-go="bill" data-p="s904"><span class="ic">${ic('doc')}</span><span><span class="t">S. 904 scheduled for markup</span><br><span class="d">Voter Registration Modernization Act</span></span><span class="chip">Oct 17</span></button>
+   <button class="row" data-go="rep" data-p="r6"><span class="ic yel">${ic('users')}</span><span><span class="t">State Rep. Haines held a town hall</span><br><span class="d">Ohio House District 7 · transcript posted</span></span><span class="chip">Oct 16</span></button>
+  </div></section>
+  ${org?`<section class="panel"><div class="panel-h"><h2>Organizer briefing</h2><span class="pro">PRO</span></div><div class="rows">
+   <button class="row" data-go="leg"><span class="ic red">${ic('bell')}</span><span><span class="t">HB 301 hearing on Oct 28</span><br><span class="d">High priority · ballot drop box restrictions</span></span><span class="chip red">Alert</span></button>
+   <button class="row" data-go="courts"><span class="ic">${ic('gavel')}</span><span><span class="t">TRO granted on early voting hours</span><br><span class="d">S.D. Ohio · next hearing Oct 29</span></span><span class="chip green">Win</span></button>
+   <button class="row" data-go="models"><span class="ic yel">${ic('chart')}</span><span><span class="t">OH House 7 moved to toss-up</span><br><span class="d">Forecast 47.5% · up 2.5 pts in two weeks</span></span><span class="chip yel">Model</span></button>
+  </div></section>`:`<section class="panel"><div class="panel-h"><h2>Your next steps</h2></div><div class="rows">
+   <button class="row" data-go="ballot"><span class="ic">${ic('ballot')}</span><span><span class="t">Review your sample ballot</span><br><span class="d">6 races and 2 issues on your ballot</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
+   <button class="row" data-toast="Early voting plan saved to your calendar"><span class="ic">${ic('cal')}</span><span><span class="t">Make a voting plan</span><br><span class="d">Pick a day, time, and how you'll get there</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
+   <button class="row" data-go="plans"><span class="ic red">${ic('star')}</span><span><span class="t">Organizing in your community?</span><br><span class="d">See what the Organizer suite adds</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
+  </div></section>`}
+ </div>`;
+},
+
+register(){
+ return `${head('Voter registration','Your record as held by the Ohio Secretary of State. The live version checks this nightly.','<button class="btn primary" data-toast="Rechecked just now: no changes to your record">Recheck now</button>')}
+ <div class="grid g3">
+  <section class="panel span2"><div class="panel-h"><h2>Your record</h2><span class="chip green">${ic('check')}Active</span></div><div class="panel-b"><div class="kv">
+   <div class="k">Name</div><div class="v">${USER.name}</div>
+   <div class="k">Registered address</div><div class="v">${USER.addr}</div>
+   <div class="k">County</div><div class="v">${USER.county}</div>
+   <div class="k">Precinct</div><div class="v">${USER.precinct} · ${USER.ward}</div>
+   <div class="k">Registered since</div><div class="v">September 14, 2018</div>
+   <div class="k">Party affiliation</div><div class="v">Unaffiliated (Ohio sets affiliation by the last primary ballot you chose)</div>
+   <div class="k">Voter ID on file</div><div class="v mono">OH••••••4471</div>
+  </div></div></section>
+  <section class="panel"><div class="panel-h"><h2>Polling place</h2></div><div class="panel-b" style="display:flex;flex-direction:column;gap:12px">
+   <div style="display:flex;gap:10px">${ic('pin').replace('<svg','<svg style="width:20px;flex:none;color:var(--red)"')}<div><b>Northwood Recreation Center</b><br><span style="color:var(--muted)">2000 N High St, Columbus, OH 43201</span></div></div>
+   <div class="chip blue" style="align-self:flex-start">0.6 mi · 12 min walk</div>
+   <button class="btn sm" data-toast="Would open directions in your maps app">Get directions</button>
+  </div></section>
+ </div>
+ <section class="panel"><div class="panel-h"><h2>Key dates · Nov 3 general</h2></div><div class="tbl-wrap"><table>
+  <thead><tr><th>Date</th><th>What</th><th>Status</th></tr></thead><tbody>
+  <tr><td class="tab-nums">Oct 5</td><td>Registration deadline</td><td><span class="chip">Passed</span></td></tr>
+  <tr><td class="tab-nums">Oct 6 – Nov 1</td><td>Early in-person voting at the county board</td><td><span class="chip green">Open now</span></td></tr>
+  <tr><td class="tab-nums">Oct 27</td><td>Last day to request a mail-in absentee ballot</td><td><span class="chip yel">Coming up</span></td></tr>
+  <tr><td class="tab-nums">Nov 3</td><td>Election Day, 6:30 a.m. – 7:30 p.m.</td><td><span class="chip blue">${daysLeft()} days</span></td></tr>
+ </tbody></table></div></section>
+ <section class="panel"><div class="panel-h"><h2>Check someone else</h2><span class="label">All 50 states + DC</span></div><form class="panel-b grid g4" id="lookup" style="align-items:end">
+  <div class="field"><label class="label" for="lk-first">First name</label><input id="lk-first" placeholder="First"></div>
+  <div class="field"><label class="label" for="lk-last">Last name</label><input id="lk-last" placeholder="Last"></div>
+  <div class="field"><label class="label" for="lk-state">State</label><select id="lk-state"><option>Ohio</option><option>Michigan</option><option>Pennsylvania</option><option>Wisconsin</option><option>Georgia</option></select></div>
+  <button class="btn primary" type="submit">Look up</button>
+ </form></section>`;
+},
+
+ballot(){
+ const races=[['U.S. House, Ohio District 3',['Andre Coleman (D) · incumbent','Patricia Moreland (R)']],['Governor & Lieutenant Governor',['Karen Lindqvist / Ed Torres (R) · incumbent','Michael Grant / Aisha Bell (D)']],['Ohio Senate, District 15',['Priya Raman (D) · incumbent','Doug Kessler (R)']],['Ohio House, District 7',['Gregory Haines (R) · incumbent','Nora Whitfield (D)']],['Franklin County Commissioner',['Susan Okafor (D) · incumbent','Brian Tolliver (R)']],['Columbus City Schools Board (choose 2)',['Hannah Cho · incumbent','Marcus Webb','Elena Ruiz']]];
+ return `${head('My ballot',`Sample ballot for ${USER.precinct}. Tap a contest to compare candidates in their own words.`,'<span class="sample">Sample data</span>')}
+ <div class="grid g2">${races.map(([r,c])=>`<section class="panel"><div class="panel-h"><h2 style="font-size:16px">${r}</h2></div><div class="rows">${c.map(x=>`<button class="row" data-toast="Would open the candidate's profile, positions, and funding"><span class="ic">${ic('users')}</span><span class="t">${x}</span><span></span></button>`).join('')}</div></section>`).join('')}
+ <section class="panel"><div class="panel-h"><h2 style="font-size:16px">Issue 1 · Columbus Parks Levy</h2><span class="chip">Local</span></div><div class="panel-b"><p style="margin:0 0 8px">A 0.5-mill property tax renewal for 10 years to maintain parks and recreation centers.</p><p style="margin:0;color:var(--muted);font-size:14px">A YES vote renews the levy. A NO vote ends it when the current levy expires in 2027. Estimated cost: $17.50 per year per $100,000 of home value.</p></div></section>
+ <section class="panel"><div class="panel-h"><h2 style="font-size:16px">Issue 2 · Library Bond</h2><span class="chip">Local</span></div><div class="panel-b"><p style="margin:0 0 8px">Authorizes $40M in bonds for two new branch libraries and renovations to five branches.</p><p style="margin:0;color:var(--muted);font-size:14px">A YES vote approves the bonds. A NO vote rejects them. Estimated cost: $9 per year per $100,000 of home value.</p></div></section>
+ </div>`;
+},
+
+reps(){
+ const L=S.repLvl;
+ return `${head('Representatives',`Everyone who represents ${USER.addr.split(',')[0]}, from Congress to the school board.`,'<span class="sample">Sample data</span>')}
+ <div class="tabs" role="tablist">${['federal','state','local'].map(l=>`<button role="tab" data-lvl="${l}" aria-selected="${L===l}">${l} (${REPS[l].length})</button>`).join('')}</div>
+ <div class="grid g3">${REPS[L].map(r=>`<button class="repcard" data-go="rep" data-p="${r.id}"><div class="top"><div class="portrait" style="background:${r.party==='D'?'var(--blue)':r.party==='R'?'var(--red)':'var(--black)'}">${r.ini}</div><div><b>${r.name}</b><span class="off">${r.office}</span></div></div><div class="meta">${party(r.party)}<span class="chip">${r.scope}</span><span class="chip">${r.term}</span></div></button>`).join('')}</div>`;
+},
+
+rep(){
+ const r=ALLREPS.find(x=>x.id===S.param)||ALLREPS[0];
+ const spons=BILLS.filter(b=>b.sponsor===r.id);
+ return `${head(r.name,`${r.office} · ${r.scope}`,`<button class="btn primary" data-toast="Following ${r.name}. You'll be notified of new votes and statements.">${ic('bell')}Follow</button>`,crumb('reps','Representatives'))}
+ <div class="grid g3">
+  <section class="panel"><div class="panel-h"><h2>Contact</h2>${party(r.party)}</div><div class="panel-b"><div class="kv" style="grid-template-columns:90px 1fr">
+   <div class="k">Phone</div><div class="v mono tab-nums">${r.phone}</div>
+   <div class="k">Term</div><div class="v">${r.term}</div>
+   <div class="k">Committees</div><div class="v">${r.committees.join(', ')||'—'}</div>
+   <div class="k">Voting</div><div class="v">${r.score}</div>
+  </div><button class="btn sm" style="margin-top:12px" data-toast="Would open a pre-addressed message form">Write to ${r.name.split(' ')[0]}</button></div></section>
+  <section class="panel span2"><div class="panel-h"><h2>Recent votes</h2><span class="label">Last 30 days</span></div><div class="tbl-wrap"><table><thead><tr><th>Measure</th><th>Vote</th><th>Date</th></tr></thead><tbody>
+   ${VOTES.map(([m,v,d])=>`<tr><td>${m}</td><td><span class="chip ${v==='Yea'?'green':'red'}">${v}</span></td><td class="tab-nums">${d}</td></tr>`).join('')}
+  </tbody></table></div></section>
+ </div>
+ <section class="panel"><div class="panel-h"><h2>Sponsored legislation</h2></div><div class="rows">${spons.length?spons.map(b=>`<button class="row" data-go="bill" data-p="${b.id}"><span class="ic">${ic('doc')}</span><span><span class="t">${b.num} · ${b.title}</span><br><span class="d">${STAGES[b.stage]}</span></span><span style="width:120px">${pipe(b.stage)}</span></button>`).join(''):'<div class="panel-b" style="color:var(--muted)">No sponsored bills this session.</div>'}</div></section>`;
+},
+
+bills(){
+ const q=S.billQ.toLowerCase();
+ const list=BILLS.filter(b=>(S.billF==='all'||(S.billF==='follow'?b.follow:b.lvl===S.billF))&&(!q||(b.num+b.title+b.topic).toLowerCase().includes(q)));
+ return `${head('Bills & laws','Federal and Ohio legislation in one feed, with every version and amendment tracked.','<span class="sample">Sample data</span>')}
+ <div class="filters">${[['all','All'],['Federal','Federal'],['Ohio','Ohio'],['follow','Following']].map(([k,l])=>`<button class="fbtn" data-bf="${k}" aria-pressed="${S.billF===k}">${l}</button>`).join('')}
+  <label class="search" style="margin-left:auto;max-width:300px;display:flex">${ic('search')}<input id="billq" value="${S.billQ}" placeholder="Filter bills" aria-label="Filter bills"></label></div>
+ <section class="panel"><div class="rows">${list.map(b=>`<button class="row" data-go="bill" data-p="${b.id}" style="grid-template-columns:110px 1fr 160px"><span class="mono" style="font-size:13px;color:var(--muted)">${b.num}</span><span style="min-width:0"><span class="t">${b.title}</span>${b.follow?' <span class="chip blue" style="margin-left:4px">Following</span>':''}<br><span class="d">${b.lvl} · ${b.topic} · updated ${b.updated}</span></span><span style="display:flex;flex-direction:column;gap:6px"><span class="label" style="font-size:11px">${STAGES[b.stage]}</span>${pipe(b.stage)}</span></button>`).join('')||'<div class="panel-b" style="color:var(--muted)">No bills match that filter.</div>'}</div></section>`;
+},
+
+bill(){
+ const b=BILLS.find(x=>x.id===S.param)||BILLS[0];
+ const sp=ALLREPS.find(r=>r.id===b.sponsor);
+ const tl=BILLTL[b.id]||DEFAULT_TL;
+ const vers=['Introduced · Feb 12','Committee substitute · Apr 3','Engrossed (passed House) · Oct 20'];
+ const diffs=[
+  `<p><span class="sec">§2(a)</span>The Secretary shall award grants to eligible States for last-mile broadband deployment in counties where fewer than 80 percent of households have access to service of at least 100 megabits per second.</p><p><span class="sec">§3</span>Authorizes $4,000,000,000 for fiscal years 2027 through 2031.</p>`,
+  `<p><span class="sec">§2(a)</span>The Secretary shall award grants to eligible States for last-mile broadband deployment in counties where fewer than <del>80</del> <ins>85</ins> percent of households have access to service of at least 100 megabits per second.</p><p><span class="sec">§2(c)</span><ins>A State receiving a grant shall publish a coverage map updated not less than twice per year.</ins></p><p><span class="sec">§3</span>Authorizes <del>$4,000,000,000</del> <ins>$3,200,000,000</ins> for fiscal years 2027 through 2031.</p>`,
+  `<p><span class="sec">§2(a)</span>The Secretary shall award grants to eligible States for last-mile broadband deployment in counties where fewer than 85 percent of households have access to service of at least 100 megabits per second<ins>, with priority given to tribal lands</ins>.</p><p><span class="sec">§2(c)</span>A State receiving a grant shall publish a coverage map updated not less than twice per year.</p><p><span class="sec">§4(b)</span><del>Grantees may subcontract up to 100 percent of deployment.</del></p><p><span class="sec">§3</span>Authorizes $3,200,000,000 for fiscal years 2027 through 2031.</p>`];
+ return `${head(b.title,`${b.num} · ${b.lvl} · Sponsored by ${sp?sp.name:'—'}`,`<button class="btn ${b.follow?'':'primary'}" id="followbill">${ic('bell')}${b.follow?'Following':'Follow bill'}</button>`,crumb('bills','Bills & laws'))}
+ <section class="panel"><div class="panel-b" style="display:flex;flex-direction:column;gap:14px"><p style="margin:0;max-width:75ch">${b.summary}</p>
+  <div class="pipeline">${STAGES.map((s,i)=>`<div class="${i<b.stage?'on':i===b.stage?'cur':''}">${s}${i===b.stage?`<small>Current · ${b.updated}</small>`:''}</div>`).join('')}</div></div></section>
+ <div class="grid g3">
+  <section class="panel span2"><div class="panel-h"><h2>Text changes</h2><span class="label">${vers.length} versions</span></div><div class="panel-b" style="display:flex;flex-direction:column;gap:12px">
+   <div class="tabs" role="tablist">${vers.map((v,i)=>`<button role="tab" data-ver="${i}" aria-selected="${S.ver===i}">${v}</button>`).join('')}</div>
+   <div class="diff">${diffs[S.ver]}</div>
+   <div style="display:flex;gap:14px;font-size:13px;color:var(--muted)"><span><ins style="background:var(--greenSoft);color:var(--green);text-decoration:none;padding:0 4px">added</ins> vs. previous version</span><span><del style="background:var(--redSoft);color:var(--red);padding:0 4px">removed</del></span></div>
+  </div></section>
+  <section class="panel"><div class="panel-h"><h2>Action history</h2></div><div class="panel-b"><div class="timeline">${tl.map(([w,t,c])=>`<div class="tl ${c}"><div class="when">${w}</div><div class="what">${t}</div></div>`).join('')}</div></div></section>
+ </div>
+ <section class="panel"><div class="panel-h"><h2>How your representatives voted</h2></div><div class="tbl-wrap"><table><thead><tr><th>Official</th><th>Office</th><th>Vote</th></tr></thead><tbody>
+  <tr><td>Andre Coleman ${party('D')}</td><td>U.S. Representative, OH-3</td><td><span class="chip green">Yea</span></td></tr>
+  <tr><td>Maria Delgado ${party('D')}</td><td>U.S. Senator</td><td><span class="chip">Pending</span></td></tr>
+  <tr><td>Thomas Whitaker ${party('R')}</td><td>U.S. Senator</td><td><span class="chip">Pending</span></td></tr>
+ </tbody></table></div></section>`;
+},
+
+history(){
+ const past=HISTORY.filter(h=>h[2]!=='upcoming'),v=past.filter(h=>h[2]==='Voted').length;
+ return `${head('Voting history','Whether you voted is public record in Ohio. How you voted is always secret and never stored here.','<span class="sample">Sample data</span>')}
+ <div class="grid g4">
+  <div class="panel stat"><span class="label">Participation</span><span class="v tab-nums">${Math.round(v/past.length*100)}%</span><span class="s">${v} of ${past.length} elections since 2022</span></div>
+  <div class="panel stat"><span class="label">General elections</span><span class="v ok tab-nums">4 / 4</span><span class="s">Never missed a November</span></div>
+  <div class="panel stat"><span class="label">Most used</span><span class="v">Early</span><span class="s">3 early, 3 mail, 3 Election Day</span></div>
+  <div class="panel stat"><span class="label">Streak</span><span class="v tab-nums">3</span><span class="s">Elections in a row</span></div>
+ </div>
+ <section class="panel"><div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Election</th><th>Participation</th><th>Method</th></tr></thead><tbody>
+ ${HISTORY.map(([d,e,s,m])=>`<tr><td class="tab-nums">${d}</td><td>${e}</td><td><span class="chip ${s==='Voted'?'green':s==='upcoming'?'blue':'red'}">${s==='upcoming'?'Upcoming':s}</span></td><td>${m||'—'}</td></tr>`).join('')}
+ </tbody></table></div></section>`;
+},
+
+leg(){
+ const cols=['Introduced','In committee','Passed one chamber','Awaiting signature'];
+ const inner=`${modbar('Legislation Tracker','tracker.digitalgroundgame.org')}
+ <div class="grid g4">
+  <div class="panel stat"><span class="label">Watchlist</span><span class="v tab-nums">${LEG.length}</span><span class="s">Bills across federal + Ohio</span></div>
+  <div class="panel stat"><span class="label">High priority</span><span class="v tab-nums" style="color:var(--red)">3</span><span class="s">Need action this month</span></div>
+  <div class="panel stat"><span class="label">Hearings</span><span class="v tab-nums">2</span><span class="s">Scheduled in next 14 days</span></div>
+  <div class="panel stat"><span class="label">Testimony</span><span class="v tab-nums">14</span><span class="s">Members signed up to testify</span></div>
+ </div>
+ <div class="kanban">${cols.map((c,i)=>{const it=LEG.filter(l=>l.c===i);return `<div class="kcol"><h3>${c}<span>${it.length}</span></h3>${it.map(l=>`<button class="kcard ${l.p}" data-toast="Would open ${l.id} in the Legislation Tracker"><span class="id">${l.id}</span><b>${l.t}</b><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">${l.tag}</span>${l.p==='hi'?'<span class="chip red">High</span>':''}</span><span class="d" style="font-size:13px;color:var(--muted)">${l.note}</span></button>`).join('')}</div>`}).join('')}</div>`;
+ return `${head('Legislation tracker','Your organization\'s watchlist, priorities, and testimony calendar.','<button class="btn primary" data-toast="Would open the add-bill dialog">+ Add bill</button>')}${gate('leg','The legislation tracker',inner)}`;
+},
+
+courts(){
+ const inner=`${modbar('Court Tracker','courts.digitalgroundgame.org')}
+ <section class="panel"><div class="panel-h"><h2>Active cases</h2><div class="filters"><button class="fbtn" aria-pressed="true">All</button><button class="fbtn" data-toast="Filter: voting access">Voting</button><button class="fbtn" data-toast="Filter: housing">Housing</button></div></div><div class="tbl-wrap"><table><thead><tr><th>Case</th><th>Court</th><th>Issue</th><th>Status</th><th>Next date</th></tr></thead><tbody>
+ ${COURTS.map(c=>`<tr class="click" data-toast="Would open the docket, filings, and summaries for this case"><td style="min-width:260px"><b>${c.n}</b></td><td>${c.ct}</td><td>${c.iss}</td><td><span class="chip ${c.cls}">${c.st}</span></td><td class="tab-nums">${c.next}</td></tr>`).join('')}
+ </tbody></table></div></section>
+ <section class="panel"><div class="panel-h"><h2>Upcoming docket</h2></div><div class="panel-b"><div class="timeline">
+  <div class="tl red"><div class="when">Oct 29, 2026 · 9:00 a.m.</div><div class="what">Preliminary injunction hearing, In re Franklin County Early Voting Hours</div></div>
+  <div class="tl"><div class="when">Nov 5, 2026</div><div class="what">Ruling expected on motion to dismiss, Midwest Tenants Union</div></div>
+  <div class="tl"><div class="when">Nov 12, 2026</div><div class="what">Oral argument, Ohio Fair Districts Coalition v. State Redistricting Board</div></div>
+ </div></div></section>`;
+ return `${head('Court tracker','Litigation that affects voting, housing, and open government in the states we work in.','<span class="sample">Sample cases</span>')}${gate('courts','The court tracker',inner)}`;
+},
+
+wiki(){
+ const q=S.wikiQ.toLowerCase(),list=WIKI.filter(w=>!q||(w.name+w.h+w.topics).toLowerCase().includes(q));
+ const inner=`${modbar('Influencer Wiki','wiki.digitalgroundgame.org')}
+ <div class="filters"><label class="search" style="max-width:380px;display:flex">${ic('search')}<input id="wikiq" value="${S.wikiQ}" placeholder="Search creators, handles, topics" aria-label="Search the wiki"></label><span class="label" style="margin-left:auto">1,284 articles · 312 editors</span></div>
+ <div class="wikigrid">${list.map(w=>`<button class="wcard" data-go="article" data-p="${w.id}"><div class="h"><div class="avatar" style="background:${w.c};${w.c==='#FFC800'?'color:#242424':''}">${w.ini}</div><div><b>${w.name}</b><span>${w.h}</span></div></div><p>${w.blurb}</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip blue">${w.reach} reach</span><span class="chip">${w.lean}</span></div></button>`).join('')}</div>`;
+ return `${head('Influencer wiki','A community-edited reference on the online voices shaping political conversation, with sourced claims and accuracy records.','<span class="sample">Fictional profiles</span>')}${gate('wiki','The influencer wiki',inner)}`;
+},
+
+article(){
+ const w=WIKI.find(x=>x.id===S.param)||WIKI[0];
+ if(S.tier!=='organizer'){S.view='wiki';return VIEWS.wiki()}
+ return `${head(w.name,w.h,`<button class="btn" data-toast="Would open the editor with revision history">Edit article</button>`,crumb('wiki','Influencer wiki'))}
+ <div class="article">
+  <article class="panel panel-b">
+   <p><b>${w.name}</b> (${w.h}) is a political content creator active on ${w.plat}. ${w.blurb}<span class="cite">[1]</span></p>
+   <h2>Content and audience</h2>
+   <p>Most content focuses on ${w.topics.toLowerCase()}. Audience analytics from the tracker estimate a combined reach of ${w.reach} followers, concentrated in the Midwest and among 18–34 year olds.<span class="cite">[2]</span></p>
+   <h2>Accuracy record</h2>
+   <p>Editors have reviewed ${w.claims} factual claims. ${w.flag} were rated misleading or false, and ${w.flag?'corrections were issued for '+Math.max(0,w.flag-1):'none required correction'}.<span class="cite">[3]</span></p>
+   <h2>Relationship to campaigns</h2>
+   <p>No paid partnerships with campaigns or PACs were disclosed in FEC or state filings during the 2026 cycle.<span class="cite">[4]</span></p>
+   <p style="font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px;margin-top:18px">Last edited Oct 19, 2026 by a DGG research volunteer · 27 revisions</p>
+  </article>
+  <aside class="infobox"><div class="ttl">${w.name}</div><div class="kv">
+   <div class="k">Handle</div><div class="v mono" style="font-size:13px">${w.h}</div>
+   <div class="k">Platforms</div><div class="v">${w.plat}</div>
+   <div class="k">Reach</div><div class="v tab-nums">${w.reach}</div>
+   <div class="k">Topics</div><div class="v">${w.topics}</div>
+   <div class="k">Lean</div><div class="v">${w.lean}</div>
+   <div class="k">Claims</div><div class="v tab-nums">${w.claims} reviewed · ${w.flag} flagged</div>
+  </div></aside>
+ </div>`;
+},
+
+models(){
+ const inner=`${modbar('Prediction Models','models.digitalgroundgame.org')}
+ <div class="grid g3">
+  <section class="panel"><div class="panel-h"><h2>Races</h2></div><div class="rows">${RACES.map(r=>`<button class="row" data-race="${r.id}" style="grid-template-columns:1fr auto;${S.race===r.id?'background:var(--blueSoft)':''}"><span class="t" style="font-size:15px">${r.name}</span><span class="mono tab-nums" style="font-size:14px">${r.base.toFixed(1)}%</span></button>`).join('')}</div>
+   <div class="panel-b" style="display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--line)">
+    <span class="label">Scenario inputs</span>
+    <div class="slider"><div class="top"><label for="youth">Youth turnout vs. 2022</label><b id="youthv">+0 pts</b></div><input type="range" id="youth" min="-10" max="10" value="${S.youth}"></div>
+    <div class="slider"><div class="top"><label for="swing">Late swing</label><b id="swingv">0 pts</b></div><input type="range" id="swing" min="-5" max="5" step="0.5" value="${S.swing}"></div>
+   </div></section>
+  <section class="panel span2"><div class="panel-h"><h2 id="racename"></h2><span class="chip yel">Turnout-adjusted · in house</span></div><div class="panel-b" style="display:flex;flex-direction:column;gap:16px">
+   <div class="prob" id="probbar"></div>
+   <div class="chartbox" id="chart"></div>
+   <p style="margin:0;font-size:14px;color:var(--muted)">Win probability for the Democratic nominee over the last 11 weeks. Scenario inputs adjust the final week only. Model methodology and backtests live in the full app.</p>
+  </div></section>
+ </div>`;
+ return `${head('Prediction models','Forecasts built on DGG\'s canvassing contact data and turnout modeling.','<span class="sample">Sample forecasts</span>')}${gate('models','Prediction models',inner)}`;
+},
+
+plans(){
+ const org=S.tier==='organizer';
+ const li=a=>a.map(x=>`<li>${ic('check')}${x}</li>`).join('');
+ return `${head('Plans & giving','Public information stays free for everyone. Organizer subscriptions fund the tools our teams build.')}
+ <div class="plans">
+  <section class="plan ${org?'':'feat'}"><span class="label">${org?'':'Your plan'}</span><h2>Citizen</h2><div class="pr">Free <small>· supported by donations</small></div>
+   <ul>${li(['Voter registration status and alerts','All your federal, state, and local officials','Federal and state bills with version history','Sample ballots and issue explainers','Your personal voting history'])}</ul>
+   <div style="display:flex;flex-direction:column;gap:10px"><span class="label">Chip in once or monthly</span><div class="amts">${[3,10,25,50].map(a=>`<button class="amt" data-amt="${a}" aria-pressed="${S.amt===a}">$${a}</button>`).join('')}</div><button class="btn red" id="give">${ic('heart')}Donate $${S.amt}</button></div>
+  </section>
+  <section class="plan ${org?'feat':''}"><span class="label">${org?'Your plan':'For organizers'}</span><h2>Organizer</h2><div class="pr">$12 <small>/ month · or $120 / year</small></div>
+   <ul>${li(['Everything in Citizen','Legislation tracker with team watchlists','Court tracker and docket alerts','Influencer wiki with editing rights','In-house prediction models and scenarios','Chapter seats available for teams of 5+'])}</ul>
+   ${org?'<button class="btn" data-toast="Would open billing management">Manage subscription</button>':'<button class="btn primary" id="upgrade">Upgrade to Organizer</button>'}
+  </section>
+ </div>
+ <p class="demo-note" style="max-width:70ch">Payments in this prototype are simulated. In production, donations and subscriptions would run through a payment processor and appear on statements as Digital Ground Game.</p>`;
+},
+};
+
+/* ---------- per-view behavior ---------- */
+function commonHooks(){
+ document.querySelectorAll('[data-amt]').forEach(b=>b.onclick=()=>{S.amt=+b.dataset.amt;renderApp()});
+ const g=$('#give');if(g)g.onclick=()=>toast(`Thank you! A $${S.amt} donation would be processed here.`);
+ const u=$('#upgrade');if(u)u.onclick=()=>{S.tier='organizer';renderApp();toast('Welcome to the Organizer suite. Trial started.')};
+ const h=$('#hidedonate');if(h)h.onclick=()=>{S.donate=false;renderApp()};
+}
+const HOOKS={
+ home:commonHooks,plans:commonHooks,leg:commonHooks,courts:commonHooks,
+ register(){$('#lookup').onsubmit=e=>{e.preventDefault();const n=($('#lk-first').value+' '+$('#lk-last').value).trim()||'That voter';toast(`${n}: Active registration found in ${$('#lk-state').value} (sample result)`)}},
+ reps(){document.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>{S.repLvl=b.dataset.lvl;renderApp()})},
+ bills(){document.querySelectorAll('[data-bf]').forEach(b=>b.onclick=()=>{S.billF=b.dataset.bf;renderApp()});
+  const q=$('#billq');q.oninput=()=>{S.billQ=q.value;clearTimeout(q._t);q._t=setTimeout(()=>{renderApp();const n=$('#billq');n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)}},
+ bill(){document.querySelectorAll('[data-ver]').forEach(b=>b.onclick=()=>{S.ver=+b.dataset.ver;renderApp()});
+  $('#followbill').onclick=()=>{const b=BILLS.find(x=>x.id===S.param)||BILLS[0];b.follow=!b.follow;renderApp();toast(b.follow?'Following '+b.num+'. You\'ll get an alert when it moves.':'Unfollowed '+b.num)}},
+ wiki(){commonHooks();const q=$('#wikiq');if(!q)return;q.oninput=()=>{S.wikiQ=q.value;clearTimeout(q._t);q._t=setTimeout(()=>{renderApp();const n=$('#wikiq');n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)}},
+ models(){commonHooks();if(S.tier!=='organizer')return;
+  document.querySelectorAll('[data-race]').forEach(b=>b.onclick=()=>{S.race=b.dataset.race;renderApp()});
+  const y=$('#youth'),s=$('#swing');
+  const upd=()=>{S.youth=+y.value;S.swing=+s.value;$('#youthv').textContent=(S.youth>=0?'+':'')+S.youth+' pts';$('#swingv').textContent=(S.swing>0?'+':'')+S.swing+' pts';drawModel()};
+  y.oninput=upd;s.oninput=upd;upd();},
+};
+HOOKS.ballot=()=>{};HOOKS.history=()=>{};HOOKS.rep=()=>{};HOOKS.article=()=>{};
+
+function drawModel(){
+ const r=RACES.find(x=>x.id===S.race);
+ const adj=S.youth*0.45+S.swing*2.2;
+ const pts=r.trend.map((v,i)=>i===r.trend.length-1?Math.min(99,Math.max(1,v+adj)):v);
+ const fin=pts[pts.length-1];
+ $('#racename').textContent=r.name;
+ $('#probbar').innerHTML=`<div style="width:${fin}%;background:var(--blue)">DEM ${fin.toFixed(1)}%</div><div style="width:${100-fin}%;background:var(--red);justify-content:flex-end">${(100-fin).toFixed(1)}% REP</div>`;
+ const W=600,H=230,L=40,R=16,T=12,B=28,iw=W-L-R,ih=H-T-B;
+ const x=i=>L+i*iw/(pts.length-1),y=v=>T+ih-(v-20)/60*ih; // y domain 20–80
+ const line=pts.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
+ const area=line+`L${x(pts.length-1)},${y(20)}L${x(0)},${y(20)}Z`;
+ const ticks=[20,35,50,65,80];
+ $('#chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Win probability trend ending at ${fin.toFixed(1)} percent">
+  ${ticks.map(t=>`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)" ${t===50?'stroke-dasharray="4 4" stroke-width="1.5"':''}/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="Roboto Mono, monospace">${t}%</text>`).join('')}
+  <path d="${area}" fill="var(--blue)" opacity=".12"/>
+  <path d="${line}" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="${x(pts.length-1)}" cy="${y(fin)}" r="6" fill="var(--blue)" stroke="var(--surface)" stroke-width="2"/>
+  ${pts.map((_,i)=>i%2===0?`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="Roboto Mono, monospace">Wk ${i+1}</text>`:'').join('')}
+ </svg>`;
+}
+
+renderAuth();
+</script>
+
+</body></html>
