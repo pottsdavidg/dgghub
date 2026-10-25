@@ -4,12 +4,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Staatliches&family=Roboto+Condensed:wght@400;500;700&family=Alexandria:wght@900&family=Roboto+Mono:wght@500&display=swap">
 <style>
-/* Layout: fixed brand sidebar (Impact Black + isometric wordmark) beside a light working canvas; organizer suite gated by tier. */
+/* Layout: fixed brand sidebar (Impact Black + isometric wordmark) beside a light working canvas; Democracy Lab gated by tier. */
 :root{
   --blue:#1144FF; --red:#FF0F43; --yellow:#FFC800; --white:#FBFCFF; --black:#242424;
   --bg:#EEF1FA; --surface:#FBFCFF; --surface2:#F4F6FD; --ink:#242424; --muted:#596079; --line:#DCE1F0;
   --link:#1144FF; --blueSoft:#E3EAFF; --redSoft:#FFE3EA; --yellowSoft:#FFF4CC; --greenSoft:#DDF5E6; --green:#13824A;
-  --shadow:#242424;
+  --shadow:#242424; --sloganShadow:#C9CFE3; --sloganAccent:#FF0F43;
   --display:"Staatliches","Bebas Neue",Impact,"Arial Narrow",sans-serif;
   --head:"Roboto Condensed","Arial Narrow",Arial,sans-serif;
   --body:"Roboto Condensed","Helvetica Neue",Arial,sans-serif;
@@ -18,10 +18,10 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#18191D; --surface:#242424; --surface2:#2C2D32; --ink:#FBFCFF; --muted:#A6ABBE; --line:#3A3C44;
-  --link:#7C98FF; --blueSoft:#1D2754; --redSoft:#4A1622; --yellowSoft:#40360F; --greenSoft:#163A27; --green:#5FD394; --shadow:#000; color-scheme:dark}}
+  --link:#7C98FF; --blueSoft:#1D2754; --redSoft:#4A1622; --yellowSoft:#40360F; --greenSoft:#163A27; --green:#5FD394; --shadow:#000; --sloganShadow:#0B0C0E; --sloganAccent:#FFC800; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#18191D; --surface:#242424; --surface2:#2C2D32; --ink:#FBFCFF; --muted:#A6ABBE; --line:#3A3C44;
-  --link:#7C98FF; --blueSoft:#1D2754; --redSoft:#4A1622; --yellowSoft:#40360F; --greenSoft:#163A27; --green:#5FD394; --shadow:#000; color-scheme:dark}
+  --link:#7C98FF; --blueSoft:#1D2754; --redSoft:#4A1622; --yellowSoft:#40360F; --greenSoft:#163A27; --green:#5FD394; --shadow:#000; --sloganShadow:#0B0C0E; --sloganAccent:#FFC800; color-scheme:dark}
 
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -48,14 +48,13 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .wm span{display:block}.wm span:nth-child(2){margin-left:.55em}.wm span:nth-child(3){margin-left:1.1em}
 
 /* ===== AUTH ===== */
-#auth{min-height:100%;display:grid;grid-template-columns:1.1fr 1fr}
-.auth-brand{background:var(--blue) url(massive-tile.webp) center/cover no-repeat;color:var(--white);padding-block:48px 56px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:32px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;min-height:100%}
-.auth-brand .brandcopy{display:flex;flex-direction:column;align-items:center;gap:18px;max-width:100%;padding:28px clamp(20px,4vw,40px);border-radius:24px;background:rgba(136,148,198,.21);-webkit-backdrop-filter:blur(18px) saturate(155%);backdrop-filter:blur(18px) saturate(155%);border:1px solid rgba(255,255,255,.31);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 16px 36px rgba(0,0,0,.24)}
-.slogan{font-family:var(--display);font-size:clamp(48px,6vw,84px);line-height:.9;text-shadow:4px 4px 0 var(--black)}
-.slogan .r{color:var(--red)}
-.auth-brand p{max-width:44ch;font-size:18px;margin:0;text-shadow:0 1px 2px rgba(0,0,0,.35)}
-.auth-form{display:flex;align-items:center;justify-content:center;padding-block:40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.auth-card{width:100%;max-width:440px;display:flex;flex-direction:column;gap:18px}
+#auth{position:relative;min-height:100%;display:flex;justify-content:center;background:var(--blue) url(massive-tile.webp) center/cover no-repeat}
+.auth-form{width:70%;min-height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg);border-left:2px solid var(--black);border-right:2px solid var(--black);box-shadow:0 0 60px rgba(0,0,0,.35);padding-block:48px calc(48px + env(safe-area-inset-bottom,0px));padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.auth-card{width:100%;max-width:460px;display:flex;flex-direction:column;gap:18px}
+.tagline{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;margin-bottom:34px}
+.slogan{font-family:var(--display);font-size:clamp(48px,6vw,80px);line-height:.9;color:var(--ink);text-shadow:4px 4px 0 var(--sloganShadow)}
+.slogan .r{color:var(--sloganAccent)}
+.tagline p{max-width:42ch;font-size:17px;margin:0;color:var(--muted)}
 .seg{display:flex;border:2px solid var(--ink)}
 .seg button{flex:1;border:0;background:transparent;padding:10px;font:700 15px var(--head);text-transform:uppercase;letter-spacing:.06em}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
@@ -76,6 +75,77 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .btn.sm{padding:7px 11px;font-size:13px}
 .btn.ghost{box-shadow:none;border-color:var(--line)}
 .btn.block{width:100%;padding:14px}
+.live{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);border:2px solid var(--ink);background:var(--surface);box-shadow:5px 5px 0 var(--red)}
+.thumb{position:relative;aspect-ratio:16/9;max-width:100%;background:var(--blue) url(pattern-tile.png) center/420px;background-blend-mode:screen;overflow:hidden;display:grid;place-items:center;color:#fff}
+.thumb::before{content:"";position:absolute;inset:0;background:var(--tint,rgba(17,68,255,.82))}
+.thumb>*{position:relative}
+.thumb.k{--tint:rgba(36,36,36,.9)}.thumb.r{--tint:rgba(255,15,67,.85)}.thumb.y{--tint:rgba(255,200,0,.88);color:var(--black)}
+.thumb .playbtn{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.95);color:var(--black);display:grid;place-items:center;box-shadow:3px 3px 0 var(--black)}
+.thumb .playbtn svg{width:24px;height:24px}
+.thumb .ttag{position:absolute;left:10px;top:10px;font:700 11px/1 var(--head);letter-spacing:.08em;text-transform:uppercase;background:var(--black);color:#fff;padding:5px 7px}
+.thumb .ttag.on{background:var(--red)}
+.thumb .dur{position:absolute;right:10px;bottom:10px;font:500 12px var(--mono);background:rgba(0,0,0,.75);color:#fff;padding:3px 6px}
+.thumb .big{font:400 clamp(28px,4vw,44px)/.9 var(--display);text-align:center;padding:0 24px;text-shadow:3px 3px 0 rgba(0,0,0,.6)}
+.live .side-info{padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.live .side-info h2{font:400 30px/1 var(--display);letter-spacing:.02em}
+.livedot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--red);margin-right:6px;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.mcard{text-align:left;border:1px solid var(--line);background:var(--surface);padding:0;display:flex;flex-direction:column;border-radius:2px;overflow:hidden}
+.mcard:hover{border-color:var(--blue);box-shadow:4px 4px 0 var(--blue)}
+.mcard .mi{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px}
+.mcard b{font:700 16px/1.25 var(--head)}
+.mcard .d{font-size:13px;color:var(--muted)}
+.themebtn{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 10px;border-radius:2px;font:700 12px/1 var(--head);text-transform:uppercase;letter-spacing:.06em}
+.themebtn:hover{border-color:var(--ink)}
+.themebtn svg{width:16px;height:16px}
+.auththeme{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));z-index:3;box-shadow:3px 3px 0 var(--black)}
+.lead{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.lead .portrait{width:84px;height:84px;font-size:38px;background:var(--blue);box-shadow:4px 4px 0 var(--black)}
+.lead h2{font:400 32px/1 var(--display);letter-spacing:.02em}
+.contact{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:15px}
+.contact .mono{background:var(--surface2);border:1px solid var(--line);padding:5px 8px;user-select:all}
+.nochap{border:2px solid var(--ink);background:var(--surface);box-shadow:6px 6px 0 var(--yellow);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.nochap .pitch{background:var(--black);color:var(--white);padding:28px;display:flex;flex-direction:column;gap:14px}
+.nochap .pitch h2{font:400 clamp(34px,4vw,48px)/.92 var(--display);letter-spacing:.02em}
+.nochap .pitch h2 span{color:var(--yellow)}
+.nochap .pitch ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.nochap .pitch li{display:flex;gap:8px;font-size:15px}
+.nochap .pitch li svg{width:18px;height:18px;flex:none;color:var(--yellow);margin-top:2px}
+.nochap form{padding:24px;display:flex;flex-direction:column;gap:14px}
+.field textarea{border:2px solid var(--line);background:var(--surface);padding:11px 12px;border-radius:2px;font:inherit;color:inherit;resize:vertical;min-height:90px}
+.daily{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);border:2px solid var(--ink);background:var(--surface);box-shadow:5px 5px 0 var(--yellow)}
+.daily .art{background:var(--black) url(pattern-tile.png) center/420px;background-blend-mode:screen;position:relative;padding:26px;color:#fff;display:flex;flex-direction:column;gap:12px;justify-content:flex-end;min-height:220px}
+.daily .art::before{content:"";position:absolute;inset:0;background:rgba(17,68,255,.84)}
+.daily .art>*{position:relative}
+.daily .art h2{font:400 clamp(40px,5vw,60px)/.88 var(--display);letter-spacing:.02em;text-shadow:4px 4px 0 var(--black)}
+.daily .art h2 span{color:var(--yellow)}
+.daily .meta{padding:22px;display:flex;flex-direction:column;gap:12px}
+.streak{display:flex;gap:6px}
+.streak i{flex:1;height:30px;border:2px solid var(--ink);display:grid;place-items:center;font:700 11px var(--head);font-style:normal;color:var(--muted)}
+.streak i.on{background:var(--yellow);color:var(--black)}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.game{text-align:left;border:2px solid var(--ink);background:var(--surface);padding:0;display:flex;flex-direction:column;border-radius:2px;box-shadow:4px 4px 0 var(--shadow);transition:transform .08s,box-shadow .08s}
+.game:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue)}
+.game .gart{height:96px;display:grid;place-items:center;font:400 44px/1 var(--display);color:#fff;letter-spacing:.03em}
+.game .gi{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px}
+.game .gi b{font:400 24px/1 var(--display);letter-spacing:.03em}
+.game .gi span{font-size:14px;color:var(--muted);line-height:1.35}
+.play{max-width:640px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.qprog{display:flex;gap:4px}.qprog i{flex:1;height:6px;background:var(--line)}.qprog i.on{background:var(--blue)}
+.qcard{border:2px solid var(--ink);background:var(--surface);padding:22px;box-shadow:5px 5px 0 var(--blue);display:flex;flex-direction:column;gap:14px}
+.qcard h2{font:700 22px/1.25 var(--head)}
+.opt{border:2px solid var(--line);background:var(--surface);padding:12px 14px;text-align:left;font:500 16px var(--body);border-radius:2px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--green);background:var(--greenSoft)}
+.opt.wrong{border-color:var(--red);background:var(--redSoft)}
+.opt:disabled{cursor:default}
+.tlrow{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:2px solid var(--ink);background:var(--surface);padding:10px 12px}
+.tlrow.right{border-color:var(--green);background:var(--greenSoft)}.tlrow.wrong{border-color:var(--red);background:var(--redSoft)}
+.tlrow .yr{font:400 24px/1 var(--display);width:56px;text-align:center;color:var(--link)}
+.tlrow .mv{display:flex;gap:4px}
+.tlrow .mv button{border:2px solid var(--line);background:var(--surface2);width:34px;height:34px;display:grid;place-items:center;border-radius:2px}
+.tlrow .mv button svg{width:16px;height:16px}
 .demo-note{font-size:13px;color:var(--muted);border-left:3px solid var(--yellow);padding-left:10px}
 
 /* ===== SHELL ===== */
@@ -91,6 +161,11 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .navbtn svg{width:18px;height:18px;flex:none}
 .navbtn:hover{background:#2f2f2f;color:#fff}
 .navbtn[aria-current="page"]{background:var(--blue);color:#fff}
+.navdrop .chev{margin-left:auto;width:16px;height:16px;transform:rotate(-90deg);transition:transform .15s;opacity:.7}
+.navdrop[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.navdrop.has-cur{color:#fff;box-shadow:inset 3px 0 0 var(--blue)}
+.navsub{display:flex;flex-direction:column;gap:2px;margin:2px 0 4px 19px;padding-left:10px;border-left:1px solid #3a3a3a}
+.navbtn.sub{font-size:15px;padding:7px 10px}
 .navbtn .lk{margin-left:auto;width:14px;height:14px;opacity:.6}
 .side-foot{padding:14px 16px;border-top:1px solid #3a3a3a;display:flex;align-items:center;gap:10px}
 .avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:700 14px var(--head);background:var(--red);color:#fff;flex:none}
@@ -150,9 +225,27 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .stat .s{font-size:14px;color:var(--muted);line-height:1.35}
 .stat .v.ok{color:var(--green)}
 
-.donate{border:2px solid var(--ink);background:var(--yellowSoft);padding:18px 20px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;position:relative}
-.donate h3{font:700 19px var(--head)}
-.donate p{margin:4px 0 0;font-size:15px;max-width:72ch}
+.donate{border:2px solid var(--ink);background:var(--yellowSoft);padding:8px 44px 8px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;position:relative}
+.donate .msg{flex:1 1 280px;min-width:0;font-size:14px;line-height:1.35}
+.donate .msg b{font:700 15px var(--head)}
+.donate .give{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.donate .amt{padding:5px 9px;font-size:13px}
+.donate .btn{padding:7px 11px;font-size:13px;box-shadow:2px 2px 0 var(--shadow)}
+.cta{border:2px solid var(--ink);background:var(--surface);box-shadow:5px 5px 0 var(--blue)}
+.cta-h{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 18px;background:var(--black);color:var(--white)}
+.cta-h h2{font:400 28px/1 var(--display);letter-spacing:.03em}
+.cta-h h2 span{color:var(--yellow)}
+.cta-h .btn{box-shadow:none;border-color:var(--white);background:transparent;color:var(--white)}
+.events{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.event{display:flex;gap:14px;padding:16px 18px;border-left:1px solid var(--line);min-width:0}
+.event:first-child{border-left:0}
+.edate{flex:none;width:54px;text-align:center;border:2px solid var(--ink);align-self:flex-start}
+.edate small{display:block;background:var(--red);color:#fff;font:700 11px/1 var(--head);letter-spacing:.08em;padding:4px 0}
+.edate b{display:block;font:400 28px/1.1 var(--display);padding:2px 0 3px}
+.event .info{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1}
+.event .info b{font:700 16px/1.2 var(--head)}
+.event .info .d{font-size:14px;color:var(--muted);line-height:1.35}
+.event .btn{align-self:flex-start;margin-top:4px}
 .amts{display:flex;gap:8px;flex-wrap:wrap}
 .amt{border:2px solid var(--ink);background:var(--surface);padding:8px 14px;font:700 15px var(--head)}
 .amt[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
@@ -285,8 +378,7 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--surface2)}
 
 @media (max-width:1100px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.article{grid-template-columns:1fr}.infobox{order:-1}}
 @media (max-width:900px){
-  #auth{grid-template-columns:1fr}
-  .auth-brand{min-height:auto;padding-block:36px 300px;justify-content:flex-start;padding-right:max(16px,env(safe-area-inset-right,0px));padding-left:max(16px,env(safe-area-inset-left,0px));background-size:max(100%,760px) auto;background-position:center bottom -200px}
+  .auth-form{width:88%;padding-block:36px calc(36px + env(safe-area-inset-bottom,0px))}
   #app{grid-template-columns:1fr}
   .side{position:fixed;left:0;top:0;bottom:0;width:272px;z-index:30;transform:translateX(-100%);transition:transform .2s;padding-top:env(safe-area-inset-top,0px);padding-left:env(safe-area-inset-left,0px);height:100%}
   .side.open{transform:none}
@@ -298,15 +390,20 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--surface2)}
   .viewas>span{display:none}
 }
 @media (max-width:600px){
+  .themebtn:not(.auththeme) span{display:none}
+  .auth-form{padding-top:76px}
   .g4{grid-template-columns:1fr 1fr}
   .tiers{grid-template-columns:1fr}
-  .donate{grid-template-columns:1fr}
+  .live{grid-template-columns:1fr}
+  .daily{grid-template-columns:1fr}
+  .nochap{grid-template-columns:1fr}
+  .events{grid-template-columns:1fr}.event{border-left:0;border-top:1px solid var(--line)}.event:first-child{border-top:0}
   .pipeline{grid-template-columns:repeat(3,1fr)}
   .kv{grid-template-columns:1fr}.kv>div:nth-child(odd){padding-bottom:0;}.kv>div:nth-child(even){border-top:0;padding-top:2px}
   .search{display:none}
   .content,.topbar{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
 <div id="auth"></div>
@@ -336,6 +433,12 @@ star:'<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.
 bell:'<path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/>',
 ext:'<path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>',
 back:'<path d="M15 18l-6-6 6-6"/>',
+pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>',
+play:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 9l5 3-5 3z"/>',
+cam:'<path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>',
+mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0014 0v-1M12 18v4M8 22h8"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',
 x:'<path d="M18 6L6 18M6 6l12 12"/>',
 pin:'<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
 cal:'<rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/>',
@@ -430,32 +533,77 @@ const WIKI=[
  {id:'w5',name:'Ray Bustamante',h:'@raybvotes',ini:'RB',c:'#FFC800',plat:'YouTube, Twitch',reach:'890K',topics:'Labor, gaming culture',lean:'Left',claims:35,flag:4,blurb:'Streamer who mixes political commentary with live gameplay and regular union-organizer interviews.'},
  {id:'w6',name:'Heartland Ledger',h:'@heartlandledger',ini:'HL',c:'#596079',plat:'Substack, X',reach:'240K',topics:'State legislatures, taxes',lean:'Center-right',claims:49,flag:3,blurb:'Newsletter tracking statehouse tax bills across Ohio, Indiana, and Michigan.'},
 ];
-const RACES=[
- {id:'m1',name:'Ohio House District 7',base:47.5,trend:[39,41,40,43,44,43,45,46,45,47,47.5]},
- {id:'m2',name:'Ohio Senate District 15',base:63,trend:[58,59,61,60,62,61,62,64,63,62,63]},
- {id:'m3',name:'U.S. House, Ohio District 9',base:52,trend:[55,54,53,52,50,51,50,51,52,53,52]},
- {id:'m4',name:'Franklin Co. Commission',base:71,trend:[66,67,68,69,70,69,70,71,72,71,71]},
+const EOS=[
+ {id:'EO 26-031',t:'Federal Workforce Return-to-Office Requirements',ag:'OPM',d:'Oct 14, 2026',st:'In effect',cls:'green',cases:0},
+ {id:'EO 26-029',t:'Election Equipment Certification Review',ag:'EAC, DHS',d:'Oct 2, 2026',st:'Challenged',cls:'yel',cases:2},
+ {id:'EO 26-024',t:'Disaster Relief Grant Eligibility Changes',ag:'FEMA',d:'Aug 21, 2026',st:'Enjoined',cls:'red',cases:3},
+ {id:'EO 26-019',t:'Rural Broadband Permitting Streamlining',ag:'Commerce, Interior',d:'Jul 9, 2026',st:'In effect',cls:'green',cases:0},
+ {id:'EO 26-012',t:'Student Loan Servicer Oversight',ag:'Education',d:'May 28, 2026',st:'Revoked',cls:'',cases:1},
+ {id:'EO 26-007',t:'Public Lands Energy Leasing Expansion',ag:'Interior',d:'Apr 3, 2026',st:'Challenged',cls:'yel',cases:4},
 ];
-
+const APPTS=[
+ {pos:'Deputy Secretary of Education',ag:'Education',who:'Carl Brenner',st:'Confirmed',cls:'green',d:'Oct 9, 2026',vote:'52–47'},
+ {pos:'Assistant Attorney General, Civil Rights',ag:'Justice',who:'Dana Whitlock',st:'Committee vote',cls:'blue',d:'Oct 30, 2026',vote:'—'},
+ {pos:'Commissioner, Election Assistance Commission',ag:'EAC',who:'Paul Ostrander',st:'Hearing held',cls:'yel',d:'Oct 16, 2026',vote:'—'},
+ {pos:'Inspector General',ag:'Labor',who:'Vacant (IG removed)',st:'Vacant',cls:'red',d:'Since Jun 2, 2026',vote:'—'},
+ {pos:'Administrator, FEMA',ag:'Homeland Security',who:'Renee Calloway (acting)',st:'Acting',cls:'',d:'Since Mar 11, 2026',vote:'—'},
+ {pos:'U.S. Attorney, S.D. Ohio',ag:'Justice',who:'Mark Dunleavy',st:'Nominated',cls:'',d:'Sep 22, 2026',vote:'—'},
+];
+const AGENDA=[
+ ['Federal workforce',[['Reclassify policy-influencing career jobs (Schedule F)','In progress',70],['Move agency headquarters out of Washington','Proposed',10],['Consolidate inspector general offices','Blocked',30]]],
+ ['Education',[['Wind down the Department of Education','In progress',45],['Convert federal K-12 grants to block grants','Proposed',10]]],
+ ['Elections & justice',[['Bring independent agencies under direct presidential control','In progress',55],['Narrow civil rights enforcement priorities','Implemented',100]]],
+ ['Environment & energy',[['Expand oil and gas leasing on federal lands','Implemented',100],['Roll back vehicle emissions standards','Blocked',35]]],
+];
+const AGCLS={'Implemented':'green','In progress':'blue','Blocked':'red','Proposed':''};
+const EVENTS=[
+ {m:'OCT',d:27,type:'Phone bank',cls:'blue',t:'Early Vote Phone Bank',when:'Tue 6–8 p.m.',where:'Virtual (Zoom)',going:42},
+ {m:'OCT',d:31,type:'Canvass',cls:'red',t:'Short North Door Knock',when:'Sat 10 a.m.–1 p.m.',where:'Goodale Park, Columbus',going:28},
+ {m:'NOV',d:1,type:'Text bank',cls:'yel',t:'Final Weekend Text Bank',when:'Sun 2–4 p.m.',where:'Virtual',going:65},
+];
+const MEDIA=[
+ {k:'interview',t:'Candidate Q&A: Nora Whitfield, Ohio House District 7',d:'Interview · 24 min · Oct 21',tint:'k',dur:'24:12',big:'Q&A'},
+ {k:'photos',t:'Goodale Park Canvass Kickoff',d:'Photo album · 86 photos · Oct 18',tint:'',dur:'86',big:'Oct 18'},
+ {k:'stream',t:'Replay: Columbus Weekend of Action',d:'Live stream replay · 1 hr 12 min · Oct 17',tint:'r',dur:'1:12:40',big:'Replay'},
+ {k:'interview',t:'Candidate Q&A: Priya Raman, Ohio Senate District 15',d:'Interview · 19 min · Oct 14',tint:'k',dur:'19:05',big:'Q&A'},
+ {k:'photos',t:'Dayton Phone Bank Night',d:'Photo album · 34 photos · Oct 10',tint:'y',dur:'34',big:'Oct 10'},
+ {k:'stream',t:'Replay: Canvasser Training 101',d:'Live stream replay · 48 min · Oct 6',tint:'',dur:'48:30',big:'Training'},
+ {k:'photos',t:'Cleveland Door Knock, 4,200 Doors',d:'Photo album · 121 photos · Oct 4',tint:'r',dur:'121',big:'Oct 4'},
+ {k:'interview',t:'Street Interviews: Why Voters Are Showing Up',d:'Video · 7 min · Sep 29',tint:'',dur:'7:48',big:'On the street'},
+];
+const QUIZ=[
+ ['How many amendments does the U.S. Constitution have?',['10','27','33','50'],1,'27 amendments have been ratified. The most recent, the 27th, took effect in 1992 after being proposed in 1789.'],
+ ['Which amendment lowered the voting age to 18?',['19th','24th','26th','15th'],2,'The 26th Amendment was ratified in 1971, faster than any other amendment.'],
+ ['How many voting members sit in the House of Representatives?',['100','435','438','535'],1,'The House has 435 voting members, a number fixed by law since 1929.'],
+ ['How long is a U.S. senator\'s term?',['2 years','4 years','6 years','8 years'],2,'Senators serve six-year terms, with about a third of the Senate up for election every two years.'],
+ ['Under the Constitution, which branch has the power to declare war?',['The President','Congress','The Supreme Court','The Secretary of Defense'],1,'Article I, Section 8 gives Congress the power to declare war.'],
+];
+const TIMELINE=[['Declaration of Independence adopted',1776],['Bill of Rights ratified',1791],['15th Amendment bars race-based voting denial',1870],['19th Amendment guarantees women the vote',1920],['Voting Rights Act signed',1965]];
 /* ---------- state ---------- */
-const S={tier:'citizen',mode:'signin',pickTier:'citizen',view:'home',param:null,donate:true,amt:10,repLvl:'federal',billF:'all',billQ:'',ver:2,wikiQ:'',race:'m1',youth:0,swing:0};
+const S={govOpen:false,game:null,qi:0,qScore:0,qPick:null,tl:null,tlChecked:false,hasChapter:true,leadSent:false,tier:'citizen',mode:'signin',pickTier:'citizen',view:'home',param:null,donate:true,amt:10,repLvl:'federal',billF:'all',billQ:'',ver:2,wikiQ:'',eoF:'all',exTab:'orders',mediaF:'all'};
 try{const t=localStorage.getItem('dgg-tier');if(t)S.pickTier=t}catch(e){}
 
 const $=s=>document.querySelector(s);
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600)}
 
+/* ---------- theme ---------- */
+const curTheme=()=>document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+const themeBtn=(c='')=>{const d=curTheme()==='dark';return `<button class="themebtn ${c}" data-theme-toggle aria-label="Switch to ${d?'light':'dark'} mode" title="Switch to ${d?'light':'dark'} mode">${ic(d?'sun':'moon')}<span>${d?'Light':'Dark'}</span></button>`};
+function setTheme(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('dgg-theme',t)}catch(e){}
+ document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const c=b.classList.contains('auththeme')?'auththeme':'';b.outerHTML=themeBtn(c)});bindTheme()}
+function bindTheme(){document.querySelectorAll('[data-theme-toggle]').forEach(b=>b.onclick=()=>setTheme(curTheme()==='dark'?'light':'dark'))}
+try{const t=localStorage.getItem('dgg-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}
+
 /* ---------- auth ---------- */
 function renderAuth(){
  const su=S.mode==='signup';
- $('#auth').innerHTML=`
- <section class="auth-brand">
-  <div class="brandcopy">
-   <div class="slogan"><span class="r">Vote</span> loud,<br><span class="r">Lead</span> louder</div>
-   <p>Your government in one place: registration, representatives, bills, and ballots. Plus the tools our organizers use to win.</p>
-  </div>
- </section>
+ $('#auth').innerHTML=themeBtn('auththeme')+`
  <section class="auth-form">
   <form class="auth-card" id="authform" novalidate>
+   <div class="tagline">
+   <div class="slogan"><span class="r">Vote</span> loud,<br><span class="r">Lead</span> louder</div>
+   <p>Your government in one place: registration, representatives, bills, and ballots. Plus the tools our organizers use to win.</p>
+   </div>
    <div class="seg" role="group" aria-label="Sign in or create account">
     <button type="button" data-mode="signin" aria-pressed="${!su}">Sign in</button>
     <button type="button" data-mode="signup" aria-pressed="${su}">Create account</button>
@@ -463,7 +611,7 @@ function renderAuth(){
    <div class="label">Account type</div>
    <div class="tiers">
     <button type="button" class="tier" data-tier="citizen" aria-pressed="${S.pickTier==='citizen'}"><b>Citizen</b><span class="price">Free · donor supported</span><small>Registration, representatives, bills, ballots, and your voting history.</small></button>
-    <button type="button" class="tier" data-tier="organizer" aria-pressed="${S.pickTier==='organizer'}"><b>Organizer</b><span class="price">$12 / month</span><small>Everything in Citizen plus the legislation, court, influencer, and forecasting trackers.</small></button>
+    <button type="button" class="tier" data-tier="organizer" aria-pressed="${S.pickTier==='organizer'}"><b>Organizer</b><span class="price">$12 / month</span><small>Everything in Citizen plus the Democracy Lab: The Blue Book, LegisTracker, Court Tracker, Agenda Tracker, and ExecuTracker.</small></button>
    </div>
    ${su?`<div class="field"><label class="label" for="f-name">Full name</label><input id="f-name" value="Jordan Ellis"></div>
    <div class="field"><label class="label" for="f-zip">Home ZIP code</label><input id="f-zip" value="43201" inputmode="numeric"></div>`:''}
@@ -473,6 +621,7 @@ function renderAuth(){
    <p class="demo-note">Prototype: any email and password work. Every name, bill, and figure inside is sample data.</p>
   </form>
  </section>`;
+ bindTheme();
  $('#auth').querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;renderAuth()});
  $('#auth').querySelectorAll('[data-tier]').forEach(b=>b.onclick=()=>{S.pickTier=b.dataset.tier;renderAuth()});
  $('#authform').onsubmit=e=>{e.preventDefault();S.tier=S.pickTier;try{localStorage.setItem('dgg-tier',S.tier)}catch(x){}
@@ -481,19 +630,25 @@ function renderAuth(){
 
 /* ---------- shell ---------- */
 const NAV=[
- ['Your government',[['home','Dashboard','home'],['register','Voter registration','badge'],['ballot','My ballot','ballot'],['reps','Representatives','users'],['bills','Bills & laws','doc'],['history','Voting history','history']]],
- ['Organizer suite',[['leg','Legislation tracker','track'],['courts','Court tracker','scale'],['wiki','Influencer wiki','book'],['models','Prediction models','chart']]],
+ ['Digital Hub',[['home','Dashboard','home'],{drop:'Your Government',icon:'scale',items:[['register','Voter registration','badge'],['ballot','My ballot','ballot'],['reps','Representatives','users'],['bills','Bills & laws','doc'],['history','Voting history','history']]},['media','Media','play'],['games','Know Your Stuff','star'],['chapter','Local Chapter','pin']]],
+ ['Democracy Lab',[['wiki','The Blue Book','book'],['leg','LegisTracker','track'],['courts','Court Tracker','scale'],['agenda','Agenda Tracker','check'],['exec','ExecuTracker','pen']]],
  ['Account',[['plans','Plans & giving','heart']]],
 ];
-const ORG=['leg','courts','wiki','models'];
+const ORG=['wiki','leg','courts','agenda','exec'];
 const parentOf={rep:'reps',bill:'bills',article:'wiki'};
 
+const navBtn=([v,l,i],cur,sub)=>`<button class="navbtn${sub?' sub':''}" data-go="${v}" ${cur===v?'aria-current="page"':''}>${ic(i)}${l}${ORG.includes(v)&&S.tier==='citizen'?ic('lock','lk'):''}</button>`;
+function navDrop(d,cur){
+ const inside=d.items.some(([v])=>v===cur),open=S.govOpen||inside;
+ return `<button class="navbtn navdrop${inside&&!open?' has-cur':''}" id="govtoggle" aria-expanded="${open}" aria-controls="govlist">${ic(d.icon)}${d.drop}${ic('back','chev')}</button>
+ <div class="navsub" id="govlist" ${open?'':'hidden'}>${d.items.map(it=>navBtn(it,cur,true)).join('')}</div>`;
+}
 function renderApp(){
  const cur=parentOf[S.view]||S.view;
  $('#app').innerHTML=`
  <aside class="side" id="side">
   <div class="side-head patwrap tilebg dark"><img class="side-logo" src="logo-white.png" alt="Digital Ground Game"><div class="label" style="color:#9a9ca6;margin-top:18px">Ground Game Hub</div></div>
-  <nav aria-label="Main">${NAV.map(([g,items])=>`<div class="navgroup">${g}${g==='Organizer suite'?'<span class="pro">PRO</span>':''}</div>`+items.map(([v,l,i])=>`<button class="navbtn" data-go="${v}" ${cur===v?'aria-current="page"':''}>${ic(i)}${l}${ORG.includes(v)&&S.tier==='citizen'?ic('lock','lk'):''}</button>`).join('')).join('')}</nav>
+  <nav aria-label="Main">${NAV.map(([g,items])=>`<div class="navgroup">${g}${g==='Democracy Lab'?'<span class="pro">PRO</span>':''}</div>`+items.map(it=>it.drop?navDrop(it,cur):navBtn(it,cur)).join('')).join('')}</nav>
   <div class="side-foot"><div class="avatar">${USER.initials}</div><div class="who"><b>${USER.name}</b><span>${S.tier==='citizen'?'Citizen · Free':'Organizer · Pro'}</span></div><button class="iconbtn" id="signout" aria-label="Sign out" title="Sign out">${ic('logout')}</button></div>
  </aside>
  <div class="scrim" id="scrim"></div>
@@ -502,17 +657,20 @@ function renderApp(){
    <button class="iconbtn menubtn" id="menubtn" aria-label="Open menu">${ic('menu')}</button>
    <label class="search">${ic('search')}<input id="gsearch" placeholder="Search bills, officials, cases…" aria-label="Search"></label>
    <div class="viewas"><span>Preview as</span><div class="seg" role="group" aria-label="Preview tier"><button data-tierswap="citizen" aria-pressed="${S.tier==='citizen'}">Citizen</button><button data-tierswap="organizer" aria-pressed="${S.tier==='organizer'}">Organizer</button></div></div>
+   ${themeBtn()}
   </header>
   <main class="content" id="content">${VIEWS[S.view]()}</main>
  </div>`;
  bind();
  window.scrollTo(0,0);
 }
-function go(v,p=null){S.view=v;S.param=p;renderApp()}
+function go(v,p=null){if(v!==S.view&&v==='games')S.game=null;S.view=v;S.param=p;renderApp()}
 function bind(){
  const app=$('#app');
  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go,b.dataset.p||null));
  app.querySelectorAll('[data-tierswap]').forEach(b=>b.onclick=()=>{S.tier=b.dataset.tierswap;renderApp();toast('Previewing the '+(S.tier==='citizen'?'Citizen':'Organizer')+' experience')});
+ bindTheme();
+ const gt=$('#govtoggle');if(gt)gt.onclick=()=>{const o=gt.getAttribute('aria-expanded')==='true';S.govOpen=!o;gt.setAttribute('aria-expanded',String(!o));$('#govlist').hidden=o};
  app.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>toast(b.dataset.toast));
  $('#signout').onclick=()=>{$('#app').hidden=true;$('#auth').hidden=false;S.mode='signin';renderAuth()};
  const side=$('#side'),scrim=$('#scrim');
@@ -531,8 +689,8 @@ const modbar=(name,host)=>`<div class="modbar"><span class="dot"></span><b class
 function gate(view,title,inner){
  if(S.tier==='organizer')return inner;
  return `<div class="locked"><div class="ghost" aria-hidden="true">${inner}</div><div class="lockcard"><div>
-  <span class="chip yel">${ic('star')}Organizer suite</span><h2>${title} is for organizers</h2>
-  <p>Organizer accounts fund our in-house tools and unlock the legislation, court, influencer, and forecasting trackers.</p>
+  <span class="chip yel">${ic('star')}Democracy Lab</span><h2>${title} is part of the Democracy Lab</h2>
+  <p>Organizer accounts fund our in-house tools and unlock The Blue Book, LegisTracker, Court Tracker, Agenda Tracker, and ExecuTracker.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="upgrade">Upgrade · $12/mo</button><button class="btn ghost" data-go="plans">Compare plans</button></div></div></div></div>`;
 }
 
@@ -542,8 +700,11 @@ home(){
  const d=daysLeft(),org=S.tier==='organizer';
  return `
  ${head('Good evening, '+USER.first,`${USER.precinct} · ${USER.county}, Ohio`,'<span class="sample">Sample data</span>')}
- ${!org&&S.donate?`<div class="donate"><button class="iconbtn close" id="hidedonate" aria-label="Dismiss">${ic('x')}</button><div><h3>Keep this hub free for every voter.</h3><p>No ads and no paywall on public information. If everyone reading this gave $3, we could cover a full year of data costs. Most people don't give, so if you can, please do.</p></div>
-  <div style="display:flex;flex-direction:column;gap:10px"><div class="amts">${[3,10,25,50].map(a=>`<button class="amt" data-amt="${a}" aria-pressed="${S.amt===a}">$${a}</button>`).join('')}</div><button class="btn red" id="give">${ic('heart')}Give $${S.amt}</button></div></div>`:''}
+ ${!org&&S.donate?`<div class="donate"><button class="iconbtn close" id="hidedonate" aria-label="Dismiss">${ic('x')}</button><div class="msg"><b>Keep this hub free for every voter.</b> No ads, no paywall. If you can, chip in.</div>
+  <div class="give">${[3,10,25].map(a=>`<button class="amt" data-amt="${a}" aria-pressed="${S.amt===a}">$${a}</button>`).join('')}<button class="btn red" id="give">${ic('heart')}Give $${S.amt}</button></div></div>`:''}
+ <section class="cta"><div class="cta-h"><h2>Get in the <span>ground game</span></h2><button class="btn sm" data-toast="Would open the full events map for your area">All events near you</button></div>
+  <div class="events">${EVENTS.map(e=>`<div class="event"><div class="edate"><small>${e.m}</small><b class="tab-nums">${e.d}</b></div><div class="info"><span class="chip ${e.cls}" style="align-self:flex-start">${e.type}</span><b>${e.t}</b><span class="d">${e.when} · ${e.where}</span><span class="d">${e.going} signed up</span><button class="btn sm ${e.cls==='red'?'red':'primary'}" data-toast="You're signed up for ${e.t}. Details are on the way.">Sign up</button></div></div>`).join('')}</div>
+ </section>
  <section class="hero patwrap tilebg">
   <div class="big tab-nums">${d}<small>days to go</small></div>
   <div><h2>General Election · Tue, Nov 3</h2><p>Early in-person voting is open now at the Franklin County Board of Elections. Polls open 6:30 a.m. to 7:30 p.m. on Election Day. Bring a photo ID.</p></div>
@@ -564,11 +725,11 @@ home(){
   ${org?`<section class="panel"><div class="panel-h"><h2>Organizer briefing</h2><span class="pro">PRO</span></div><div class="rows">
    <button class="row" data-go="leg"><span class="ic red">${ic('bell')}</span><span><span class="t">HB 301 hearing on Oct 28</span><br><span class="d">High priority · ballot drop box restrictions</span></span><span class="chip red">Alert</span></button>
    <button class="row" data-go="courts"><span class="ic">${ic('gavel')}</span><span><span class="t">TRO granted on early voting hours</span><br><span class="d">S.D. Ohio · next hearing Oct 29</span></span><span class="chip green">Win</span></button>
-   <button class="row" data-go="models"><span class="ic yel">${ic('chart')}</span><span><span class="t">OH House 7 moved to toss-up</span><br><span class="d">Forecast 47.5% · up 2.5 pts in two weeks</span></span><span class="chip yel">Model</span></button>
+   <button class="row" data-go="exec"><span class="ic yel">${ic('pen')}</span><span><span class="t">New order on election equipment</span><br><span class="d">ExecuTracker · 2 lawsuits filed so far</span></span><span class="chip yel">Order</span></button>
   </div></section>`:`<section class="panel"><div class="panel-h"><h2>Your next steps</h2></div><div class="rows">
    <button class="row" data-go="ballot"><span class="ic">${ic('ballot')}</span><span><span class="t">Review your sample ballot</span><br><span class="d">6 races and 2 issues on your ballot</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
    <button class="row" data-toast="Early voting plan saved to your calendar"><span class="ic">${ic('cal')}</span><span><span class="t">Make a voting plan</span><br><span class="d">Pick a day, time, and how you'll get there</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
-   <button class="row" data-go="plans"><span class="ic red">${ic('star')}</span><span><span class="t">Organizing in your community?</span><br><span class="d">See what the Organizer suite adds</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
+   <button class="row" data-go="plans"><span class="ic red">${ic('star')}</span><span><span class="t">Organizing in your community?</span><br><span class="d">See what the Democracy Lab adds</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
   </div></section>`}
  </div>`;
 },
@@ -692,15 +853,15 @@ history(){
 
 leg(){
  const cols=['Introduced','In committee','Passed one chamber','Awaiting signature'];
- const inner=`${modbar('Legislation Tracker','tracker.digitalgroundgame.org')}
+ const inner=`${modbar('LegisTracker','legistracker.digitalgroundgame.org')}
  <div class="grid g4">
   <div class="panel stat"><span class="label">Watchlist</span><span class="v tab-nums">${LEG.length}</span><span class="s">Bills across federal + Ohio</span></div>
   <div class="panel stat"><span class="label">High priority</span><span class="v tab-nums" style="color:var(--red)">3</span><span class="s">Need action this month</span></div>
   <div class="panel stat"><span class="label">Hearings</span><span class="v tab-nums">2</span><span class="s">Scheduled in next 14 days</span></div>
   <div class="panel stat"><span class="label">Testimony</span><span class="v tab-nums">14</span><span class="s">Members signed up to testify</span></div>
  </div>
- <div class="kanban">${cols.map((c,i)=>{const it=LEG.filter(l=>l.c===i);return `<div class="kcol"><h3>${c}<span>${it.length}</span></h3>${it.map(l=>`<button class="kcard ${l.p}" data-toast="Would open ${l.id} in the Legislation Tracker"><span class="id">${l.id}</span><b>${l.t}</b><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">${l.tag}</span>${l.p==='hi'?'<span class="chip red">High</span>':''}</span><span class="d" style="font-size:13px;color:var(--muted)">${l.note}</span></button>`).join('')}</div>`}).join('')}</div>`;
- return `${head('Legislation tracker','Your organization\'s watchlist, priorities, and testimony calendar.','<button class="btn primary" data-toast="Would open the add-bill dialog">+ Add bill</button>')}${gate('leg','The legislation tracker',inner)}`;
+ <div class="kanban">${cols.map((c,i)=>{const it=LEG.filter(l=>l.c===i);return `<div class="kcol"><h3>${c}<span>${it.length}</span></h3>${it.map(l=>`<button class="kcard ${l.p}" data-toast="Would open ${l.id} in LegisTracker"><span class="id">${l.id}</span><b>${l.t}</b><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">${l.tag}</span>${l.p==='hi'?'<span class="chip red">High</span>':''}</span><span class="d" style="font-size:13px;color:var(--muted)">${l.note}</span></button>`).join('')}</div>`}).join('')}</div>`;
+ return `${head('LegisTracker','Your organization\'s watchlist, priorities, and testimony calendar.','<button class="btn primary" data-toast="Would open the add-bill dialog">+ Add bill</button>')}${gate('leg','LegisTracker',inner)}`;
 },
 
 courts(){
@@ -713,21 +874,21 @@ courts(){
   <div class="tl"><div class="when">Nov 5, 2026</div><div class="what">Ruling expected on motion to dismiss, Midwest Tenants Union</div></div>
   <div class="tl"><div class="when">Nov 12, 2026</div><div class="what">Oral argument, Ohio Fair Districts Coalition v. State Redistricting Board</div></div>
  </div></div></section>`;
- return `${head('Court tracker','Litigation that affects voting, housing, and open government in the states we work in.','<span class="sample">Sample cases</span>')}${gate('courts','The court tracker',inner)}`;
+ return `${head('Court Tracker','Litigation that affects voting, housing, and open government in the states we work in.','<span class="sample">Sample cases</span>')}${gate('courts','Court Tracker',inner)}`;
 },
 
 wiki(){
  const q=S.wikiQ.toLowerCase(),list=WIKI.filter(w=>!q||(w.name+w.h+w.topics).toLowerCase().includes(q));
- const inner=`${modbar('Influencer Wiki','wiki.digitalgroundgame.org')}
+ const inner=`${modbar('The Blue Book','bluebook.digitalgroundgame.org')}
  <div class="filters"><label class="search" style="max-width:380px;display:flex">${ic('search')}<input id="wikiq" value="${S.wikiQ}" placeholder="Search creators, handles, topics" aria-label="Search the wiki"></label><span class="label" style="margin-left:auto">1,284 articles · 312 editors</span></div>
  <div class="wikigrid">${list.map(w=>`<button class="wcard" data-go="article" data-p="${w.id}"><div class="h"><div class="avatar" style="background:${w.c};${w.c==='#FFC800'?'color:#242424':''}">${w.ini}</div><div><b>${w.name}</b><span>${w.h}</span></div></div><p>${w.blurb}</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip blue">${w.reach} reach</span><span class="chip">${w.lean}</span></div></button>`).join('')}</div>`;
- return `${head('Influencer wiki','A community-edited reference on the online voices shaping political conversation, with sourced claims and accuracy records.','<span class="sample">Fictional profiles</span>')}${gate('wiki','The influencer wiki',inner)}`;
+ return `${head('The Blue Book','A community-edited reference on the online voices shaping political conversation, with sourced claims and accuracy records.','<span class="sample">Fictional profiles</span>')}${gate('wiki','The Blue Book',inner)}`;
 },
 
 article(){
  const w=WIKI.find(x=>x.id===S.param)||WIKI[0];
  if(S.tier!=='organizer'){S.view='wiki';return VIEWS.wiki()}
- return `${head(w.name,w.h,`<button class="btn" data-toast="Would open the editor with revision history">Edit article</button>`,crumb('wiki','Influencer wiki'))}
+ return `${head(w.name,w.h,`<button class="btn" data-toast="Would open the editor with revision history">Edit article</button>`,crumb('wiki','The Blue Book'))}
  <div class="article">
   <article class="panel panel-b">
    <p><b>${w.name}</b> (${w.h}) is a political content creator active on ${w.plat}. ${w.blurb}<span class="cite">[1]</span></p>
@@ -750,24 +911,134 @@ article(){
  </div>`;
 },
 
-models(){
- const inner=`${modbar('Prediction Models','models.digitalgroundgame.org')}
+agenda(){
+ const all=AGENDA.flatMap(([,it])=>it),tot=all.length,c=st=>all.filter(i=>i[1]===st).length;
+ const avg=Math.round(all.reduce((a,i)=>a+i[2],0)/tot);
+ const inner=`${modbar('Agenda Tracker','agendatracker.digitalgroundgame.org')}
+ <section class="panel panel-b" style="display:flex;flex-direction:column;gap:12px">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><span><span class="label">Tracking</span><br><b style="font:400 26px var(--display);letter-spacing:.02em">Project 2025 · Mandate for Leadership</b></span><span style="text-align:right"><span class="label">Overall progress</span><br><span class="disp tab-nums" style="font-size:40px">${avg}%</span></span></div>
+  <div class="bar" style="height:14px"><i style="width:${c('Implemented')/tot*100}%;background:var(--green)"></i><i style="width:${c('In progress')/tot*100}%;background:var(--blue)"></i><i style="width:${c('Blocked')/tot*100}%;background:var(--red)"></i><i style="width:${c('Proposed')/tot*100}%;background:var(--muted)"></i></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">${['Implemented','In progress','Blocked','Proposed'].map(k=>`<span class="chip ${AGCLS[k]}">${c(k)} ${k}</span>`).join('')}</div>
+ </section>
+ <div class="grid g2">${AGENDA.map(([area,items])=>`<section class="panel"><div class="panel-h"><h2 style="font-size:16px">${area}</h2><span class="label">${items.length} items</span></div><div class="rows">${items.map(([t,st,p])=>`<button class="row" style="grid-template-columns:1fr auto" data-toast="Would open the evidence log: orders, rules, and rulings tied to this item"><span style="display:flex;flex-direction:column;gap:8px;min-width:0"><span class="t" style="font-size:15px">${t}</span><span class="bar"><i style="width:${p}%;background:${st==='Blocked'?'var(--red)':st==='Implemented'?'var(--green)':'var(--blue)'}"></i></span></span><span class="chip ${AGCLS[st]}">${st}</span></button>`).join('')}</div></section>`).join('')}</div>`;
+ return `${head('Agenda Tracker','Item-by-item progress on an administration\'s published agenda, scored from orders, rules, budgets, and court rulings.','<span class="sample">Sample statuses</span>')}${gate('agenda','Agenda Tracker',inner)}`;
+},
+exec(){
+ const n=st=>EOS.filter(e=>e.st===st).length,orders=S.exTab==='orders';
+ const list=EOS.filter(e=>S.eoF==='all'||e.st===S.eoF);
+ const inner=`${modbar('ExecuTracker','executracker.digitalgroundgame.org')}
+ <div class="grid g4">
+  <div class="panel stat"><span class="label">Orders this year</span><span class="v tab-nums">${EOS.length}</span><span class="s">${n('Enjoined')} blocked by a court</span></div>
+  <div class="panel stat"><span class="label">Challenged</span><span class="v tab-nums">${n('Challenged')+n('Enjoined')}</span><span class="s">${EOS.reduce((a,e)=>a+e.cases,0)} cases synced with Court Tracker</span></div>
+  <div class="panel stat"><span class="label">Pending nominees</span><span class="v tab-nums">${APPTS.filter(a=>['Nominated','Hearing held','Committee vote'].includes(a.st)).length}</span><span class="s">Awaiting Senate action</span></div>
+  <div class="panel stat"><span class="label">Vacant or acting</span><span class="v tab-nums" style="color:var(--red)">${APPTS.filter(a=>a.st==='Vacant'||a.st==='Acting').length}</span><span class="s">Senate-confirmed posts</span></div>
+ </div>
+ <div class="tabs" role="tablist"><button role="tab" data-extab="orders" aria-selected="${orders}">Executive orders</button><button role="tab" data-extab="appts" aria-selected="${!orders}">Appointments</button></div>
+ ${orders?`<div class="filters">${['all','In effect','Challenged','Enjoined','Revoked'].map(k=>`<button class="fbtn" data-eof="${k}" aria-pressed="${S.eoF===k}">${k==='all'?'All':k}</button>`).join('')}</div>
+ <section class="panel"><div class="tbl-wrap"><table><thead><tr><th>Order</th><th>Title</th><th>Agencies</th><th>Signed</th><th>Status</th><th>Cases</th></tr></thead><tbody>
+ ${list.map(e=>`<tr class="click" data-toast="Would open ${e.id} with full text, agency actions, and litigation"><td class="mono" style="font-size:13px;white-space:nowrap">${e.id}</td><td style="min-width:240px"><b>${e.t}</b></td><td>${e.ag}</td><td class="tab-nums" style="white-space:nowrap">${e.d}</td><td><span class="chip ${e.cls}">${e.st}</span></td><td class="tab-nums">${e.cases||'—'}</td></tr>`).join('')}
+ </tbody></table></div></section>`
+ :`<section class="panel"><div class="tbl-wrap"><table><thead><tr><th>Position</th><th>Agency</th><th>Person</th><th>Status</th><th>Date</th><th>Senate vote</th></tr></thead><tbody>
+ ${APPTS.map(a=>`<tr class="click" data-toast="Would open the profile, hearing record, and financial disclosures"><td style="min-width:220px"><b>${a.pos}</b></td><td>${a.ag}</td><td>${a.who}</td><td><span class="chip ${a.cls}">${a.st}</span></td><td class="tab-nums" style="white-space:nowrap">${a.d}</td><td class="tab-nums">${a.vote}</td></tr>`).join('')}
+ </tbody></table></div></section>`}`;
+ return `${head('ExecuTracker','Executive branch appointments and orders, the agencies carrying them out, and the lawsuits against them.','<span class="sample">Sample data</span>')}${gate('exec','ExecuTracker',inner)}`;
+},
+media(){
+ const F=[['all','All'],['stream','Live & replays'],['interview','Interviews'],['photos','Photos']];
+ const list=MEDIA.filter(m=>S.mediaF==='all'||m.k===S.mediaF);
+ const lab={stream:'Replay',interview:'Interview',photos:'Photos'},ico={stream:'play',interview:'mic',photos:'cam'};
+ return `${head('Media','Photos, live streams, and candidate interviews from our canvassing events.','<span class="sample">Sample content</span>')}
+ <section class="live"><button class="thumb r" style="border:0;cursor:pointer" data-toast="Would open the live stream player"><span class="ttag on"><span class="livedot"></span>Live now</span><span class="playbtn">${ic('play')}</span><span class="dur">1,204 watching</span></button>
+  <div class="side-info"><span class="label">Streaming from Columbus</span><h2>Final Weekend Canvass Launch</h2><p style="margin:0;color:var(--muted)">Organizers are briefing 150 volunteers at Goodale Park before teams head out to knock doors in the Short North.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto"><button class="btn red sm" data-toast="Would open the live stream player">${ic('play')}Watch live</button><button class="btn sm ghost" data-toast="Stream link copied">Share</button></div></div></section>
+ <div class="filters">${F.map(([k,l])=>`<button class="fbtn" data-mf="${k}" aria-pressed="${S.mediaF===k}">${l}</button>`).join('')}<button class="btn sm" style="margin-left:auto" data-toast="Would open the upload form for event photos and video">${ic('cam')}Upload from an event</button></div>
+ <div class="mgrid">${list.map(m=>`<button class="mcard" data-toast="Would open ${m.k==='photos'?'the photo album':'the video player'}"><div class="thumb ${m.tint}"><span class="ttag">${lab[m.k]}</span><span class="big">${m.big}</span><span class="dur">${m.k==='photos'?ic('cam').replace('<svg','<svg style="width:12px;height:12px;vertical-align:-1px;margin-right:4px"')+m.dur:m.dur}</span></div><div class="mi"><b>${m.t}</b><span class="d">${m.d}</span></div></button>`).join('')}</div>`;
+},
+chapter(){
+ const toggle=`<div class="viewas"><span>Preview</span><div class="seg" role="group" aria-label="Preview chapter state"><button data-chap="1" aria-pressed="${S.hasChapter}">Chapter exists</button><button data-chap="0" aria-pressed="${!S.hasChapter}">No chapter yet</button></div></div>`;
+ if(!S.hasChapter){
+  return `${head('Local Chapter','No Digital Ground Game chapter covers Lima, OH 45801 yet. The nearest one is Columbus, 78 miles away.',toggle)}
+  <section class="nochap">
+   <div class="pitch"><span class="label" style="color:#9a9ca6">Lima, Ohio</span><h2>Start the <span>Lima chapter</span></h2>
+    <p style="margin:0;opacity:.9">City leads recruit volunteers, run canvasses and phone banks, and connect their town to the national ground game.</p>
+    <ul>${['Training and a starter kit from the national team','Event tools, walk lists, and a chapter page','A regional organizer who checks in every two weeks','Leadership development you can put on a résumé'].map(x=>`<li>${ic('check')}${x}</li>`).join('')}</ul>
+    <span class="d" style="font-size:13px;color:#b9bdd0">23 people near Lima have already joined DGG and would be your first members.</span></div>
+   ${S.leadSent?`<div style="padding:28px;display:flex;flex-direction:column;gap:12px;justify-content:center"><span class="chip green" style="align-self:flex-start">${ic('check')}Application sent</span><h2 style="font:400 32px/1 var(--display)">Thanks, ${USER.first}.</h2><p style="margin:0;color:var(--muted)">A regional organizer will reach out within three days to set up an intro call. In the meantime, the Columbus chapter has invited you to its next meeting.</p><button class="btn sm" style="align-self:flex-start" id="undoLead">Edit application</button></div>`
+   :`<form id="leadform" novalidate><span class="label">Apply to be a city lead</span>
+    <div class="field"><label class="label" for="cl-name">Full name</label><input id="cl-name" value="${USER.name}"></div>
+    <div class="field"><label class="label" for="cl-email">Email</label><input id="cl-email" type="email" value="jordan.ellis@example.org"></div>
+    <div class="field"><label class="label" for="cl-city">City</label><input id="cl-city" value="Lima, OH"></div>
+    <div class="field"><label class="label" for="cl-hours">Hours per week you can give</label><select id="cl-hours"><option>2–4 hours</option><option selected>5–8 hours</option><option>9+ hours</option></select></div>
+    <div class="field"><label class="label" for="cl-why">Why do you want to lead a chapter?</label><textarea id="cl-why" placeholder="Tell us about your community and any organizing experience"></textarea></div>
+    <button class="btn red block" type="submit">Apply to start a chapter</button></form>`}
+  </section>`;
+ }
+ return `${head('Columbus Chapter','Your nearest Digital Ground Game chapter, covering Franklin, Delaware, and Licking counties.',toggle)}
  <div class="grid g3">
-  <section class="panel"><div class="panel-h"><h2>Races</h2></div><div class="rows">${RACES.map(r=>`<button class="row" data-race="${r.id}" style="grid-template-columns:1fr auto;${S.race===r.id?'background:var(--blueSoft)':''}"><span class="t" style="font-size:15px">${r.name}</span><span class="mono tab-nums" style="font-size:14px">${r.base.toFixed(1)}%</span></button>`).join('')}</div>
-   <div class="panel-b" style="display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--line)">
-    <span class="label">Scenario inputs</span>
-    <div class="slider"><div class="top"><label for="youth">Youth turnout vs. 2022</label><b id="youthv">+0 pts</b></div><input type="range" id="youth" min="-10" max="10" value="${S.youth}"></div>
-    <div class="slider"><div class="top"><label for="swing">Late swing</label><b id="swingv">0 pts</b></div><input type="range" id="swing" min="-5" max="5" step="0.5" value="${S.swing}"></div>
-   </div></section>
-  <section class="panel span2"><div class="panel-h"><h2 id="racename"></h2><span class="chip yel">Turnout-adjusted · in house</span></div><div class="panel-b" style="display:flex;flex-direction:column;gap:16px">
-   <div class="prob" id="probbar"></div>
-   <div class="chartbox" id="chart"></div>
-   <p style="margin:0;font-size:14px;color:var(--muted)">Win probability for the Democratic nominee over the last 11 weeks. Scenario inputs adjust the final week only. Model methodology and backtests live in the full app.</p>
+  <section class="panel span2"><div class="panel-h"><h2>City lead</h2><span class="chip green">Active chapter</span></div><div class="panel-b lead">
+   <div class="portrait">AM</div>
+   <div style="display:flex;flex-direction:column;gap:10px;min-width:0"><div><h2>Alex Moreno</h2><span style="color:var(--muted)">Columbus City Lead · since March 2025</span></div>
+    <div class="contact">${ic('doc').replace('<svg','<svg style="width:16px;height:16px;color:var(--muted)"')}<span class="mono">columbus@digitalgroundgame.org</span><button class="btn sm ghost" id="copyEmail">Copy</button></div>
+    <div class="contact">${ic('phone').replace('<svg','<svg style="width:16px;height:16px;color:var(--muted)"')}<span class="mono tab-nums">(614) 555-0190</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary sm" data-toast="Message sent to Alex. Expect a reply within a day or two.">Message Alex</button><button class="btn sm" data-toast="You joined the Columbus chapter">Join chapter</button></div></div>
+  </div></section>
+  <section class="panel"><div class="panel-h"><h2>Chapter stats</h2></div><div class="panel-b"><div class="kv" style="grid-template-columns:1fr auto">
+   <div class="k">Members</div><div class="v tab-nums">412</div>
+   <div class="k">Doors knocked, 2026</div><div class="v tab-nums">38,650</div>
+   <div class="k">Calls made, 2026</div><div class="v tab-nums">21,300</div>
+   <div class="k">Events this month</div><div class="v tab-nums">9</div>
+  </div></div></section>
+ </div>
+ <div class="grid g2">
+  <section class="panel"><div class="panel-h"><h2>Next meetings</h2></div><div class="rows">
+   <div class="row"><span class="ic">${ic('users')}</span><span><span class="t">Monthly chapter meeting</span><br><span class="d">Thu, Oct 29 · 7 p.m. · Columbus Metropolitan Library, Main Branch</span></span><span class="chip blue">RSVP</span></div>
+   <div class="row"><span class="ic red">${ic('pin')}</span><span><span class="t">Canvass captain training</span><br><span class="d">Sat, Oct 31 · 9 a.m. · Goodale Park shelter house</span></span><span class="chip red">12 spots</span></div>
+   <div class="row"><span class="ic yel">${ic('phone')}</span><span><span class="t">Election week debrief</span><br><span class="d">Thu, Nov 5 · 7 p.m. · Virtual</span></span><span class="chip">Open</span></div>
+  </div></section>
+  <section class="panel"><div class="panel-h"><h2>Chapter team</h2></div><div class="rows">
+   ${[['JK','Jasmine Kim','Volunteer coordinator'],['TR','Tyler Reed','Canvass captain, Short North'],['OB','Omar Bashir','Data and turf lead'],['LP','Lauren Pike','Media and photos']].map(([i,n,r])=>`<div class="row" style="grid-template-columns:auto 1fr"><div class="avatar" style="background:var(--black)">${i}</div><span><span class="t">${n}</span><br><span class="d">${r}</span></span></div>`).join('')}
   </div></section>
  </div>`;
- return `${head('Prediction models','Forecasts built on DGG\'s canvassing contact data and turnout modeling.','<span class="sample">Sample forecasts</span>')}${gate('models','Prediction models',inner)}`;
 },
-
+games(){
+ if(S.game==='quiz'){
+  const done=S.qi>=QUIZ.length;
+  if(done)return `${head('Daily Civics Quiz','',`<button class="btn" data-game="">${ic('back')}All games</button>`)}
+   <div class="play"><div class="qcard" style="align-items:flex-start"><span class="label">Today's score</span><div class="disp tab-nums" style="font-size:72px">${S.qScore}/${QUIZ.length}</div>
+   <p style="margin:0;color:var(--muted)">${S.qScore===QUIZ.length?'Perfect score. Your streak is now 5 days.':S.qScore>=3?'Solid work. Come back tomorrow for a new set.':'Good start. Each answer comes with the facts, so tomorrow will go better.'}</p>
+   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-toast="Score copied: Know Your Stuff ${S.qScore}/${QUIZ.length}">Share score</button><button class="btn" id="qagain">Play again</button></div></div></div>`;
+  const [q,opts,ans,why]=QUIZ[S.qi],picked=S.qPick!==null;
+  return `${head('Daily Civics Quiz','',`<button class="btn" data-game="">${ic('back')}All games</button>`)}
+  <div class="play"><div class="qprog">${QUIZ.map((_,i)=>`<i class="${i<S.qi+(picked?1:0)?'on':''}"></i>`).join('')}</div>
+   <div class="qcard"><span class="label">Question ${S.qi+1} of ${QUIZ.length}</span><h2>${q}</h2>
+    <div style="display:flex;flex-direction:column;gap:8px">${opts.map((o,i)=>`<button class="opt ${picked?(i===ans?'right':i===S.qPick?'wrong':''):''}" data-opt="${i}" ${picked?'disabled':''}>${o}</button>`).join('')}</div>
+    ${picked?`<p style="margin:0;padding:12px 14px;background:var(--surface2);border-left:4px solid ${S.qPick===ans?'var(--green)':'var(--red)'}"><b>${S.qPick===ans?'Correct.':'Not quite.'}</b> ${why}</p><button class="btn primary" id="qnext" style="align-self:flex-start">${S.qi===QUIZ.length-1?'See score':'Next question'}</button>`:''}
+   </div></div>`;
+ }
+ if(S.game==='timeline'){
+  if(!S.tl)S.tl=[2,0,4,1,3];
+  const right=S.tl.every((v,i)=>v===i);
+  return `${head('Timeline','Put these moments in order, earliest at the top.',`<button class="btn" data-game="">${ic('back')}All games</button>`)}
+  <div class="play">${S.tl.map((k,i)=>{const [t,y]=TIMELINE[k];return `<div class="tlrow ${S.tlChecked?(k===i?'right':'wrong'):''}"><span class="yr tab-nums">${S.tlChecked?y:'?'}</span><b style="font:700 16px/1.3 var(--head)">${t}</b><span class="mv"><button data-mv="${i}" data-dir="-1" aria-label="Move up" ${i===0||S.tlChecked?'disabled':''}>${ic('back').replace('<svg','<svg style="transform:rotate(90deg)"')}</button><button data-mv="${i}" data-dir="1" aria-label="Move down" ${i===S.tl.length-1||S.tlChecked?'disabled':''}>${ic('back').replace('<svg','<svg style="transform:rotate(-90deg)"')}</button></span></div>`}).join('')}
+   ${S.tlChecked?`<div class="qcard" style="box-shadow:5px 5px 0 ${right?'var(--green)':'var(--red)'}"><b style="font:400 30px var(--display)">${right?'All in order.':S.tl.filter((v,i)=>v===i).length+' of 5 in place.'}</b><span style="color:var(--muted)">${right?'You know your stuff.':'Green rows are in the right spot. Try again to rearrange.'}</span><button class="btn" id="tlreset" style="align-self:flex-start">Try again</button></div>`:`<button class="btn primary" id="tlcheck" style="align-self:flex-start">Check order</button>`}
+  </div>`;
+ }
+ const G=[
+  ['timeline','Timeline','Order key moments in American history.','var(--red)','1776','Playable'],
+  [null,'Amendment Match','Match each amendment to the right it protects.','var(--black)','#19','In development'],
+  [null,'Branch Sort','Sort powers into legislative, executive, or judicial.','var(--blue)','I·II·III','In development'],
+  [null,'Preamble Fill-In','Fill in the missing words of the Preamble.','#13824A','We the','In development'],
+  [null,'Civics Connections','Find four groups of four hidden among 16 civics terms.','var(--yellow)','4×4','In development'],
+  [null,'Map the Vote','Name the state from its electoral vote count and shape.','var(--black)','270','In development'],
+ ];
+ return `${head('Know Your Stuff','Daily games and quizzes on American civics and history. New puzzles every morning.','<span class="chip yel">'+ic('star')+'4-day streak</span>')}
+ <section class="daily"><div class="art"><span class="label" style="color:#fff">Sunday, October 25</span><h2>Daily <span>Civics</span> Quiz</h2><span>5 questions · about 2 minutes</span></div>
+  <div class="meta"><span class="label">This week</span><div class="streak">${['M','T','W','T','F','S','S'].map((d,i)=>`<i class="${i>=2&&i<6?'on':''}">${d}</i>`).join('')}</div>
+   <p style="margin:0;color:var(--muted);font-size:15px">Columbus chapter average yesterday: <b style="color:var(--ink)">3.8 / 5</b>. You're in the top 30%.</p>
+   <button class="btn primary" data-game="quiz" style="align-self:flex-start;margin-top:auto">${ic('play')}Play today's quiz</button></div></section>
+ <div class="panel-h" style="padding:0;border:0"><h2>More games</h2></div>
+ <div class="games">${G.map(([k,n,d,c,art,st])=>`<button class="game" ${k?`data-game="${k}"`:`data-toast="${n} is in development"`}><div class="gart" style="background:${c};${c==='var(--yellow)'?'color:var(--black)':''}">${art}</div><div class="gi"><b>${n}</b><span>${d}</span><span class="chip ${k?'green':''}" style="align-self:flex-start;margin-top:4px">${st}</span></div></button>`).join('')}</div>`;
+},
 plans(){
  const org=S.tier==='organizer';
  const li=a=>a.map(x=>`<li>${ic('check')}${x}</li>`).join('');
@@ -778,7 +1049,7 @@ plans(){
    <div style="display:flex;flex-direction:column;gap:10px"><span class="label">Chip in once or monthly</span><div class="amts">${[3,10,25,50].map(a=>`<button class="amt" data-amt="${a}" aria-pressed="${S.amt===a}">$${a}</button>`).join('')}</div><button class="btn red" id="give">${ic('heart')}Donate $${S.amt}</button></div>
   </section>
   <section class="plan ${org?'feat':''}"><span class="label">${org?'Your plan':'For organizers'}</span><h2>Organizer</h2><div class="pr">$12 <small>/ month · or $120 / year</small></div>
-   <ul>${li(['Everything in Citizen','Legislation tracker with team watchlists','Court tracker and docket alerts','Influencer wiki with editing rights','In-house prediction models and scenarios','Chapter seats available for teams of 5+'])}</ul>
+   <ul>${li(['Everything in Citizen','The Blue Book with editing rights','LegisTracker team watchlists','Court Tracker docket alerts','Agenda Tracker progress reports','ExecuTracker orders and appointments','Chapter seats available for teams of 5+'])}</ul>
    ${org?'<button class="btn" data-toast="Would open billing management">Manage subscription</button>':'<button class="btn primary" id="upgrade">Upgrade to Organizer</button>'}
   </section>
  </div>
@@ -790,11 +1061,26 @@ plans(){
 function commonHooks(){
  document.querySelectorAll('[data-amt]').forEach(b=>b.onclick=()=>{S.amt=+b.dataset.amt;renderApp()});
  const g=$('#give');if(g)g.onclick=()=>toast(`Thank you! A $${S.amt} donation would be processed here.`);
- const u=$('#upgrade');if(u)u.onclick=()=>{S.tier='organizer';renderApp();toast('Welcome to the Organizer suite. Trial started.')};
+ const u=$('#upgrade');if(u)u.onclick=()=>{S.tier='organizer';renderApp();toast('Welcome to the Democracy Lab. Trial started.')};
  const h=$('#hidedonate');if(h)h.onclick=()=>{S.donate=false;renderApp()};
 }
 const HOOKS={
- home:commonHooks,plans:commonHooks,leg:commonHooks,courts:commonHooks,
+ chapter(){document.querySelectorAll('[data-chap]').forEach(b=>b.onclick=()=>{S.hasChapter=b.dataset.chap==='1';renderApp()});
+  const c=$('#copyEmail');if(c)c.onclick=()=>{const t='columbus@digitalgroundgame.org';(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Email copied')).catch(()=>{const r=document.createRange();r.selectNodeContents(c.previousElementSibling);const sel=getSelection();sel.removeAllRanges();sel.addRange(r);toast('Email selected. Press Ctrl+C to copy.')})};
+  const f=$('#leadform');if(f)f.onsubmit=e=>{e.preventDefault();S.leadSent=true;renderApp();toast('Application sent')};
+  const u=$('#undoLead');if(u)u.onclick=()=>{S.leadSent=false;renderApp()}},
+ games(){
+  document.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{S.game=b.dataset.game||null;if(S.game==='quiz'){S.qi=0;S.qScore=0;S.qPick=null}if(S.game==='timeline'){S.tl=null;S.tlChecked=false}renderApp()});
+  document.querySelectorAll('[data-opt]').forEach(b=>b.onclick=()=>{S.qPick=+b.dataset.opt;if(S.qPick===QUIZ[S.qi][2])S.qScore++;renderApp()});
+  const n=$('#qnext');if(n)n.onclick=()=>{S.qi++;S.qPick=null;renderApp()};
+  const a=$('#qagain');if(a)a.onclick=()=>{S.qi=0;S.qScore=0;S.qPick=null;renderApp()};
+  document.querySelectorAll('[data-mv]').forEach(b=>b.onclick=()=>{const i=+b.dataset.mv,j=i+ +b.dataset.dir;[S.tl[i],S.tl[j]]=[S.tl[j],S.tl[i]];renderApp()});
+  const c=$('#tlcheck');if(c)c.onclick=()=>{S.tlChecked=true;renderApp()};
+  const r=$('#tlreset');if(r)r.onclick=()=>{S.tlChecked=false;renderApp()};
+ },
+ media(){document.querySelectorAll('[data-mf]').forEach(b=>b.onclick=()=>{S.mediaF=b.dataset.mf;renderApp()})},
+ home:commonHooks,plans:commonHooks,leg:commonHooks,courts:commonHooks,agenda:commonHooks,
+ exec(){commonHooks();document.querySelectorAll('[data-eof]').forEach(b=>b.onclick=()=>{S.eoF=b.dataset.eof;renderApp()});document.querySelectorAll('[data-extab]').forEach(b=>b.onclick=()=>{S.exTab=b.dataset.extab;renderApp()})},
  register(){$('#lookup').onsubmit=e=>{e.preventDefault();const n=($('#lk-first').value+' '+$('#lk-last').value).trim()||'That voter';toast(`${n}: Active registration found in ${$('#lk-state').value} (sample result)`)}},
  reps(){document.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>{S.repLvl=b.dataset.lvl;renderApp()})},
  bills(){document.querySelectorAll('[data-bf]').forEach(b=>b.onclick=()=>{S.billF=b.dataset.bf;renderApp()});
@@ -802,34 +1088,8 @@ const HOOKS={
  bill(){document.querySelectorAll('[data-ver]').forEach(b=>b.onclick=()=>{S.ver=+b.dataset.ver;renderApp()});
   $('#followbill').onclick=()=>{const b=BILLS.find(x=>x.id===S.param)||BILLS[0];b.follow=!b.follow;renderApp();toast(b.follow?'Following '+b.num+'. You\'ll get an alert when it moves.':'Unfollowed '+b.num)}},
  wiki(){commonHooks();const q=$('#wikiq');if(!q)return;q.oninput=()=>{S.wikiQ=q.value;clearTimeout(q._t);q._t=setTimeout(()=>{renderApp();const n=$('#wikiq');n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)}},
- models(){commonHooks();if(S.tier!=='organizer')return;
-  document.querySelectorAll('[data-race]').forEach(b=>b.onclick=()=>{S.race=b.dataset.race;renderApp()});
-  const y=$('#youth'),s=$('#swing');
-  const upd=()=>{S.youth=+y.value;S.swing=+s.value;$('#youthv').textContent=(S.youth>=0?'+':'')+S.youth+' pts';$('#swingv').textContent=(S.swing>0?'+':'')+S.swing+' pts';drawModel()};
-  y.oninput=upd;s.oninput=upd;upd();},
 };
 HOOKS.ballot=()=>{};HOOKS.history=()=>{};HOOKS.rep=()=>{};HOOKS.article=()=>{};
-
-function drawModel(){
- const r=RACES.find(x=>x.id===S.race);
- const adj=S.youth*0.45+S.swing*2.2;
- const pts=r.trend.map((v,i)=>i===r.trend.length-1?Math.min(99,Math.max(1,v+adj)):v);
- const fin=pts[pts.length-1];
- $('#racename').textContent=r.name;
- $('#probbar').innerHTML=`<div style="width:${fin}%;background:var(--blue)">DEM ${fin.toFixed(1)}%</div><div style="width:${100-fin}%;background:var(--red);justify-content:flex-end">${(100-fin).toFixed(1)}% REP</div>`;
- const W=600,H=230,L=40,R=16,T=12,B=28,iw=W-L-R,ih=H-T-B;
- const x=i=>L+i*iw/(pts.length-1),y=v=>T+ih-(v-20)/60*ih; // y domain 20–80
- const line=pts.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
- const area=line+`L${x(pts.length-1)},${y(20)}L${x(0)},${y(20)}Z`;
- const ticks=[20,35,50,65,80];
- $('#chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Win probability trend ending at ${fin.toFixed(1)} percent">
-  ${ticks.map(t=>`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)" ${t===50?'stroke-dasharray="4 4" stroke-width="1.5"':''}/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="Roboto Mono, monospace">${t}%</text>`).join('')}
-  <path d="${area}" fill="var(--blue)" opacity=".12"/>
-  <path d="${line}" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linejoin="round"/>
-  <circle cx="${x(pts.length-1)}" cy="${y(fin)}" r="6" fill="var(--blue)" stroke="var(--surface)" stroke-width="2"/>
-  ${pts.map((_,i)=>i%2===0?`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="Roboto Mono, monospace">Wk ${i+1}</text>`:'').join('')}
- </svg>`;
-}
 
 renderAuth();
 </script>
