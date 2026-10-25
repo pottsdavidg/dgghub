@@ -166,6 +166,38 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .track b{font:400 22px/1 var(--display);letter-spacing:.03em}
 .track span{font-size:13px;color:var(--muted);line-height:1.35}
 .track .bar{height:6px}
+.tq-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tq-q{font:700 22px/1.25 var(--head)}
+.teamscore{display:grid;grid-template-columns:120px 1fr 40px;gap:10px;align-items:center;font-size:14px}
+.teamhero{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;border:2px solid var(--ink);background:var(--surface);padding:20px;box-shadow:5px 5px 0 var(--team,var(--blue))}
+.teamicon{width:56px;height:56px;display:grid;place-items:center;border:2px solid var(--ink);background:var(--surface2);color:var(--team,var(--blue))}
+.teamicon svg{width:28px;height:28px}
+.teamhero h2{font:700 26px/1.1 var(--head)}
+.teamhero .tsub{font:700 14px var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--link);margin-top:4px}
+.teamhero p{margin:8px 0 0;max-width:68ch}
+.otherteams{display:flex;flex-wrap:wrap;gap:8px}
+.otherteams button{border:2px solid var(--line);background:var(--surface);padding:7px 10px;font:700 13px var(--head);border-radius:2px;display:inline-flex;gap:6px;align-items:center}
+.otherteams button svg{width:14px;height:14px}
+.otherteams button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.mstack{display:flex}
+.mstack .avatar{width:34px;height:34px;font-size:12px;border:2px solid var(--surface);margin-left:-8px}
+.mstack .avatar:first-child{margin-left:0}
+.av-sm{width:28px;height:28px;font-size:11px}
+.task td{vertical-align:middle}
+.task.done .tt{text-decoration:line-through;color:var(--muted)}
+.task select,.newtask input,.newtask select{border:2px solid var(--line);background:var(--surface);padding:6px 8px;border-radius:2px;font-size:14px;max-width:100%}
+.chk{width:22px;height:22px;border:2px solid var(--ink);background:var(--surface);display:grid;place-items:center;border-radius:2px;padding:0}
+.chk svg{width:14px;height:14px}
+.chk[aria-checked="true"]{background:var(--green);border-color:var(--green);color:#fff}
+.newtask{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px;align-items:end;padding:16px 18px;border-bottom:1px solid var(--line);background:var(--surface2)}
+.joinfab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;width:min(320px,calc(100% - 32px));background:var(--surface);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--blue);padding:16px 40px 16px 16px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.4}
+.joinfab b{font:400 24px/1 var(--display);letter-spacing:.02em}
+.joinfab .btn{align-self:flex-start;margin-top:4px}
+.joinpill{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;border:2px solid var(--black);box-shadow:3px 3px 0 var(--black);padding:9px 14px;font:700 14px var(--head);text-transform:uppercase;letter-spacing:.05em;border-radius:2px}
+.joinpill svg{width:16px;height:16px}
+.freqseg{display:flex;border:2px solid var(--ink);align-self:flex-start}
+.freqseg button{border:0;background:transparent;padding:9px 16px;font:700 14px var(--head);text-transform:uppercase;letter-spacing:.05em}
+.freqseg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .demo-note{font-size:13px;color:var(--muted);border-left:3px solid var(--yellow);padding-left:10px}
 
 /* ===== SHELL ===== */
@@ -211,7 +243,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .viewas{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
 .viewas .seg{border-width:2px}
 .viewas .seg button{padding:6px 10px;font-size:12px}
-.content{padding-block:28px 64px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));width:100%;max-width:1180px;display:flex;flex-direction:column;gap:24px}
+.content{padding-block:28px 200px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));width:100%;max-width:1180px;display:flex;flex-direction:column;gap:24px}
 
 .pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .pagehead h1{font:400 clamp(36px,4.5vw,52px)/.95 var(--display);letter-spacing:.02em}
@@ -244,7 +276,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .hero .big small{display:block;font-size:.3em;line-height:1;margin-top:10px;text-shadow:none;letter-spacing:.06em}
 .hero h2{font:400 34px/1 var(--display);letter-spacing:.03em}
 .hero p{margin:6px 0 0;max-width:52ch;opacity:.92}
-.hero .btn{border-color:var(--black)}
+.hero .btn{border-color:var(--black);color:var(--ink)}
 .stat{padding:16px 18px;display:flex;flex-direction:column;gap:8px}
 .stat .v{font:400 34px/1 var(--display);letter-spacing:.02em}
 .stat .s{font-size:14px;color:var(--muted);line-height:1.35}
@@ -420,6 +452,8 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--surface2)}
   .g4{grid-template-columns:1fr 1fr}
   .tiers{grid-template-columns:1fr}
   .live{grid-template-columns:1fr}
+  .newtask{grid-template-columns:1fr}
+  .teamhero{grid-template-columns:1fr}
   .wsfeat{grid-template-columns:1fr}
   .tracks{grid-template-columns:1fr 1fr}
   .daily{grid-template-columns:1fr}
@@ -467,6 +501,10 @@ mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0014
 sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
 moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',
 cap:'<path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5M22 10v6"/>',
+code:'<path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/>',
+mega:'<path d="M3 11v2a1 1 0 001 1h3l5 4V6L7 10H4a1 1 0 00-1 1z"/><path d="M16 8a5 5 0 010 8M19 5a9 9 0 010 14"/>',
+door:'<path d="M14 3H5v18h9"/><path d="M10 12h11M18 9l3 3-3 3"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
 x:'<path d="M18 6L6 18M6 6l12 12"/>',
 pin:'<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
 cal:'<rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/>',
@@ -645,9 +683,82 @@ const ROLODEX=[
  {n:'Darnell Brooks',ini:'DB',type:'Politician',what:'Mayor, Columbus',where:'Columbus, OH',topic:'City budget, public safety',rel:'Cold',last:'Apr 2, 2026',poc:'Jasmine Kim',pocRole:'Volunteer coordinator'},
  {n:'Susan Okafor',ini:'SO',type:'Politician',what:'Franklin County Commissioner',where:'Columbus, OH',topic:'County services',rel:'Warm',last:'Sep 18, 2026',poc:'Omar Bashir',pocRole:'Data and turf lead'},
 ];
+const TEAMS={
+ dev:{n:'Dev Team',sub:'Development & Technology',icon:'code',c:'var(--blue)',d:'Handles programming and development for projects including websites, bots, and Digital Ground Game infrastructure.',projects:['Hub prototype','Discord bots','Website'],
+  members:[['SO','Sam Ortega','Team lead'],['NB','Nia Brooks','Front end'],['KW','Kai Wen','Bots and automation'],['RG','Rosa Guerrero','Data engineering']]},
+ research:{n:'Research Team',sub:'Policy & Analysis',icon:'search',c:'#13824A',d:'Conducts research on key issues, maintains talking point resources, and provides evidence-based analysis for political initiatives and electoral efforts.',projects:['Talking points','Bill analysis','Election Model'],
+  members:[['PD','Priya Desai','Team lead'],['DP','Dev Patel','Fact-checking'],['EH','Ella Hart','Election data'],['MJ','Marcus Johnson','Policy writer']]},
+ media:{n:'Media Team',sub:'Social Media & Messaging',icon:'mega',c:'var(--red)',d:'Produces content that informs and mobilizes voters while coordinating with creators who support liberal and Democratic messaging.',projects:['Final weekend push','Creator outreach','Event coverage'],
+  members:[['LP','Lauren Pike','Team lead'],['BA','Bea Alvarez','Video editor'],['CT','Chris Tan','Graphics'],['ZM','Zoe Mendez','Creator partnerships']]},
+ events:{n:'Events Team',sub:'Events & Community',icon:'cal',c:'#C99A00',d:'Organizes social events, civics workshops, and organizing events while helping regional squads with event logistics.',projects:['Final weekend canvass','Workshops','Election night watch party'],
+  members:[['JK','Jasmine Kim','Team lead'],['TR','Tyler Reed','Canvass logistics'],['AF','Ari Feld','Venues'],['GS','Grace Song','Volunteer shifts']]},
+ welcome:{n:'Welcome Team',sub:'Community Onboarding',icon:'door',c:'var(--black)',d:'Helps new members navigate the server, connect with teams, and find ways to get involved with Digital Ground Game.',projects:['New member calls','Server guide','Team matching'],
+  members:[['HO','Hannah Ortiz','Team lead'],['WB','Will Bauer','Discord moderator'],['YN','Yara Nasser','Buddy program'],['LC','Leo Cruz','Onboarding docs']]},
+};
+const TEAM_ORDER=['dev','research','media','events','welcome'];
+let TID=100;
+const TASKS=[
+ ['dev','Wire "Open full app" buttons to the live tracker URLs','Hub prototype','In progress','SO','Oct 28'],
+ ['dev','Add sign-in with Discord','Hub prototype','To do',null,'Nov 6'],
+ ['dev','Fix role sync bug in the welcome bot','Discord bots','In progress','KW','Oct 27'],
+ ['dev','Move the website to the new host','Website','To do','RG','Nov 15'],
+ ['dev','Write setup docs for new developers','Website','Done','NB','Oct 20'],
+ ['research','Update early voting talking points for Ohio','Talking points','In progress','MJ','Oct 27'],
+ ['research','Summarize HB 301 drop box restrictions','Bill analysis','To do',null,'Oct 28'],
+ ['research','Fact-check this week\'s top 10 viral claims','Talking points','In progress','DP','Oct 26'],
+ ['research','Load early vote returns into the Election Model','Election Model','To do','EH','Oct 29'],
+ ['research','Brief on Ohio redistricting oral argument','Bill analysis','Done','PD','Oct 21'],
+ ['media','Edit recap video from the Goodale Park canvass','Event coverage','In progress','BA','Oct 27'],
+ ['media','Design "Make a plan to vote" carousel','Final weekend push','To do',null,'Oct 28'],
+ ['media','Send talking points to 12 partner creators','Creator outreach','In progress','ZM','Oct 29'],
+ ['media','Schedule final weekend posts','Final weekend push','To do','LP','Oct 30'],
+ ['media','Photo album from the Dayton phone bank','Event coverage','Done','CT','Oct 19'],
+ ['events','Confirm Goodale Park shelter house for Oct 31','Final weekend canvass','In progress','AF','Oct 26'],
+ ['events','Build volunteer shift sign-up for election day','Final weekend canvass','To do',null,'Oct 30'],
+ ['events','Book venue for election night watch party','Election night watch party','To do','JK','Oct 28'],
+ ['events','Set up Zoom and slides for public comment workshop','Workshops','In progress','GS','Nov 3'],
+ ['events','Order clipboards and walk list printing','Final weekend canvass','Done','TR','Oct 22'],
+ ['welcome','Host Tuesday new member call','New member calls','In progress','HO','Oct 27'],
+ ['welcome','Update the server guide for the new hub','Server guide','To do',null,'Nov 1'],
+ ['welcome','Pair 14 new members with buddies','Team matching','In progress','YN','Oct 28'],
+ ['welcome','Clean up stale channels in Discord','Server guide','To do','WB','Nov 4'],
+ ['welcome','Write FAQ for the team matching quiz','Team matching','Done','LC','Oct 23'],
+].map(([team,t,project,status,who,due])=>({id:TID++,team,t,project,status,who,due}));
+const TEAMQUIZ=[
+ ['Which of these sounds like the most fun way to spend a Saturday helping out?',[
+  ['Building a tool or fixing something that\'s broken',{dev:3}],
+  ['Digging into a bill and writing up what it really does',{research:3}],
+  ['Making a video or graphic people will share',{media:3}],
+  ['Planning a meetup and making sure it runs smoothly',{events:3}],
+  ['Meeting new people and helping them find their place',{welcome:3}]]],
+ ['What would friends say you\'re best at?',[
+  ['Figuring out how technology works',{dev:3,research:1}],
+  ['Getting the facts right',{research:3,dev:1}],
+  ['Telling a story that grabs attention',{media:3,events:1}],
+  ['Keeping everyone organized',{events:3,welcome:1}],
+  ['Making people feel welcome',{welcome:3,events:1}]]],
+ ['Which tools are you most comfortable with?',[
+  ['Code editors, GitHub, or the command line',{dev:3}],
+  ['Spreadsheets, databases, and research tools',{research:3,dev:1}],
+  ['Canva, CapCut, Premiere, or social media apps',{media:3}],
+  ['Calendars, sign-up forms, and event platforms',{events:3}],
+  ['Discord, Slack, and group chats',{welcome:3,media:1}]]],
+ ['A friend texts you for help. Which message are you most excited to answer?',[
+  ['"My website is broken, can you look?"',{dev:3}],
+  ['"Is this viral claim actually true?"',{research:3}],
+  ['"Can you help me post about this?"',{media:3}],
+  ['"Help me throw a fundraiser this weekend."',{events:3}],
+  ['"I just joined and I\'m kind of lost."',{welcome:3}]]],
+ ['Where do you do your best work?',[
+  ['Heads-down on my laptop, solving problems',{dev:2,research:2}],
+  ['Reading, writing, and taking notes',{research:2,media:1}],
+  ['Online, creating and posting',{media:2}],
+  ['Out in the community, in person',{events:2,welcome:1}],
+  ['One-on-one conversations with people',{welcome:2,events:1}]]],
+];
 /* ---------- state ---------- */
-const S={openDrops:{},rxF:'all',rxQ:'',wsF:'all',race:'oh7',turnout:0,swing:0,game:null,qi:0,qScore:0,qPick:null,tl:null,tlChecked:false,hasChapter:true,leadSent:false,tier:'citizen',mode:'signin',pickTier:'citizen',view:'home',param:null,donate:true,amt:10,repLvl:'federal',billF:'all',billQ:'',ver:2,wikiQ:'',eoF:'all',exTab:'orders',mediaF:'all'};
-try{const t=localStorage.getItem('dgg-tier');if(t)S.pickTier=t}catch(e){}
+const S={openDrops:{},quizCtx:'auth',joinMin:false,freq:'once',authStep:'form',tq:0,tans:[],team:null,teamPick:null,taskF:'all',newTask:false,rxF:'all',rxQ:'',wsF:'all',race:'oh7',turnout:0,swing:0,game:null,qi:0,qScore:0,qPick:null,tl:null,tlChecked:false,hasChapter:true,leadSent:false,tier:'citizen',mode:'signin',pickTier:'citizen',view:'home',param:null,donate:true,amt:10,repLvl:'federal',billF:'all',billQ:'',ver:2,wikiQ:'',eoF:'all',exTab:'orders',mediaF:'all'};
+try{const t=localStorage.getItem('dgg-tier');if(t)S.pickTier=t==='citizen'?'citizen':'member'}catch(e){}
 
 const $=s=>document.querySelector(s);
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600)}
@@ -661,6 +772,41 @@ function bindTheme(){document.querySelectorAll('[data-theme-toggle]').forEach(b=
 try{const t=localStorage.getItem('dgg-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}
 
 /* ---------- auth ---------- */
+function teamScores(){const sc=Object.fromEntries(TEAM_ORDER.map(k=>[k,0]));S.tans.forEach((a,i)=>{if(a==null)return;const w=TEAMQUIZ[i][1][a][1];for(const k in w)sc[k]+=w[k]});return sc}
+function startJoin(){S.quizCtx='app';S.authStep='quiz';S.tq=0;S.tans=[];S.teamPick=null;go('join')}
+function enterApp(msg){$('#auth').hidden=true;$('#app').hidden=false;S.authStep='form';S.view='home';renderApp();toast(msg)}
+function renderQuizStep(){
+ const app=S.quizCtx==='app',card=app?$('#joinbox'):document.querySelector('#auth .auth-card');if(!card)return;
+ if(S.authStep==='quiz'){
+  const [q,opts]=TEAMQUIZ[S.tq],pick=S.tans[S.tq];
+  card.innerHTML=`<div class="tagline" style="margin-bottom:6px"><span class="label">${app?'Join a team':'Step 2 of 2 · Find your team'}</span><div class="slogan" style="font-size:clamp(40px,5vw,60px)">Where do <span class="r">you</span> fit?</div><p>Five quick questions to match you with a Digital Ground Game team. You can always switch later.</p></div>
+   <div class="qprog">${TEAMQUIZ.map((_,i)=>`<i class="${i<=S.tq?'on':''}"></i>`).join('')}</div>
+   <div class="tq-head"><span class="label">Question ${S.tq+1} of ${TEAMQUIZ.length}</span><button type="button" class="crumb" id="tqskip" style="margin:0">${app?'Not now':'Skip for now'}</button></div>
+   <div class="tq-q">${q}</div>
+   <div style="display:flex;flex-direction:column;gap:8px">${opts.map(([l],i)=>`<button type="button" class="opt" data-tqa="${i}" aria-pressed="${pick===i}" style="${pick===i?'border-color:var(--blue);background:var(--blueSoft)':''}">${l}</button>`).join('')}</div>
+   <div style="display:flex;justify-content:space-between;gap:10px">${S.tq>0?`<button type="button" class="btn ghost" id="tqback">${ic('back')}Back</button>`:'<span></span>'}<button type="button" class="btn primary" id="tqnext" ${pick==null?'disabled style="opacity:.5;cursor:not-allowed"':''}>${S.tq===TEAMQUIZ.length-1?'See my team':'Next'}</button></div>`;
+ } else {
+  const sc=teamScores(),max=Math.max(1,...Object.values(sc)),best=TEAM_ORDER.slice().sort((a,b)=>sc[b]-sc[a])[0];
+  if(!S.teamPick)S.teamPick=best;const T=TEAMS[S.teamPick];
+  card.innerHTML=`<div class="tagline" style="margin-bottom:6px"><span class="label">Your match</span><div class="slogan" style="font-size:clamp(40px,5vw,60px)">Welcome to the <span class="r">${TEAMS[best].n.replace(' Team','')}</span> team</div></div>
+   <div class="teamhero" style="--team:${T.c}"><div class="teamicon">${ic(T.icon)}</div><div><h2>${T.n}</h2><div class="tsub">${T.sub}</div><p>${T.d}</p></div></div>
+   <div class="panel panel-b" style="display:flex;flex-direction:column;gap:8px"><span class="label">How you matched</span>${TEAM_ORDER.map(k=>`<div class="teamscore"><span>${TEAMS[k].n}</span><span class="bar"><i style="width:${sc[k]/max*100}%;background:${TEAMS[k].c}"></i></span><span class="mono tab-nums" style="text-align:right">${sc[k]}</span></div>`).join('')}</div>
+   <div class="field"><span class="label">Rather join a different team?</span><div class="otherteams">${TEAM_ORDER.map(k=>`<button type="button" data-tpick="${k}" aria-pressed="${S.teamPick===k}">${ic(TEAMS[k].icon)}${TEAMS[k].n}</button>`).join('')}</div></div>
+   <button type="button" class="btn primary block" id="tjoin">Join the ${T.n}${app?'':' and continue'}</button>
+   <button type="button" class="crumb" id="tretake" style="align-self:center">Retake the quiz</button>`;
+ }
+ bindQuiz();
+}
+function bindQuiz(){
+ const a=S.quizCtx==='app'?$('#content'):document.querySelector('#auth');
+ a.querySelectorAll('[data-tqa]').forEach(b=>b.onclick=()=>{S.tans[S.tq]=+b.dataset.tqa;renderQuizStep()});
+ const n=$('#tqnext');if(n)n.onclick=()=>{if(S.tans[S.tq]==null)return;if(S.tq<TEAMQUIZ.length-1)S.tq++;else{S.authStep='result';S.teamPick=null}renderQuizStep()};
+ const bk=$('#tqback');if(bk)bk.onclick=()=>{S.tq--;renderQuizStep()};
+ const sk=$('#tqskip');if(sk)sk.onclick=()=>{if(S.quizCtx==='app'){S.authStep='form';go('home');return}S.team='welcome';enterApp('Account created. The Welcome Team will help you find a fit.')};
+ a.querySelectorAll('[data-tpick]').forEach(b=>b.onclick=()=>{S.teamPick=b.dataset.tpick;renderQuizStep()});
+ const j=$('#tjoin');if(j)j.onclick=()=>{S.team=S.teamPick;if(S.quizCtx==='app'){S.tier='member';S.authStep='form';go('team');toast(`You joined the ${TEAMS[S.team].n}. The Democracy Lab is unlocked.`);return}enterApp(`Account created. Welcome to the ${TEAMS[S.team].n}, ${USER.first}.`)};
+ const r=$('#tretake');if(r)r.onclick=()=>{S.authStep='quiz';S.tq=0;S.tans=[];S.teamPick=null;renderQuizStep()};
+}
 function renderAuth(){
  const su=S.mode==='signup';
  $('#auth').innerHTML=themeBtn('auththeme')+`
@@ -668,7 +814,7 @@ function renderAuth(){
   <form class="auth-card" id="authform" novalidate>
    <div class="tagline">
    <div class="slogan"><span class="r">Vote</span> loud,<br><span class="r">Lead</span> louder</div>
-   <p>Your government in one place: registration, representatives, bills, and ballots. Plus the tools our organizers use to win.</p>
+   <p>Your government in one place: registration, representatives, bills, and ballots. Plus the tools our teams use to win.</p>
    </div>
    <div class="seg" role="group" aria-label="Sign in or create account">
     <button type="button" data-mode="signin" aria-pressed="${!su}">Sign in</button>
@@ -676,14 +822,15 @@ function renderAuth(){
    </div>
    <div class="label">Account type</div>
    <div class="tiers">
-    <button type="button" class="tier" data-tier="citizen" aria-pressed="${S.pickTier==='citizen'}"><b>Citizen</b><span class="price">Free · donor supported</span><small>Registration, representatives, bills, ballots, and your voting history.</small></button>
-    <button type="button" class="tier" data-tier="organizer" aria-pressed="${S.pickTier==='organizer'}"><b>Organizer</b><span class="price">$12 / month</span><small>Everything in Citizen plus the Democracy Lab: The Blue Book, four trackers, the Election Model, and the Rolodex. The Blue Book and Workshops are free to try.</small></button>
+    <button type="button" class="tier" data-tier="citizen" aria-pressed="${S.pickTier==='citizen'}"><b>Citizen</b><span class="price">Free</span><small>Registration, representatives, bills, ballots, media, and civics games. Preview The Blue Book and Workshops.</small></button>
+    <button type="button" class="tier" data-tier="member" aria-pressed="${S.pickTier==='member'}"><b>Team Member</b><span class="price">Free · join a team</span><small>Everything in Citizen plus the full Democracy Lab. A five-question quiz places you on a DGG team.</small></button>
    </div>
    ${su?`<div class="field"><label class="label" for="f-name">Full name</label><input id="f-name" value="Jordan Ellis"></div>
    <div class="field"><label class="label" for="f-zip">Home ZIP code</label><input id="f-zip" value="43201" inputmode="numeric"></div>`:''}
    <div class="field"><label class="label" for="f-email">Email</label><input id="f-email" type="email" value="jordan.ellis@example.org"></div>
    <div class="field"><label class="label" for="f-pw">Password</label><input id="f-pw" type="password" value="demo-password"></div>
-   <button class="btn primary block" type="submit">${su?'Create account':'Sign in'} as ${S.pickTier==='citizen'?'Citizen':'Organizer'}</button>
+   <button class="btn primary block" type="submit">${su?(S.pickTier==='member'?'Next: find your team':'Create account'):'Sign in'} as ${S.pickTier==='citizen'?'Citizen':'Team Member'}</button>
+   ${su&&S.pickTier==='member'?'<p class="demo-note">Step 1 of 2. Next, a five-question quiz matches you with a DGG team.</p>':''}
    <p class="demo-note">Prototype: any email and password work. Every name, bill, and figure inside is sample data.</p>
   </form>
  </section>`;
@@ -691,20 +838,23 @@ function renderAuth(){
  $('#auth').querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;renderAuth()});
  $('#auth').querySelectorAll('[data-tier]').forEach(b=>b.onclick=()=>{S.pickTier=b.dataset.tier;renderAuth()});
  $('#authform').onsubmit=e=>{e.preventDefault();S.tier=S.pickTier;try{localStorage.setItem('dgg-tier',S.tier)}catch(x){}
-  $('#auth').hidden=true;$('#app').hidden=false;S.view='home';renderApp();toast(S.mode==='signup'?'Account created. Welcome, Jordan.':'Signed in as '+(S.tier==='citizen'?'Citizen':'Organizer'));};
+  if(S.mode==='signup'&&S.tier==='member'){S.quizCtx='auth';S.authStep='quiz';S.tq=0;S.tans=[];S.teamPick=null;renderQuizStep();window.scrollTo(0,0);return}
+  if(S.tier==='member'&&!S.team)S.team='media';if(S.tier==='citizen')S.team=null;
+  enterApp(S.mode==='signup'?'Account created. Welcome, '+USER.first+'.':'Signed in as '+(S.tier==='citizen'?'Citizen':'Team Member'));};
+ if(S.authStep!=='form')renderQuizStep();
 }
 
 /* ---------- shell ---------- */
 const NAV=[
- ['Digital Hub',[['home','Dashboard','home'],{drop:'Your Government',icon:'scale',items:[['register','Voter registration','badge'],['ballot','My ballot','ballot'],['reps','Representatives','users'],['bills','Bills & laws','doc'],['history','Voting history','history']]},['media','Media','play'],['games','Know Your Stuff','star'],['chapter','Local Chapter','pin']]],
+ ['Digital Hub',[['home','Dashboard','home'],['team','My Team','users'],{drop:'Your Government',icon:'scale',items:[['register','Voter registration','badge'],['ballot','My ballot','ballot'],['reps','Representatives','users'],['bills','Bills & laws','doc'],['history','Voting history','history']]},['media','Media','play'],['games','Know Your Stuff','star'],['chapter','Local Chapter','pin']]],
  ['Democracy Lab',[['wiki','The Blue Book','book'],['workshops','Workshops','cap'],{drop:'Trackers',icon:'track',items:[['leg','LegisTracker','track'],['courts','Court Tracker','scale'],['agenda','Agenda Tracker','check'],['exec','ExecuTracker','pen']]},['model','Election Model','chart'],['rolodex','Rolodex','phone']]],
- ['Account',[['plans','Plans & giving','heart']]],
+ ['Account',[['donate','Donate','heart']]],
 ];
 const ORG=['leg','courts','agenda','exec','model','rolodex'];
 const FREE_SAMPLE=['wiki','workshops'];
 const parentOf={rep:'reps',bill:'bills',article:'wiki'};
 
-const navBtn=([v,l,i],cur,sub)=>`<button class="navbtn${sub?' sub':''}" data-go="${v}" ${cur===v?'aria-current="page"':''}>${ic(i)}${l}${ORG.includes(v)&&S.tier==='citizen'?ic('lock','lk'):''}${FREE_SAMPLE.includes(v)&&S.tier==='citizen'?'<span class="freetag">Free</span>':''}</button>`;
+const navBtn=([v,l,i],cur,sub)=>v==='team'&&S.tier!=='member'?'':`<button class="navbtn${sub?' sub':''}" data-go="${v}" ${cur===v?'aria-current="page"':''}>${ic(i)}${l}${ORG.includes(v)&&S.tier==='citizen'?ic('lock','lk'):''}${FREE_SAMPLE.includes(v)&&S.tier==='citizen'?'<span class="freetag">Open</span>':''}</button>`;
 function navDrop(d,cur){
  const id=d.drop.toLowerCase().replace(/\W+/g,'-'),inside=d.items.some(([v])=>v===cur),open=S.openDrops[id]??inside;
  return `<button class="navbtn navdrop${inside&&!open?' has-cur':''}" data-drop="${id}" aria-expanded="${open}" aria-controls="drop-${id}">${ic(d.icon)}${d.drop}${ic('back','chev')}</button>
@@ -715,31 +865,42 @@ function renderApp(){
  $('#app').innerHTML=`
  <aside class="side" id="side">
   <div class="side-head patwrap tilebg dark"><img class="side-logo" src="logo-white.png" alt="Digital Ground Game"><div class="label" style="color:#9a9ca6;margin-top:18px">Ground Game Hub</div></div>
-  <nav aria-label="Main">${NAV.map(([g,items])=>`<div class="navgroup">${g}${g==='Democracy Lab'?'<span class="pro">PRO</span>':''}</div>`+items.map(it=>it.drop?navDrop(it,cur):navBtn(it,cur)).join('')).join('')}</nav>
-  <div class="side-foot"><div class="avatar">${USER.initials}</div><div class="who"><b>${USER.name}</b><span>${S.tier==='citizen'?'Citizen · Free':'Organizer · Pro'}</span></div><button class="iconbtn" id="signout" aria-label="Sign out" title="Sign out">${ic('logout')}</button></div>
+  <nav aria-label="Main">${NAV.map(([g,items])=>`<div class="navgroup">${g}${g==='Democracy Lab'?'<span class="pro">TEAM</span>':''}</div>`+items.map(it=>it.drop?navDrop(it,cur):navBtn(it,cur)).join('')).join('')}</nav>
+  <div class="side-foot"><div class="avatar">${USER.initials}</div><div class="who"><b>${USER.name}</b><span>${S.tier==='member'&&S.team?TEAMS[S.team].n:'Citizen'}</span></div><button class="iconbtn" id="signout" aria-label="Sign out" title="Sign out">${ic('logout')}</button></div>
  </aside>
  <div class="scrim" id="scrim"></div>
  <div class="main">
   <header class="topbar">
    <button class="iconbtn menubtn" id="menubtn" aria-label="Open menu">${ic('menu')}</button>
    <label class="search">${ic('search')}<input id="gsearch" placeholder="Search bills, officials, cases…" aria-label="Search"></label>
-   <div class="viewas"><span>Preview as</span><div class="seg" role="group" aria-label="Preview tier"><button data-tierswap="citizen" aria-pressed="${S.tier==='citizen'}">Citizen</button><button data-tierswap="organizer" aria-pressed="${S.tier==='organizer'}">Organizer</button></div></div>
+   <div class="viewas"><span>Preview as</span><div class="seg" role="group" aria-label="Preview tier"><button data-tierswap="citizen" aria-pressed="${S.tier==='citizen'}">Citizen</button><button data-tierswap="member" aria-pressed="${S.tier==='member'}">Team Member</button></div></div>
    ${themeBtn()}
   </header>
   <main class="content" id="content">${VIEWS[S.view]()}</main>
- </div>`;
+ </div>
+ <div id="joinfab"></div>`;
+ renderJoinFab(true);
  bind();
  window.scrollTo(0,0);
+}
+function renderJoinFab(skipBind){
+ const el=$('#joinfab');if(!el)return;
+ if(S.tier==='member'||S.view==='join'){el.innerHTML='';return}
+ el.innerHTML=S.joinMin?`<button class="joinpill" id="joinmin" aria-label="Show join a team prompt">${ic('users')}Join a team</button>`
+ :`<div class="joinfab"><button class="iconbtn close" id="joinmin" aria-label="Minimize">${ic('x')}</button><span class="pro" style="align-self:flex-start">Democracy Lab</span><b>Join a DGG team</b><span>Unlock the Trackers, Election Model, and Rolodex, and work on real projects with other members. It's free.</span><button class="btn primary sm" data-join>Find my team · 2 min</button></div>`;
+ if(!skipBind){el.querySelectorAll('[data-join]').forEach(b=>b.onclick=startJoin);const jm=$('#joinmin');if(jm)jm.onclick=()=>{S.joinMin=!S.joinMin;renderJoinFab()}}
 }
 function go(v,p=null){for(const k in S.openDrops){const el=document.getElementById('drop-'+k);if(el&&el.querySelector(`[data-go="${v}"]`))delete S.openDrops[k]}if(v!==S.view&&v==='games')S.game=null;S.view=v;S.param=p;renderApp()}
 function bind(){
  const app=$('#app');
  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go,b.dataset.p||null));
- app.querySelectorAll('[data-tierswap]').forEach(b=>b.onclick=()=>{S.tier=b.dataset.tierswap;renderApp();toast('Previewing the '+(S.tier==='citizen'?'Citizen':'Organizer')+' experience')});
+ app.querySelectorAll('[data-tierswap]').forEach(b=>b.onclick=()=>{S.tier=b.dataset.tierswap;if(S.tier==='member'&&!S.team)S.team='media';if(S.tier==='citizen'&&S.view==='team')S.view='home';renderApp();toast('Previewing the '+(S.tier==='citizen'?'Citizen':'Team Member')+' experience')});
  bindTheme();
  app.querySelectorAll('[data-drop]').forEach(gt=>gt.onclick=()=>{const id=gt.dataset.drop,o=gt.getAttribute('aria-expanded')==='true';S.openDrops[id]=!o;gt.setAttribute('aria-expanded',String(!o));$('#drop-'+id).hidden=o;gt.classList.toggle('has-cur',o&&!!document.querySelector('#drop-'+id+' [aria-current]'))});
  app.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>toast(b.dataset.toast));
- $('#signout').onclick=()=>{$('#app').hidden=true;$('#auth').hidden=false;S.mode='signin';renderAuth()};
+ $('#signout').onclick=()=>{$('#app').hidden=true;$('#auth').hidden=false;S.mode='signin';S.authStep='form';renderAuth()};
+ app.querySelectorAll('[data-join]').forEach(b=>b.onclick=startJoin);
+ const jm=$('#joinmin');if(jm)jm.onclick=()=>{S.joinMin=!S.joinMin;renderJoinFab()};
  const side=$('#side'),scrim=$('#scrim');
  $('#menubtn').onclick=()=>{side.classList.add('open');scrim.classList.add('open')};
  scrim.onclick=()=>{side.classList.remove('open');scrim.classList.remove('open')};
@@ -753,22 +914,22 @@ const crumb=(v,l)=>`<button class="crumb" data-go="${v}">${ic('back')}${l}</butt
 const party=p=>`<span class="party ${p}" title="${{D:'Democrat',R:'Republican',I:'Independent',N:'Nonpartisan'}[p]}">${p==='N'?'NP':p}</span>`;
 const pipe=s=>`<div class="pipe" aria-label="${STAGES[s]}">${STAGES.map((_,i)=>`<i class="${i<=s?'on':''}"></i>`).join('')}</div>`;
 const modbar=(name,host)=>`<div class="modbar"><span class="dot"></span><b class="label" style="color:#fff">Connected module</b><span>${name}</span><code>${host}</code><button class="btn sm" data-toast="Would open the full ${name} app in a new tab">${ic('ext')}Open full app</button></div>`;
-const sampleBar=n=>S.tier==='organizer'?'':`<div class="samplebar"><span class="pro">Free sample</span><span class="msg"><b>${n} is free to try.</b> It's a sample of the Democracy Lab. Upgrade to unlock four trackers, the Election Model, and the Rolodex.</span><button class="btn primary" id="upgrade">Upgrade · $12/mo</button></div>`;
+const sampleBar=n=>S.tier==='member'?'':`<div class="samplebar"><span class="pro">Open preview</span><span class="msg"><b>${n} is open to everyone.</b> Join a team to unlock the rest of the Democracy Lab: four trackers, the Election Model, and the Rolodex.</span><button class="btn primary" data-join>Join a team</button></div>`;
 function gate(view,title,inner){
- if(S.tier==='organizer')return inner;
+ if(S.tier==='member')return inner;
  return `<div class="locked"><div class="ghost" aria-hidden="true">${inner}</div><div class="lockcard"><div>
-  <span class="chip yel">${ic('star')}Democracy Lab</span><h2>${title} is part of the Democracy Lab</h2>
-  <p>Organizer accounts fund our in-house tools and unlock the Trackers, the Election Model, and the Rolodex. The Blue Book and Workshops are free to try.</p>
-  <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="upgrade">Upgrade · $12/mo</button><button class="btn ghost" data-go="plans">Compare plans</button></div></div></div></div>`;
+  <span class="chip yel">${ic('users')}Democracy Lab</span><h2>${title} is for team members</h2>
+  <p>Join a DGG team to unlock the Trackers, the Election Model, and the Rolodex. It's free, and a five-question quiz finds where you fit.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" data-join>Join a team</button><button class="btn ghost" data-go="wiki">Preview The Blue Book</button></div></div></div></div>`;
 }
 
 /* ---------- views ---------- */
 const VIEWS={
 home(){
- const d=daysLeft(),org=S.tier==='organizer';
+ const d=daysLeft(),org=S.tier==='member';
  return `
  ${head('Good evening, '+USER.first,`${USER.precinct} · ${USER.county}, Ohio`,'<span class="sample">Sample data</span>')}
- ${!org&&S.donate?`<div class="donate"><button class="iconbtn close" id="hidedonate" aria-label="Dismiss">${ic('x')}</button><div class="msg"><b>Keep this hub free for every voter.</b> No ads, no paywall. If you can, chip in.</div>
+ ${S.donate?`<div class="donate"><button class="iconbtn close" id="hidedonate" aria-label="Dismiss">${ic('x')}</button><div class="msg"><b>Keep this hub free for every voter.</b> No ads, no paywall. If you can, chip in.</div>
   <div class="give">${[3,10,25].map(a=>`<button class="amt" data-amt="${a}" aria-pressed="${S.amt===a}">$${a}</button>`).join('')}<button class="btn red" id="give">${ic('heart')}Give $${S.amt}</button></div></div>`:''}
  <section class="cta"><div class="cta-h"><h2>Get in the <span>ground game</span></h2><button class="btn sm" data-toast="Would open the full events map for your area">All events near you</button></div>
   <div class="events">${EVENTS.map(e=>`<div class="event"><div class="edate"><small>${e.m}</small><b class="tab-nums">${e.d}</b></div><div class="info"><span class="chip ${e.cls}" style="align-self:flex-start">${e.type}</span><b>${e.t}</b><span class="d">${e.when} · ${e.where}</span><span class="d">${e.going} signed up</span><button class="btn sm ${e.cls==='red'?'red':'primary'}" data-toast="You're signed up for ${e.t}. Details are on the way.">Sign up</button></div></div>`).join('')}</div>
@@ -790,14 +951,14 @@ home(){
    <button class="row" data-go="bill" data-p="s904"><span class="ic">${ic('doc')}</span><span><span class="t">S. 904 scheduled for markup</span><br><span class="d">Voter Registration Modernization Act</span></span><span class="chip">Oct 17</span></button>
    <button class="row" data-go="rep" data-p="r6"><span class="ic yel">${ic('users')}</span><span><span class="t">State Rep. Haines held a town hall</span><br><span class="d">Ohio House District 7 · transcript posted</span></span><span class="chip">Oct 16</span></button>
   </div></section>
-  ${org?`<section class="panel"><div class="panel-h"><h2>Organizer briefing</h2><span class="pro">PRO</span></div><div class="rows">
+  ${org?`<section class="panel"><div class="panel-h"><h2>Team briefing</h2><span class="chip blue">${S.team?TEAMS[S.team].n:''}</span></div><div class="rows">
    <button class="row" data-go="leg"><span class="ic red">${ic('bell')}</span><span><span class="t">HB 301 hearing on Oct 28</span><br><span class="d">High priority · ballot drop box restrictions</span></span><span class="chip red">Alert</span></button>
    <button class="row" data-go="courts"><span class="ic">${ic('gavel')}</span><span><span class="t">TRO granted on early voting hours</span><br><span class="d">S.D. Ohio · next hearing Oct 29</span></span><span class="chip green">Win</span></button>
    <button class="row" data-go="exec"><span class="ic yel">${ic('pen')}</span><span><span class="t">New order on election equipment</span><br><span class="d">ExecuTracker · 2 lawsuits filed so far</span></span><span class="chip yel">Order</span></button>
   </div></section>`:`<section class="panel"><div class="panel-h"><h2>Your next steps</h2></div><div class="rows">
    <button class="row" data-go="ballot"><span class="ic">${ic('ballot')}</span><span><span class="t">Review your sample ballot</span><br><span class="d">6 races and 2 issues on your ballot</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
    <button class="row" data-toast="Early voting plan saved to your calendar"><span class="ic">${ic('cal')}</span><span><span class="t">Make a voting plan</span><br><span class="d">Pick a day, time, and how you'll get there</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
-   <button class="row" data-go="plans"><span class="ic red">${ic('star')}</span><span><span class="t">Organizing in your community?</span><br><span class="d">See what the Democracy Lab adds</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
+   <button class="row" data-join><span class="ic red">${ic('users')}</span><span><span class="t">Join a DGG team</span><br><span class="d">Find your fit and unlock the Democracy Lab</span></span>${ic('back','').replace('<svg','<svg style="width:16px;transform:rotate(180deg)"')}</button>
   </div></section>`}
  </div>`;
 },
@@ -1163,29 +1324,71 @@ rolodex(){
  </tbody></table></div></section>
  <p class="demo-note" style="max-width:72ch">Direct contact details stay with each point of contact. Members request an introduction through them so every relationship has one owner.</p>`)}`;
 },
-plans(){
- const org=S.tier==='organizer';
- const li=a=>a.map(x=>`<li>${ic('check')}${x}</li>`).join('');
- return `${head('Plans & giving','Public information stays free for everyone. Organizer subscriptions fund the tools our teams build.')}
- <div class="plans">
-  <section class="plan ${org?'':'feat'}"><span class="label">${org?'':'Your plan'}</span><h2>Citizen</h2><div class="pr">Free <small>· supported by donations</small></div>
-   <ul>${li(['Voter registration status and alerts','All your federal, state, and local officials','Federal and state bills with version history','Sample ballots and issue explainers','Your personal voting history'])}</ul>
-   <div style="display:flex;flex-direction:column;gap:10px"><span class="label">Chip in once or monthly</span><div class="amts">${[3,10,25,50].map(a=>`<button class="amt" data-amt="${a}" aria-pressed="${S.amt===a}">$${a}</button>`).join('')}</div><button class="btn red" id="give">${ic('heart')}Donate $${S.amt}</button></div>
-  </section>
-  <section class="plan ${org?'feat':''}"><span class="label">${org?'Your plan':'For organizers'}</span><h2>Organizer</h2><div class="pr">$12 <small>/ month · or $120 / year</small></div>
-   <ul>${li(['Everything in Citizen','The Blue Book editing rights','LegisTracker team watchlists','Court Tracker docket alerts','Agenda Tracker progress reports','ExecuTracker orders and appointments','Election Model forecasts and scenarios','Rolodex of creators and officials','The Blue Book and Workshops (free to try)','Chapter seats available for teams of 5+'])}</ul>
-   ${org?'<button class="btn" data-toast="Would open billing management">Manage subscription</button>':'<button class="btn primary" id="upgrade">Upgrade to Organizer</button>'}
-  </section>
+team(){
+ if(S.tier!=='member'){S.view='home';return VIEWS.home()}
+ if(!S.team)S.team='media';
+ const T=TEAMS[S.team],me=['JE',USER.name,'Member · joined Oct 25'],mem=[me,...T.members],who=Object.fromEntries(mem.map(m=>[m[0],m]));
+ const all=TASKS.filter(t=>t.team===S.team);
+ const list=all.filter(t=>S.taskF==='all'||(S.taskF==='mine'?t.who==='JE':S.taskF==='open'?!t.who:true)).sort((a,b)=>(a.status==='Done')-(b.status==='Done'));
+ const cnt=f=>all.filter(f).length;
+ const opts=(sel)=>`<option value="">Unassigned</option>${mem.map(m=>`<option value="${m[0]}" ${sel===m[0]?'selected':''}>${m[0]==='JE'?'Me ('+m[1]+')':m[1]}</option>`).join('')}`;
+ return `${head('My Team','Your team, its members, and the projects you are working on together.',`<label class="viewas" style="gap:8px"><span>Preview team</span><select id="teamswitch" style="border:2px solid var(--line);background:var(--surface);padding:6px 8px;border-radius:2px">${TEAM_ORDER.map(k=>`<option value="${k}" ${k===S.team?'selected':''}>${TEAMS[k].n}</option>`).join('')}</select></label>`)}
+ <div class="grid g3">
+  <section class="teamhero span2" style="--team:${T.c}"><div class="teamicon">${ic(T.icon)}</div><div><h2>${T.n}</h2><div class="tsub">${T.sub}</div><p>${T.d}</p>
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><span class="chip blue">You: Member</span><span class="chip">Lead: ${T.members[0][1]}</span><span class="chip">${mem.length} members</span></div></div></section>
+  <section class="panel"><div class="panel-h"><h2>Members</h2></div><div class="rows">${mem.map(([i,n,r])=>`<div class="row" style="grid-template-columns:auto 1fr;padding:9px 18px"><div class="avatar av-sm" style="background:${i==='JE'?'var(--red)':T.c}">${i}</div><span><span class="t" style="font-size:15px">${i==='JE'?n+' (you)':n}</span><br><span class="d">${r}</span></span></div>`).join('')}</div></section>
  </div>
- <p class="demo-note" style="max-width:70ch">Payments in this prototype are simulated. In production, donations and subscriptions would run through a payment processor and appear on statements as Digital Ground Game.</p>`;
+ <div class="grid g4">
+  <div class="panel stat"><span class="label">Open tasks</span><span class="v tab-nums">${cnt(t=>t.status!=='Done')}</span><span class="s">Across ${T.projects.length} projects</span></div>
+  <div class="panel stat"><span class="label">Assigned to you</span><span class="v tab-nums">${cnt(t=>t.who==='JE'&&t.status!=='Done')}</span><span class="s">Not yet done</span></div>
+  <div class="panel stat"><span class="label">Unassigned</span><span class="v tab-nums" style="color:var(--red)">${cnt(t=>!t.who&&t.status!=='Done')}</span><span class="s">Need an owner</span></div>
+  <div class="panel stat"><span class="label">Done</span><span class="v ok tab-nums">${cnt(t=>t.status==='Done')}</span><span class="s">This month</span></div>
+ </div>
+ <section class="panel"><div class="panel-h"><div class="filters">${[['all','All'],['mine','Assigned to me'],['open','Unassigned']].map(([k,l])=>`<button class="fbtn" data-tf="${k}" aria-pressed="${S.taskF===k}">${l}</button>`).join('')}</div><button class="btn primary sm" id="newtaskbtn">${ic('plus')}New task</button></div>
+  ${S.newTask?`<form class="newtask" id="newtask" novalidate>
+   <div class="field"><label class="label" for="nt-title">Task</label><input id="nt-title" placeholder="What needs doing?" required></div>
+   <div class="field"><label class="label" for="nt-proj">Project</label><select id="nt-proj">${T.projects.map(p=>`<option>${p}</option>`).join('')}</select></div>
+   <div class="field"><label class="label" for="nt-who">Assign to</label><select id="nt-who">${opts('JE')}</select></div>
+   <div class="field"><label class="label" for="nt-due">Due</label><input id="nt-due" type="date" value="2026-11-01"></div>
+   <div style="display:flex;gap:6px"><button class="btn primary sm" type="submit">Add</button><button class="btn sm ghost" type="button" id="nt-cancel">Cancel</button></div>
+  </form>`:''}
+  <div class="tbl-wrap"><table><thead><tr><th></th><th>Task</th><th>Assigned to</th><th>Status</th><th>Due</th></tr></thead><tbody>
+  ${list.map(t=>`<tr class="task ${t.status==='Done'?'done':''}"><td style="width:40px"><button class="chk" role="checkbox" aria-checked="${t.status==='Done'}" aria-label="Mark done" data-done="${t.id}">${t.status==='Done'?ic('check'):''}</button></td>
+   <td style="min-width:240px"><b class="tt">${t.t}</b><br><span style="font-size:13px;color:var(--muted)">${t.project}</span></td>
+   <td style="min-width:200px"><div style="display:flex;gap:8px;align-items:center">${t.who?`<div class="avatar av-sm" style="background:${t.who==='JE'?'var(--red)':T.c}">${t.who}</div>`:''}<select data-who="${t.id}" aria-label="Assign task">${opts(t.who)}</select>${!t.who?`<button class="btn sm" data-mine="${t.id}">Take it</button>`:''}</div></td>
+   <td><select data-status="${t.id}" aria-label="Task status">${['To do','In progress','Done'].map(x=>`<option ${x===t.status?'selected':''}>${x}</option>`).join('')}</select></td>
+   <td class="tab-nums" style="white-space:nowrap">${t.due}</td></tr>`).join('')||'<tr><td colspan="5" style="color:var(--muted)">No tasks here. Pick one from All, or add a new task.</td></tr>'}
+  </tbody></table></div></section>`;
+},
+donate(){
+ const amts=[5,10,25,50,100],mo=S.freq==='monthly';
+ return `${head('Donate','Digital Ground Game is free for everyone. Donations keep it that way.')}
+ <div class="grid g3">
+  <section class="panel span2"><div class="panel-b" style="display:flex;flex-direction:column;gap:18px">
+   <div class="freqseg" role="group" aria-label="Donation frequency"><button data-freq="once" aria-pressed="${!mo}">One time</button><button data-freq="monthly" aria-pressed="${mo}">Monthly</button></div>
+   <div class="amts">${amts.map(a=>`<button class="amt" data-amt="${a}" aria-pressed="${S.amt===a}" style="padding:12px 20px;font-size:18px">$${a}</button>`).join('')}</div>
+   <p style="margin:0;color:var(--muted)">${mo?`$${S.amt} a month covers about ${Math.max(1,Math.round(S.amt*12/25))} months of data costs for one chapter each year.`:`$${S.amt} covers printing for about ${S.amt*4} door hangers.`}</p>
+   <button class="btn red" id="give" style="align-self:flex-start;padding:14px 22px;font-size:16px">${ic('heart')}Donate $${S.amt}${mo?' / month':''}</button>
+  </div></section>
+  <section class="panel"><div class="panel-h"><h2>Where it goes</h2></div><div class="panel-b"><div class="kv" style="grid-template-columns:1fr auto">
+   <div class="k">Data and hosting</div><div class="v tab-nums">38%</div>
+   <div class="k">Events and canvass supplies</div><div class="v tab-nums">31%</div>
+   <div class="k">Training and workshops</div><div class="v tab-nums">19%</div>
+   <div class="k">Operations</div><div class="v tab-nums">12%</div>
+  </div></div></section>
+ </div>
+ <p class="demo-note" style="max-width:70ch">Payments in this prototype are simulated. In production, donations would run through a payment processor and appear on statements as Digital Ground Game. Allocation figures are sample data.</p>`;
+},
+join(){
+ return `${head('Join a team','Five quick questions match you with the DGG team that fits your skills.')}
+ <div class="play"><div class="auth-card" id="joinbox" style="max-width:none"></div></div>`;
 },
 };
 
 /* ---------- per-view behavior ---------- */
 function commonHooks(){
  document.querySelectorAll('[data-amt]').forEach(b=>b.onclick=()=>{S.amt=+b.dataset.amt;renderApp()});
- const g=$('#give');if(g)g.onclick=()=>toast(`Thank you! A $${S.amt} donation would be processed here.`);
- const u=$('#upgrade');if(u)u.onclick=()=>{S.tier='organizer';renderApp();toast('Welcome to the Democracy Lab. Trial started.')};
+ const g=$('#give');if(g)g.onclick=()=>toast(`Thank you! A $${S.amt}${S.view==='donate'&&S.freq==='monthly'?' monthly':''} donation would be processed here.`);
  const h=$('#hidedonate');if(h)h.onclick=()=>{S.donate=false;renderApp()};
 }
 const HOOKS={
@@ -1202,7 +1405,7 @@ const HOOKS={
   const c=$('#tlcheck');if(c)c.onclick=()=>{S.tlChecked=true;renderApp()};
   const r=$('#tlreset');if(r)r.onclick=()=>{S.tlChecked=false;renderApp()};
  },
- model(){commonHooks();if(S.tier!=='organizer')return;
+ model(){commonHooks();if(S.tier!=='member')return;
   document.querySelectorAll('[data-race]').forEach(b=>b.onclick=()=>{S.race=b.dataset.race;renderApp()});
   const t=$('#turnout'),w=$('#swing');
   const upd=()=>{S.turnout=+t.value;S.swing=+w.value;$('#turnoutv').textContent=(S.turnout>0?'+':'')+S.turnout+' pts';$('#swingv').textContent=(S.swing>0?'+':'')+S.swing+' pts';drawModel()};
@@ -1211,8 +1414,26 @@ const HOOKS={
  rolodex(){commonHooks();document.querySelectorAll('[data-rx]').forEach(b=>b.onclick=()=>{S.rxF=b.dataset.rx;renderApp()});
   const q=$('#rxq');q.oninput=()=>{S.rxQ=q.value;clearTimeout(q._t);q._t=setTimeout(()=>{renderApp();const n=$('#rxq');n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)}},
  workshops(){commonHooks();document.querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{S.wsF=S.wsF===b.dataset.ws?'all':b.dataset.ws;renderApp()})},
+ team(){
+  const sw=$('#teamswitch');sw.onchange=()=>{S.team=sw.value;S.newTask=false;renderApp();toast('Previewing the '+TEAMS[S.team].n)};
+  document.querySelectorAll('[data-tf]').forEach(b=>b.onclick=()=>{S.taskF=b.dataset.tf;renderApp()});
+  $('#newtaskbtn').onclick=()=>{S.newTask=!S.newTask;renderApp();const t=$('#nt-title');if(t)t.focus()};
+  const tk=id=>TASKS.find(t=>t.id===+id);
+  document.querySelectorAll('[data-who]').forEach(el=>el.onchange=()=>{const t=tk(el.dataset.who);t.who=el.value||null;renderApp();toast(t.who?(t.who==='JE'?'Assigned to you':'Assigned to '+el.selectedOptions[0].text):'Task unassigned')});
+  document.querySelectorAll('[data-mine]').forEach(b=>b.onclick=()=>{const t=tk(b.dataset.mine);t.who='JE';if(t.status==='To do')t.status='In progress';renderApp();toast('You took "'+t.t+'"')});
+  document.querySelectorAll('[data-status]').forEach(el=>el.onchange=()=>{tk(el.dataset.status).status=el.value;renderApp()});
+  document.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{const t=tk(b.dataset.done);t.status=t.status==='Done'?'To do':'Done';renderApp();if(t.status==='Done')toast('Marked done')});
+  const f=$('#newtask');if(f){$('#nt-cancel').onclick=()=>{S.newTask=false;renderApp()};
+   f.onsubmit=e=>{e.preventDefault();const title=$('#nt-title').value.trim();if(!title){$('#nt-title').focus();toast('Give the task a name first');return}
+    const d=$('#nt-due').value?new Date($('#nt-due').value+'T12:00:00'):null;
+    TASKS.unshift({id:TID++,team:S.team,t:title,project:$('#nt-proj').value,status:'To do',who:$('#nt-who').value||null,due:d?d.toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—'});
+    S.newTask=false;renderApp();toast('Task added')}}
+ },
  media(){document.querySelectorAll('[data-mf]').forEach(b=>b.onclick=()=>{S.mediaF=b.dataset.mf;renderApp()})},
- home:commonHooks,plans:commonHooks,leg:commonHooks,courts:commonHooks,agenda:commonHooks,
+ home:commonHooks,
+ donate(){commonHooks();document.querySelectorAll('[data-freq]').forEach(b=>b.onclick=()=>{S.freq=b.dataset.freq;renderApp()})},
+ join(){if(S.authStep==='form'){S.authStep='quiz';S.tq=0;S.tans=[];S.teamPick=null}S.quizCtx='app';renderQuizStep()},
+leg:commonHooks,courts:commonHooks,agenda:commonHooks,
  exec(){commonHooks();document.querySelectorAll('[data-eof]').forEach(b=>b.onclick=()=>{S.eoF=b.dataset.eof;renderApp()});document.querySelectorAll('[data-extab]').forEach(b=>b.onclick=()=>{S.exTab=b.dataset.extab;renderApp()})},
  register(){$('#lookup').onsubmit=e=>{e.preventDefault();const n=($('#lk-first').value+' '+$('#lk-last').value).trim()||'That voter';toast(`${n}: Active registration found in ${$('#lk-state').value} (sample result)`)}},
  reps(){document.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>{S.repLvl=b.dataset.lvl;renderApp()})},
