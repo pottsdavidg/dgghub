@@ -146,6 +146,26 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .tlrow .mv{display:flex;gap:4px}
 .tlrow .mv button{border:2px solid var(--line);background:var(--surface2);width:34px;height:34px;display:grid;place-items:center;border-radius:2px}
 .tlrow .mv button svg{width:16px;height:16px}
+.slider{display:flex;flex-direction:column;gap:6px}
+.slider input{accent-color:var(--blue);width:100%}
+.slider .top{display:flex;justify-content:space-between;font-size:14px}
+.slider .top b{font-family:var(--mono);font-weight:500}
+.prob{display:flex;height:36px;border:2px solid var(--ink)}
+.prob div{display:flex;align-items:center;padding:0 10px;font:700 14px var(--head);color:#fff;white-space:nowrap;overflow:hidden;transition:width .3s}
+.rating{font:700 12px/1 var(--head);text-transform:uppercase;letter-spacing:.06em;padding:5px 8px;border-radius:2px}
+.wsfeat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);border:2px solid var(--ink);background:var(--surface);box-shadow:5px 5px 0 var(--blue)}
+.wsfeat .wart{background:var(--black);color:#fff;padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-height:200px}
+.wsfeat .wart h2{font:400 clamp(32px,4vw,46px)/.92 var(--display);letter-spacing:.02em}
+.wsfeat .wart h2 span{color:var(--yellow)}
+.wsfeat .winfo{padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.presenter{display:flex;align-items:center;gap:10px}
+.presenter .avatar{width:40px;height:40px}
+.tracks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.track{text-align:left;border:2px solid var(--line);background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:8px;border-radius:2px}
+.track[aria-pressed="true"]{border-color:var(--ink);box-shadow:4px 4px 0 var(--track,var(--blue))}
+.track b{font:400 22px/1 var(--display);letter-spacing:.03em}
+.track span{font-size:13px;color:var(--muted);line-height:1.35}
+.track .bar{height:6px}
 .demo-note{font-size:13px;color:var(--muted);border-left:3px solid var(--yellow);padding-left:10px}
 
 /* ===== SHELL ===== */
@@ -157,6 +177,11 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .side nav{display:flex;flex-direction:column;padding:12px 10px;gap:2px;flex:1}
 .navgroup{font:700 11px var(--head);letter-spacing:.12em;text-transform:uppercase;color:#9a9ca6;padding:16px 10px 6px;display:flex;align-items:center;gap:8px}
 .pro{background:var(--yellow);color:var(--black);font:700 10px/1 var(--head);padding:3px 5px;letter-spacing:.08em}
+.freetag{margin-left:auto;border:1px solid var(--yellow);color:var(--yellow);font:700 10px/1 var(--head);padding:3px 5px;letter-spacing:.08em;text-transform:uppercase}
+.samplebar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:2px solid var(--ink);background:var(--yellowSoft);padding:10px 14px}
+.samplebar .msg{flex:1 1 300px;font-size:14px;line-height:1.4}
+.samplebar .msg b{font:700 15px var(--head)}
+.samplebar .btn{padding:7px 11px;font-size:13px;box-shadow:2px 2px 0 var(--shadow)}
 .navbtn{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#d9dbe4;padding:9px 10px;text-align:left;font:500 16px var(--head);border-radius:2px;position:relative}
 .navbtn svg{width:18px;height:18px;flex:none}
 .navbtn:hover{background:#2f2f2f;color:#fff}
@@ -395,6 +420,8 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--surface2)}
   .g4{grid-template-columns:1fr 1fr}
   .tiers{grid-template-columns:1fr}
   .live{grid-template-columns:1fr}
+  .wsfeat{grid-template-columns:1fr}
+  .tracks{grid-template-columns:1fr 1fr}
   .daily{grid-template-columns:1fr}
   .nochap{grid-template-columns:1fr}
   .events{grid-template-columns:1fr}.event{border-left:0;border-top:1px solid var(--line)}.event:first-child{border-top:0}
@@ -439,6 +466,7 @@ cam:'<path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2
 mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0014 0v-1M12 18v4M8 22h8"/>',
 sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
 moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',
+cap:'<path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5M22 10v6"/>',
 x:'<path d="M18 6L6 18M6 6l12 12"/>',
 pin:'<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
 cal:'<rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/>',
@@ -579,8 +607,46 @@ const QUIZ=[
  ['Under the Constitution, which branch has the power to declare war?',['The President','Congress','The Supreme Court','The Secretary of Defense'],1,'Article I, Section 8 gives Congress the power to declare war.'],
 ];
 const TIMELINE=[['Declaration of Independence adopted',1776],['Bill of Rights ratified',1791],['15th Amendment bars race-based voting denial',1870],['19th Amendment guarantees women the vote',1920],['Voting Rights Act signed',1965]];
+const RACES=[
+ {id:'oh7',name:'Ohio House District 7',dem:'Nora Whitfield',rep:'Gregory Haines (inc.)',trend:[39,41,40,43,44,43,45,46,45,47,47.5],contacts:'18,240'},
+ {id:'oh15',name:'Ohio Senate District 15',dem:'Priya Raman (inc.)',rep:'Doug Kessler',trend:[58,59,61,60,62,61,62,64,63,62,63],contacts:'24,910'},
+ {id:'oh09',name:'U.S. House, Ohio District 9',dem:'Sample Democrat',rep:'Sample Republican',trend:[55,54,53,52,50,51,50,51,52,53,52],contacts:'31,005'},
+ {id:'fcc',name:'Franklin County Commission',dem:'Susan Okafor (inc.)',rep:'Brian Tolliver',trend:[66,67,68,69,70,69,70,71,72,71,71],contacts:'12,470'},
+ {id:'mi38',name:'Michigan House District 38',dem:'Sample Democrat',rep:'Sample Republican',trend:[44,45,43,44,46,45,46,47,48,49,50],contacts:'9,860'},
+];
+const rateOf=p=>p>=85?['Safe D','blue']:p>=65?['Likely D','blue']:p>=55?['Lean D','blue']:p>45?['Toss-up','yel']:p>35?['Lean R','red']:p>15?['Likely R','red']:['Safe R','red'];
+const TRACKS=[
+ ['gov','Local & State Government','How city councils, county boards, and statehouses actually work.','var(--blue)',3,5],
+ ['career','Careers in Politics','Paths into campaigns, staff jobs, and running for office.','var(--red)',1,4],
+ ['content','Political Content Creation','Build a channel that informs people and grows an audience.','var(--yellow)',0,4],
+ ['organize','Organizing 101','Canvassing, phone banks, and building a volunteer team.','#13824A',2,3],
+];
+const WORKSHOPS=[
+ {tr:'gov',t:'Who Runs Your City? Councils, Mayors, and Managers',by:'Alex Moreno',role:'Columbus City Lead',ini:'AM',len:'52 min',st:'watched'},
+ {tr:'gov',t:'Reading a County Budget in 30 Minutes',by:'Omar Bashir',role:'Data and turf lead',ini:'OB',len:'34 min',st:'watched'},
+ {tr:'gov',t:'How a Bill Moves Through the Ohio Statehouse',by:'Priya Desai',role:'Policy volunteer, former legislative aide',ini:'PD',len:'47 min',st:'watched'},
+ {tr:'gov',t:'Public Comment: Making Your Three Minutes Count',by:'Jasmine Kim',role:'Volunteer coordinator',ini:'JK',len:'Live · Nov 4, 7 p.m.',st:'upcoming'},
+ {tr:'career',t:'From Volunteer to Field Organizer',by:'Tyler Reed',role:'Canvass captain, Short North',ini:'TR',len:'41 min',st:'watched'},
+ {tr:'career',t:'So You Want to Run for School Board',by:'Hannah Ortiz',role:'Former school board candidate',ini:'HO',len:'58 min',st:'new'},
+ {tr:'career',t:'Landing a Legislative Staff Job',by:'Marcus Lee',role:'Statehouse staffer, DGG alum',ini:'ML',len:'Live · Nov 10, 6:30 p.m.',st:'upcoming'},
+ {tr:'content',t:'Finding Your Angle: Civics Content That Gets Watched',by:'Lauren Pike',role:'Media and photos lead',ini:'LP',len:'39 min',st:'new'},
+ {tr:'content',t:'Fact-Checking Before You Post',by:'Dev Patel',role:'Blue Book editor',ini:'DP',len:'28 min',st:'new'},
+ {tr:'organize',t:'Your First Door: Canvassing Basics',by:'Tyler Reed',role:'Canvass captain, Short North',ini:'TR',len:'31 min',st:'watched'},
+ {tr:'organize',t:'Running a Phone Bank That People Come Back To',by:'Jasmine Kim',role:'Volunteer coordinator',ini:'JK',len:'36 min',st:'watched'},
+];
+const ROLODEX=[
+ {n:'Marisol Vega',ini:'MV',type:'Creator',what:'TikTok, YouTube · 2.4M',where:'Columbus, OH',topic:'Election law explainers',rel:'Warm',last:'Oct 19, 2026',poc:'Lauren Pike',pocRole:'Media lead'},
+ {n:'Civic Sunday',ini:'CS',type:'Creator',what:'Instagram, Threads · 380K',where:'Chicago, IL',topic:'Local government graphics',rel:'Partner',last:'Oct 22, 2026',poc:'Lauren Pike',pocRole:'Media lead'},
+ {n:'Ray Bustamante',ini:'RB',type:'Creator',what:'YouTube, Twitch · 890K',where:'Detroit, MI',topic:'Labor, gaming culture',rel:'Warm',last:'Sep 30, 2026',poc:'Dev Patel',pocRole:'Blue Book editor'},
+ {n:'The Policy Wonk Pod',ini:'PW',type:'Creator',what:'Podcast · 610K',where:'Washington, DC',topic:'Budget and healthcare',rel:'Cold',last:'Jun 12, 2026',poc:'Dev Patel',pocRole:'Blue Book editor'},
+ {n:'Andre Coleman',ini:'AC',type:'Politician',what:'U.S. Representative, OH-3',where:'Columbus, OH',topic:'Energy & Commerce',rel:'Warm',last:'Oct 14, 2026',poc:'Alex Moreno',pocRole:'Columbus City Lead'},
+ {n:'Priya Raman',ini:'PR',type:'Politician',what:'State Senator, OH SD-15',where:'Columbus, OH',topic:'Education, health',rel:'Partner',last:'Oct 21, 2026',poc:'Alex Moreno',pocRole:'Columbus City Lead'},
+ {n:'Nora Whitfield',ini:'NW',type:'Candidate',what:'Candidate, OH House 7',where:'Columbus, OH',topic:'Housing, transit',rel:'Warm',last:'Oct 21, 2026',poc:'Tyler Reed',pocRole:'Canvass captain'},
+ {n:'Darnell Brooks',ini:'DB',type:'Politician',what:'Mayor, Columbus',where:'Columbus, OH',topic:'City budget, public safety',rel:'Cold',last:'Apr 2, 2026',poc:'Jasmine Kim',pocRole:'Volunteer coordinator'},
+ {n:'Susan Okafor',ini:'SO',type:'Politician',what:'Franklin County Commissioner',where:'Columbus, OH',topic:'County services',rel:'Warm',last:'Sep 18, 2026',poc:'Omar Bashir',pocRole:'Data and turf lead'},
+];
 /* ---------- state ---------- */
-const S={govOpen:false,game:null,qi:0,qScore:0,qPick:null,tl:null,tlChecked:false,hasChapter:true,leadSent:false,tier:'citizen',mode:'signin',pickTier:'citizen',view:'home',param:null,donate:true,amt:10,repLvl:'federal',billF:'all',billQ:'',ver:2,wikiQ:'',eoF:'all',exTab:'orders',mediaF:'all'};
+const S={openDrops:{},rxF:'all',rxQ:'',wsF:'all',race:'oh7',turnout:0,swing:0,game:null,qi:0,qScore:0,qPick:null,tl:null,tlChecked:false,hasChapter:true,leadSent:false,tier:'citizen',mode:'signin',pickTier:'citizen',view:'home',param:null,donate:true,amt:10,repLvl:'federal',billF:'all',billQ:'',ver:2,wikiQ:'',eoF:'all',exTab:'orders',mediaF:'all'};
 try{const t=localStorage.getItem('dgg-tier');if(t)S.pickTier=t}catch(e){}
 
 const $=s=>document.querySelector(s);
@@ -611,7 +677,7 @@ function renderAuth(){
    <div class="label">Account type</div>
    <div class="tiers">
     <button type="button" class="tier" data-tier="citizen" aria-pressed="${S.pickTier==='citizen'}"><b>Citizen</b><span class="price">Free · donor supported</span><small>Registration, representatives, bills, ballots, and your voting history.</small></button>
-    <button type="button" class="tier" data-tier="organizer" aria-pressed="${S.pickTier==='organizer'}"><b>Organizer</b><span class="price">$12 / month</span><small>Everything in Citizen plus the Democracy Lab: The Blue Book, LegisTracker, Court Tracker, Agenda Tracker, and ExecuTracker.</small></button>
+    <button type="button" class="tier" data-tier="organizer" aria-pressed="${S.pickTier==='organizer'}"><b>Organizer</b><span class="price">$12 / month</span><small>Everything in Citizen plus the Democracy Lab: The Blue Book, four trackers, the Election Model, and the Rolodex. The Blue Book and Workshops are free to try.</small></button>
    </div>
    ${su?`<div class="field"><label class="label" for="f-name">Full name</label><input id="f-name" value="Jordan Ellis"></div>
    <div class="field"><label class="label" for="f-zip">Home ZIP code</label><input id="f-zip" value="43201" inputmode="numeric"></div>`:''}
@@ -631,17 +697,18 @@ function renderAuth(){
 /* ---------- shell ---------- */
 const NAV=[
  ['Digital Hub',[['home','Dashboard','home'],{drop:'Your Government',icon:'scale',items:[['register','Voter registration','badge'],['ballot','My ballot','ballot'],['reps','Representatives','users'],['bills','Bills & laws','doc'],['history','Voting history','history']]},['media','Media','play'],['games','Know Your Stuff','star'],['chapter','Local Chapter','pin']]],
- ['Democracy Lab',[['wiki','The Blue Book','book'],['leg','LegisTracker','track'],['courts','Court Tracker','scale'],['agenda','Agenda Tracker','check'],['exec','ExecuTracker','pen']]],
+ ['Democracy Lab',[['wiki','The Blue Book','book'],['workshops','Workshops','cap'],{drop:'Trackers',icon:'track',items:[['leg','LegisTracker','track'],['courts','Court Tracker','scale'],['agenda','Agenda Tracker','check'],['exec','ExecuTracker','pen']]},['model','Election Model','chart'],['rolodex','Rolodex','phone']]],
  ['Account',[['plans','Plans & giving','heart']]],
 ];
-const ORG=['wiki','leg','courts','agenda','exec'];
+const ORG=['leg','courts','agenda','exec','model','rolodex'];
+const FREE_SAMPLE=['wiki','workshops'];
 const parentOf={rep:'reps',bill:'bills',article:'wiki'};
 
-const navBtn=([v,l,i],cur,sub)=>`<button class="navbtn${sub?' sub':''}" data-go="${v}" ${cur===v?'aria-current="page"':''}>${ic(i)}${l}${ORG.includes(v)&&S.tier==='citizen'?ic('lock','lk'):''}</button>`;
+const navBtn=([v,l,i],cur,sub)=>`<button class="navbtn${sub?' sub':''}" data-go="${v}" ${cur===v?'aria-current="page"':''}>${ic(i)}${l}${ORG.includes(v)&&S.tier==='citizen'?ic('lock','lk'):''}${FREE_SAMPLE.includes(v)&&S.tier==='citizen'?'<span class="freetag">Free</span>':''}</button>`;
 function navDrop(d,cur){
- const inside=d.items.some(([v])=>v===cur),open=S.govOpen||inside;
- return `<button class="navbtn navdrop${inside&&!open?' has-cur':''}" id="govtoggle" aria-expanded="${open}" aria-controls="govlist">${ic(d.icon)}${d.drop}${ic('back','chev')}</button>
- <div class="navsub" id="govlist" ${open?'':'hidden'}>${d.items.map(it=>navBtn(it,cur,true)).join('')}</div>`;
+ const id=d.drop.toLowerCase().replace(/\W+/g,'-'),inside=d.items.some(([v])=>v===cur),open=S.openDrops[id]??inside;
+ return `<button class="navbtn navdrop${inside&&!open?' has-cur':''}" data-drop="${id}" aria-expanded="${open}" aria-controls="drop-${id}">${ic(d.icon)}${d.drop}${ic('back','chev')}</button>
+ <div class="navsub" id="drop-${id}" ${open?'':'hidden'}>${d.items.map(it=>navBtn(it,cur,true)).join('')}</div>`;
 }
 function renderApp(){
  const cur=parentOf[S.view]||S.view;
@@ -664,13 +731,13 @@ function renderApp(){
  bind();
  window.scrollTo(0,0);
 }
-function go(v,p=null){if(v!==S.view&&v==='games')S.game=null;S.view=v;S.param=p;renderApp()}
+function go(v,p=null){for(const k in S.openDrops){const el=document.getElementById('drop-'+k);if(el&&el.querySelector(`[data-go="${v}"]`))delete S.openDrops[k]}if(v!==S.view&&v==='games')S.game=null;S.view=v;S.param=p;renderApp()}
 function bind(){
  const app=$('#app');
  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go,b.dataset.p||null));
  app.querySelectorAll('[data-tierswap]').forEach(b=>b.onclick=()=>{S.tier=b.dataset.tierswap;renderApp();toast('Previewing the '+(S.tier==='citizen'?'Citizen':'Organizer')+' experience')});
  bindTheme();
- const gt=$('#govtoggle');if(gt)gt.onclick=()=>{const o=gt.getAttribute('aria-expanded')==='true';S.govOpen=!o;gt.setAttribute('aria-expanded',String(!o));$('#govlist').hidden=o};
+ app.querySelectorAll('[data-drop]').forEach(gt=>gt.onclick=()=>{const id=gt.dataset.drop,o=gt.getAttribute('aria-expanded')==='true';S.openDrops[id]=!o;gt.setAttribute('aria-expanded',String(!o));$('#drop-'+id).hidden=o;gt.classList.toggle('has-cur',o&&!!document.querySelector('#drop-'+id+' [aria-current]'))});
  app.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>toast(b.dataset.toast));
  $('#signout').onclick=()=>{$('#app').hidden=true;$('#auth').hidden=false;S.mode='signin';renderAuth()};
  const side=$('#side'),scrim=$('#scrim');
@@ -686,11 +753,12 @@ const crumb=(v,l)=>`<button class="crumb" data-go="${v}">${ic('back')}${l}</butt
 const party=p=>`<span class="party ${p}" title="${{D:'Democrat',R:'Republican',I:'Independent',N:'Nonpartisan'}[p]}">${p==='N'?'NP':p}</span>`;
 const pipe=s=>`<div class="pipe" aria-label="${STAGES[s]}">${STAGES.map((_,i)=>`<i class="${i<=s?'on':''}"></i>`).join('')}</div>`;
 const modbar=(name,host)=>`<div class="modbar"><span class="dot"></span><b class="label" style="color:#fff">Connected module</b><span>${name}</span><code>${host}</code><button class="btn sm" data-toast="Would open the full ${name} app in a new tab">${ic('ext')}Open full app</button></div>`;
+const sampleBar=n=>S.tier==='organizer'?'':`<div class="samplebar"><span class="pro">Free sample</span><span class="msg"><b>${n} is free to try.</b> It's a sample of the Democracy Lab. Upgrade to unlock four trackers, the Election Model, and the Rolodex.</span><button class="btn primary" id="upgrade">Upgrade · $12/mo</button></div>`;
 function gate(view,title,inner){
  if(S.tier==='organizer')return inner;
  return `<div class="locked"><div class="ghost" aria-hidden="true">${inner}</div><div class="lockcard"><div>
   <span class="chip yel">${ic('star')}Democracy Lab</span><h2>${title} is part of the Democracy Lab</h2>
-  <p>Organizer accounts fund our in-house tools and unlock The Blue Book, LegisTracker, Court Tracker, Agenda Tracker, and ExecuTracker.</p>
+  <p>Organizer accounts fund our in-house tools and unlock the Trackers, the Election Model, and the Rolodex. The Blue Book and Workshops are free to try.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="upgrade">Upgrade · $12/mo</button><button class="btn ghost" data-go="plans">Compare plans</button></div></div></div></div>`;
 }
 
@@ -882,12 +950,11 @@ wiki(){
  const inner=`${modbar('The Blue Book','bluebook.digitalgroundgame.org')}
  <div class="filters"><label class="search" style="max-width:380px;display:flex">${ic('search')}<input id="wikiq" value="${S.wikiQ}" placeholder="Search creators, handles, topics" aria-label="Search the wiki"></label><span class="label" style="margin-left:auto">1,284 articles · 312 editors</span></div>
  <div class="wikigrid">${list.map(w=>`<button class="wcard" data-go="article" data-p="${w.id}"><div class="h"><div class="avatar" style="background:${w.c};${w.c==='#FFC800'?'color:#242424':''}">${w.ini}</div><div><b>${w.name}</b><span>${w.h}</span></div></div><p>${w.blurb}</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip blue">${w.reach} reach</span><span class="chip">${w.lean}</span></div></button>`).join('')}</div>`;
- return `${head('The Blue Book','A community-edited reference on the online voices shaping political conversation, with sourced claims and accuracy records.','<span class="sample">Fictional profiles</span>')}${gate('wiki','The Blue Book',inner)}`;
+ return `${head('The Blue Book','A community-edited reference on the online voices shaping political conversation, with sourced claims and accuracy records.','<span class="sample">Fictional profiles</span>')}${sampleBar('The Blue Book')}${inner}`;
 },
 
 article(){
  const w=WIKI.find(x=>x.id===S.param)||WIKI[0];
- if(S.tier!=='organizer'){S.view='wiki';return VIEWS.wiki()}
  return `${head(w.name,w.h,`<button class="btn" data-toast="Would open the editor with revision history">Edit article</button>`,crumb('wiki','The Blue Book'))}
  <div class="article">
   <article class="panel panel-b">
@@ -1039,6 +1106,63 @@ games(){
  <div class="panel-h" style="padding:0;border:0"><h2>More games</h2></div>
  <div class="games">${G.map(([k,n,d,c,art,st])=>`<button class="game" ${k?`data-game="${k}"`:`data-toast="${n} is in development"`}><div class="gart" style="background:${c};${c==='var(--yellow)'?'color:var(--black)':''}">${art}</div><div class="gi"><b>${n}</b><span>${d}</span><span class="chip ${k?'green':''}" style="align-self:flex-start;margin-top:4px">${st}</span></div></button>`).join('')}</div>`;
 },
+model(){
+ const inner=`${modbar('Election Model','model.digitalgroundgame.org')}
+ <div class="grid g3">
+  <section class="panel"><div class="panel-h"><h2>Races</h2><span class="label">${RACES.length} tracked</span></div><div class="rows">${RACES.map(r=>{const p=r.trend[r.trend.length-1],[rt,c]=rateOf(p);return `<button class="row" data-race="${r.id}" style="grid-template-columns:1fr auto;${S.race===r.id?'background:var(--blueSoft)':''}"><span style="min-width:0"><span class="t" style="font-size:15px">${r.name}</span><br><span class="chip ${c}" style="margin-top:4px">${rt}</span></span><span class="mono tab-nums" style="font-size:14px">${p.toFixed(1)}%</span></button>`}).join('')}</div>
+   <div class="panel-b" style="display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--line)">
+    <span class="label">What-if scenario</span>
+    <div class="slider"><div class="top"><label for="turnout">Turnout vs. 2022</label><b id="turnoutv"></b></div><input type="range" id="turnout" min="-10" max="10" value="${S.turnout}"></div>
+    <div class="slider"><div class="top"><label for="swing">Late swing toward Dems</label><b id="swingv"></b></div><input type="range" id="swing" min="-5" max="5" step="0.5" value="${S.swing}"></div>
+    <button class="btn sm ghost" id="resetmodel" style="align-self:flex-start">Reset</button>
+   </div></section>
+  <section class="panel span2"><div class="panel-h"><h2 id="racename"></h2><span class="chip" id="raterating"></span></div><div class="panel-b" style="display:flex;flex-direction:column;gap:16px">
+   <div class="prob" id="probbar"></div>
+   <div id="chart"></div>
+   <div class="grid g3" style="gap:10px">
+    <div class="panel stat" style="padding:12px 14px"><span class="label">Democrat</span><span id="mdem" style="font:700 15px var(--head)"></span></div>
+    <div class="panel stat" style="padding:12px 14px"><span class="label">Republican</span><span id="mrep" style="font:700 15px var(--head)"></span></div>
+    <div class="panel stat" style="padding:12px 14px"><span class="label">DGG voter contacts</span><span id="mcon" class="tab-nums" style="font:700 15px var(--head)"></span></div>
+   </div>
+   <p style="margin:0;font-size:14px;color:var(--muted)">Chance the Democratic candidate wins, over the last 11 weeks. The model blends polling, early vote returns, and DGG canvass contact data. The what-if sliders adjust this week only.</p>
+  </div></section>
+ </div>`;
+ return `${head('Election Model','Race forecasts built on DGG canvassing data and in-house turnout modeling.','<span class="sample">Sample forecasts</span>')}${gate('model','Election Model',inner)}`;
+},
+workshops(){
+ const tn=Object.fromEntries(TRACKS.map(t=>[t[0],t]));
+ const list=WORKSHOPS.filter(w=>S.wsF==='all'||w.tr===S.wsF);
+ const stc={watched:['Watched','green'],new:['New','blue'],upcoming:['Upcoming','red']};
+ const inner=`${modbar('Workshops','learn.digitalgroundgame.org')}
+ <section class="wsfeat"><div class="wart"><span class="chip red" style="align-self:flex-start">Next live session · Nov 4</span><h2>Public comment: make your <span>three minutes</span> count</h2><span style="opacity:.8;font-size:14px">Local & State Government · Session 4 of 5</span></div>
+  <div class="winfo"><div class="presenter"><div class="avatar" style="background:var(--blue)">JK</div><div><b style="font:700 16px var(--head)">Jasmine Kim</b><br><span style="color:var(--muted);font-size:14px">Volunteer coordinator, Columbus chapter</span></div></div>
+   <p style="margin:0;color:var(--muted)">How to find your city council's agenda, sign up to speak, and write remarks that council members remember. Includes a live practice round with feedback.</p>
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto"><button class="btn primary sm" data-toast="You're registered. A calendar invite and Zoom link are on the way.">Register</button><button class="btn sm ghost" data-toast="Added to your calendar">Add to calendar</button><span class="chip" style="align-self:center">86 registered</span></div></div></section>
+ <div class="tracks">${TRACKS.map(([k,n,d,c,done,tot])=>`<button class="track" data-ws="${k}" aria-pressed="${S.wsF===k}" style="--track:${c}"><b>${n}</b><span>${d}</span><span class="bar"><i style="width:${done/tot*100}%;background:${c}"></i></span><span class="tab-nums">${done} of ${tot} watched</span></button>`).join('')}</div>
+ <section class="panel"><div class="panel-h"><h2>${S.wsF==='all'?'All sessions':tn[S.wsF][1]}</h2>${S.wsF!=='all'?'<button class="btn sm ghost" data-ws="all">Show all</button>':`<span class="label">${WORKSHOPS.length} sessions</span>`}</div><div class="rows">
+  ${list.map(w=>`<button class="row" data-toast="${w.st==='upcoming'?'Registered for '+w.t:'Would open the recording, slides, and worksheet'}"><div class="avatar" style="background:${tn[w.tr][3]};${tn[w.tr][3]==='var(--yellow)'?'color:var(--black)':''}">${w.ini}</div><span style="min-width:0"><span class="t">${w.t}</span><br><span class="d">${w.by} · ${w.role} · ${w.len}</span></span><span class="chip ${stc[w.st][1]}">${stc[w.st][0]}</span></button>`).join('')}
+ </div></section>
+ <section class="panel panel-b" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><b style="font:700 17px var(--head)">Have something to teach?</b><br><span style="color:var(--muted)">Members can pitch a workshop. We help with slides, recording, and promotion.</span></div><button class="btn" data-toast="Would open the workshop pitch form">Pitch a workshop</button></section>`;
+ return `${head('Workshops','A lecture series by DGG members on how government works, political careers, and building a political media channel.','<span class="sample">Sample sessions</span>')}${sampleBar('Workshops')}${inner}`;
+},
+rolodex(){
+ const q=S.rxQ.toLowerCase();
+ const list=ROLODEX.filter(r=>(S.rxF==='all'||(S.rxF==='Creator'?r.type==='Creator':r.type!=='Creator'))&&(!q||(r.n+r.what+r.topic+r.poc).toLowerCase().includes(q)));
+ const rc={Partner:'green',Warm:'blue',Cold:''};
+ return `${head('Rolodex','Political creators and officials we have relationships with, and the DGG member who owns each relationship.','<span class="sample">Sample contacts</span>')}
+ ${gate('rolodex','Rolodex',`<div class="grid g4">
+  <div class="panel stat"><span class="label">Contacts</span><span class="v tab-nums">${ROLODEX.length}</span><span class="s">Across 4 states and DC</span></div>
+  <div class="panel stat"><span class="label">Creators</span><span class="v tab-nums">${ROLODEX.filter(r=>r.type==='Creator').length}</span><span class="s">Combined reach 4.3M</span></div>
+  <div class="panel stat"><span class="label">Officials & candidates</span><span class="v tab-nums">${ROLODEX.filter(r=>r.type!=='Creator').length}</span><span class="s">Federal, state, and local</span></div>
+  <div class="panel stat"><span class="label">Active partners</span><span class="v ok tab-nums">${ROLODEX.filter(r=>r.rel==='Partner').length}</span><span class="s">Co-hosted events this cycle</span></div>
+ </div>
+ <div class="filters">${[['all','All'],['Creator','Creators'],['Politician','Officials & candidates']].map(([k,l])=>`<button class="fbtn" data-rx="${k}" aria-pressed="${S.rxF===k}">${l}</button>`).join('')}
+  <label class="search" style="margin-left:auto;max-width:300px;display:flex">${ic('search')}<input id="rxq" value="${S.rxQ}" placeholder="Search names, topics, contacts" aria-label="Search the Rolodex"></label></div>
+ <section class="panel"><div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Type</th><th>Focus</th><th>Relationship</th><th>Last contact</th><th>DGG point of contact</th><th></th></tr></thead><tbody>
+ ${list.map(r=>`<tr><td style="min-width:220px"><div style="display:flex;gap:10px;align-items:center"><div class="avatar" style="background:${r.type==='Creator'?'var(--blue)':'var(--black)'}">${r.ini}</div><div><b>${r.n}</b><br><span style="font-size:13px;color:var(--muted)">${r.what}</span></div></div></td><td><span class="chip ${r.type==='Creator'?'blue':''}">${r.type}</span></td><td style="min-width:150px">${r.topic}<br><span style="font-size:13px;color:var(--muted)">${r.where}</span></td><td><span class="chip ${rc[r.rel]}">${r.rel}</span></td><td class="tab-nums" style="white-space:nowrap">${r.last}</td><td style="min-width:160px"><b>${r.poc}</b><br><span style="font-size:13px;color:var(--muted)">${r.pocRole}</span></td><td><button class="btn sm" data-toast="Intro request sent to ${r.poc}, who manages the relationship with ${r.n}">Request intro</button></td></tr>`).join('')||'<tr><td colspan="7" style="color:var(--muted)">No contacts match that search.</td></tr>'}
+ </tbody></table></div></section>
+ <p class="demo-note" style="max-width:72ch">Direct contact details stay with each point of contact. Members request an introduction through them so every relationship has one owner.</p>`)}`;
+},
 plans(){
  const org=S.tier==='organizer';
  const li=a=>a.map(x=>`<li>${ic('check')}${x}</li>`).join('');
@@ -1049,7 +1173,7 @@ plans(){
    <div style="display:flex;flex-direction:column;gap:10px"><span class="label">Chip in once or monthly</span><div class="amts">${[3,10,25,50].map(a=>`<button class="amt" data-amt="${a}" aria-pressed="${S.amt===a}">$${a}</button>`).join('')}</div><button class="btn red" id="give">${ic('heart')}Donate $${S.amt}</button></div>
   </section>
   <section class="plan ${org?'feat':''}"><span class="label">${org?'Your plan':'For organizers'}</span><h2>Organizer</h2><div class="pr">$12 <small>/ month · or $120 / year</small></div>
-   <ul>${li(['Everything in Citizen','The Blue Book with editing rights','LegisTracker team watchlists','Court Tracker docket alerts','Agenda Tracker progress reports','ExecuTracker orders and appointments','Chapter seats available for teams of 5+'])}</ul>
+   <ul>${li(['Everything in Citizen','The Blue Book editing rights','LegisTracker team watchlists','Court Tracker docket alerts','Agenda Tracker progress reports','ExecuTracker orders and appointments','Election Model forecasts and scenarios','Rolodex of creators and officials','The Blue Book and Workshops (free to try)','Chapter seats available for teams of 5+'])}</ul>
    ${org?'<button class="btn" data-toast="Would open billing management">Manage subscription</button>':'<button class="btn primary" id="upgrade">Upgrade to Organizer</button>'}
   </section>
  </div>
@@ -1078,6 +1202,15 @@ const HOOKS={
   const c=$('#tlcheck');if(c)c.onclick=()=>{S.tlChecked=true;renderApp()};
   const r=$('#tlreset');if(r)r.onclick=()=>{S.tlChecked=false;renderApp()};
  },
+ model(){commonHooks();if(S.tier!=='organizer')return;
+  document.querySelectorAll('[data-race]').forEach(b=>b.onclick=()=>{S.race=b.dataset.race;renderApp()});
+  const t=$('#turnout'),w=$('#swing');
+  const upd=()=>{S.turnout=+t.value;S.swing=+w.value;$('#turnoutv').textContent=(S.turnout>0?'+':'')+S.turnout+' pts';$('#swingv').textContent=(S.swing>0?'+':'')+S.swing+' pts';drawModel()};
+  t.oninput=upd;w.oninput=upd;$('#resetmodel').onclick=()=>{t.value=0;w.value=0;upd()};upd();
+ },
+ rolodex(){commonHooks();document.querySelectorAll('[data-rx]').forEach(b=>b.onclick=()=>{S.rxF=b.dataset.rx;renderApp()});
+  const q=$('#rxq');q.oninput=()=>{S.rxQ=q.value;clearTimeout(q._t);q._t=setTimeout(()=>{renderApp();const n=$('#rxq');n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)}},
+ workshops(){commonHooks();document.querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{S.wsF=S.wsF===b.dataset.ws?'all':b.dataset.ws;renderApp()})},
  media(){document.querySelectorAll('[data-mf]').forEach(b=>b.onclick=()=>{S.mediaF=b.dataset.mf;renderApp()})},
  home:commonHooks,plans:commonHooks,leg:commonHooks,courts:commonHooks,agenda:commonHooks,
  exec(){commonHooks();document.querySelectorAll('[data-eof]').forEach(b=>b.onclick=()=>{S.eoF=b.dataset.eof;renderApp()});document.querySelectorAll('[data-extab]').forEach(b=>b.onclick=()=>{S.exTab=b.dataset.extab;renderApp()})},
@@ -1090,6 +1223,28 @@ const HOOKS={
  wiki(){commonHooks();const q=$('#wikiq');if(!q)return;q.oninput=()=>{S.wikiQ=q.value;clearTimeout(q._t);q._t=setTimeout(()=>{renderApp();const n=$('#wikiq');n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)}},
 };
 HOOKS.ballot=()=>{};HOOKS.history=()=>{};HOOKS.rep=()=>{};HOOKS.article=()=>{};
+
+function drawModel(){
+ const r=RACES.find(x=>x.id===S.race)||RACES[0];
+ const adj=S.turnout*0.45+S.swing*2.2;
+ const pts=r.trend.map((v,i)=>i===r.trend.length-1?Math.min(99,Math.max(1,v+adj)):v);
+ const fin=pts[pts.length-1],[rt,c]=rateOf(fin);
+ $('#racename').textContent=r.name;
+ const rr=$('#raterating');rr.textContent=rt;rr.className='chip '+c;
+ $('#mdem').textContent=r.dem;$('#mrep').textContent=r.rep;$('#mcon').textContent=r.contacts;
+ $('#probbar').innerHTML=`<div style="width:${fin}%;background:var(--blue)">DEM ${fin.toFixed(1)}%</div><div style="width:${100-fin}%;background:var(--red);justify-content:flex-end">${(100-fin).toFixed(1)}% REP</div>`;
+ const W=600,H=230,L=40,R=16,T=12,B=28,iw=W-L-R,ih=H-T-B;
+ const x=i=>L+i*iw/(pts.length-1),y=v=>T+ih-(v-20)/60*ih;
+ const line=pts.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
+ const area=line+`L${x(pts.length-1)},${y(20)}L${x(0)},${y(20)}Z`;
+ $('#chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block" role="img" aria-label="Win probability trend ending at ${fin.toFixed(1)} percent">
+  ${[20,35,50,65,80].map(t=>`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)" ${t===50?'stroke-dasharray="4 4" stroke-width="1.5"':''}/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="Roboto Mono, monospace">${t}%</text>`).join('')}
+  <path d="${area}" fill="var(--blue)" opacity=".12"/>
+  <path d="${line}" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="${x(pts.length-1)}" cy="${y(fin)}" r="6" fill="var(--blue)" stroke="var(--surface)" stroke-width="2"/>
+  ${pts.map((_,i)=>i%2===0?`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="Roboto Mono, monospace">Wk ${i+1}</text>`:'').join('')}
+ </svg>`;
+}
 
 renderAuth();
 </script>
