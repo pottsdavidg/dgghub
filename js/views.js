@@ -200,7 +200,7 @@ function T_shell(u,page,content){
  <div class="main">
   <header class="topbar">
    <button class="iconbtn menubtn" data-ui="menu-open" aria-label="Open menu">${ic('menu')}</button>
-   <form class="search" hx-get="/app/bills" hx-target="#root" role="search">${ic('search')}<input name="q" placeholder="Search bills…" aria-label="Search bills"></form>
+   <form class="search" hx-get="/app/bills" hx-target="#root" role="search">${ic('search')}<input name="q" placeholder="Search bills, representatives, etc…" aria-label="Search site"></form>
   </header>
   <main class="content" id="content">${content}</main>
  </div>
@@ -221,16 +221,7 @@ V.home=(u)=>{
   ?`<section class="dcta up"><div class="dtext"><span class="label">Democracy Lab</span><b>Become a team member</b><span>Take a two-minute quiz, join a DGG team, and unlock the Trackers, Election Model, and Rolodex.</span></div><div class="dbtns"><button class="btn primary sm" ${nav('join')}>Find my team</button></div></section>`:'';
  const donate=!member&&!u.donate_dismissed?`<div class="donate" id="donatebar"><button class="iconbtn close" hx-post="/dashboard/dismiss-donate" hx-target="#donatebar" hx-swap="outerHTML" aria-label="Dismiss">${ic('x')}</button><div class="msg"><b>Keep this hub free for every voter.</b> No ads, no paywall. If you can, chip in.</div><div class="give"><a class="btn red" href="${DONATE_URL}" target="_blank" rel="noopener">${ic('heart')}Donate</a></div></div>`:'';
  return `${head('Good evening, '+esc(u.first),`${USER.precinct} · ${USER.county}, Ohio`,'<span class="sample">Sample data</span>')}
- <div class="dash-ctas ${second?'':'one'}">${discord}${second}</div>
  ${donate}
- <section class="cta ctabox"><div class="cta-h"><div><span class="label" style="color:#9a9ca6">Call to action · ${CTA.date} · ${CTA.by}</span><h2>${CTA.title.replace('Take back','<span>Take back').replace('Senate','Senate</span>')}</h2></div><a class="btn sm" href="${CTA.url}" target="_blank" rel="noopener">${ic('ext')}Read the full CTA</a></div>
-  <ol class="ctasteps">${CTA.steps.map(([t,d,l])=>`<li><b>${t}</b><span>${d}</span>${l?(l[1].startsWith('#')?`<button class="btn sm primary" ${nav(l[1].slice(1))}>${l[0]}</button>`:`<a class="btn sm primary" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`):''}</li>`).join('')}</ol>
-  <div class="ctaprev"><span class="label">Previous calls to action</span>${CTA.previous.map(([d,t,url])=>`<a href="${url}" target="_blank" rel="noopener"><span class="mono">${d}</span>${t}</a>`).join('')}</div>
- </section>
- <section class="cta"><div class="cta-h"><h2>Upcoming <span>events</span></h2><a class="btn sm" href="${DGG_CALENDAR}" target="_blank" rel="noopener">${ic('cal')}Add the DGG calendar</a></div>
-  <div class="events">${UPCOMING.map(e=>`<div class="event"><div class="edate"><small>${e.m}</small><b class="tab-nums">${e.d}</b></div><div class="info"><span class="chip ${e.cls}" style="align-self:flex-start">${e.type}</span><b>${e.t}</b><span class="d">${e.when} · ${e.where}</span>${e.btn[1].startsWith('#')?`<button class="btn sm primary" ${nav(e.btn[1].slice(1))}>${e.btn[0]}</button>`:`<a class="btn sm ${e.cls==='red'?'red':'primary'}" href="${e.btn[1]}" target="_blank" rel="noopener">${e.btn[0]}</a>`}</div></div>`).join('')}</div>
-  <div class="pastrow"><span class="label">Recent DGG canvasses</span>${PAST_CANVASSES.map(([c,d])=>`<span class="chip">${ic('check')}${c} · ${d}</span>`).join('')}</div>
- </section>
  <section class="hero patwrap tilebg">
   <div class="big tab-nums">${d}<small>days to go</small></div>
   <div><h2>General Election · Tue, Nov 3</h2><p>Early in-person voting is open now at the Franklin County Board of Elections. Polls open 6:30 a.m. to 7:30 p.m. on Election Day. Bring a photo ID.</p></div>
@@ -242,6 +233,7 @@ V.home=(u)=>{
   <div class="panel stat"><span class="label">Bills you follow</span><span class="v tab-nums">${BILLS.filter(b=>b.follow).length}</span><span class="s">1 moved this week</span></div>
   <div class="panel stat"><span class="label">Turnout record</span><span class="v tab-nums">8 / 10</span><span class="s">Elections voted in since 2022</span></div>
  </div>
+ <div class="dash-ctas ${second?'':'one'}">${discord}${second}</div>
  <div class="grid g2">
   <section class="panel"><div class="panel-h"><h2>What changed this week</h2><button class="btn sm ghost" ${nav('bills')}>All bills</button></div><div class="rows">
    <button class="row" ${nav('bill/hr2817')}><span class="ic">${ic('doc')}</span><span><span class="t">H.R. 2817 passed the House</span><br><span class="d">Rural Broadband Access Act · your representative voted Yea</span></span><span class="chip blue">Oct 20</span></button>
@@ -257,7 +249,15 @@ V.home=(u)=>{
    <button class="row" ${act('Early voting plan saved to your calendar')}><span class="ic">${ic('cal')}</span><span><span class="t">Make a voting plan</span><br><span class="d">Pick a day, time, and how you'll get there</span></span>${arrow()}</button>
    <button class="row" ${nav('chapter')}><span class="ic red">${ic('pin')}</span><span><span class="t">Meet your local chapter</span><br><span class="d">Columbus chapter · 412 members</span></span>${arrow()}</button>
   </div></section>`}
- </div>`;
+ </div>
+ <section class="cta ctabox"><div class="cta-h"><div><span class="label" style="color:#9a9ca6">Call to action · ${CTA.date} · ${CTA.by}</span><h2>${CTA.title.replace('Take back','<span>Take back').replace('Senate','Senate</span>')}</h2></div><a class="btn sm" href="${CTA.url}" target="_blank" rel="noopener">${ic('ext')}Read the full CTA</a></div>
+  <ol class="ctasteps">${CTA.steps.map(([t,d,l])=>`<li><b>${t}</b><span>${d}</span>${l?(l[1].startsWith('#')?`<button class="btn sm primary" ${nav(l[1].slice(1))}>${l[0]}</button>`:`<a class="btn sm primary" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`):''}</li>`).join('')}</ol>
+  <div class="ctaprev"><span class="label">Previous calls to action</span>${CTA.previous.map(([d,t,url])=>`<a href="${url}" target="_blank" rel="noopener"><span class="mono">${d}</span>${t}</a>`).join('')}</div>
+ </section>
+ <section class="cta"><div class="cta-h"><h2>Upcoming <span>events</span></h2><a class="btn sm" href="${DGG_CALENDAR}" target="_blank" rel="noopener">${ic('cal')}Add the DGG calendar</a></div>
+  <div class="events">${UPCOMING.map(e=>`<div class="event"><div class="edate"><small>${e.m}</small><b class="tab-nums">${e.d}</b></div><div class="info"><span class="chip ${e.cls}" style="align-self:flex-start">${e.type}</span><b>${e.t}</b><span class="d">${e.when} · ${e.where}</span>${e.btn[1].startsWith('#')?`<button class="btn sm primary" ${nav(e.btn[1].slice(1))}>${e.btn[0]}</button>`:`<a class="btn sm ${e.cls==='red'?'red':'primary'}" href="${e.btn[1]}" target="_blank" rel="noopener">${e.btn[0]}</a>`}</div></div>`).join('')}</div>
+  <div class="pastrow"><span class="label">Recent DGG canvasses</span>${PAST_CANVASSES.map(([c,d])=>`<span class="chip">${ic('check')}${c} · ${d}</span>`).join('')}</div>
+ </section>`;
 };
 
 V.register=()=>`${head('Voter registration','Your record as held by the Ohio Secretary of State. The live version checks this nightly.',`<button class="btn primary" ${act('Rechecked just now: no changes to your record')}>Recheck now</button>`)}
