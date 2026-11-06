@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Digital Ground Game</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Staatliches&family=Roboto+Condensed:wght@400;500;700&family=Alexandria:wght@900&family=Roboto+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="css/dgg.css">
+
+<!--
+  Political Hub · HTMX prototype (Digital Ground Game)
+  ─────────────────────────────────────────────────────
+  index.html        → templates/base.html (root, pop-up slot, toast, scripts)
+  css/dgg.css       → static/css/dgg.css
+  js/mock-server.js → DELETE in production (stands in for FastAPI)
+  js/data.js        → SQLite seed data
+  js/views.js       → Jinja2 templates
+  js/routes.js      → FastAPI routes
+-->
+<script>
+  /* Apply the saved sidebar state before first paint so it doesn't flash. */
+  try { if (localStorage.getItem('dgg-side') === 'collapsed') document.documentElement.dataset.side = 'collapsed'; } catch (e) {}
+</script>
+<div id="root" hx-get="/" hx-trigger="load"></div>
+<div id="modal"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/mock-server.js"></script>
+<script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/views.js"></script>
+<script src="js/routes.js"></script>
+<script>
+  /* Client-side glue that stays in production (static/js/ui.js). */
+  if (window.htmx) htmx.config.historyEnabled = false;
+  window.ui = {
+    menu(open) {
+      const side = document.getElementById('side'), scrim = document.querySelector('.scrim');
+      if (side) side.classList.toggle('open', open);
+      if (scrim) scrim.classList.toggle('open', open);
+    },
+    toggleSide() {
+      const root = document.documentElement, collapsed = root.dataset.side !== 'collapsed';
+      if (collapsed) root.dataset.side = 'collapsed'; else delete root.dataset.side;
+      try { localStorage.setItem('dgg-side', collapsed ? 'collapsed' : 'open'); } catch (e) {}
+    },
+    toast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('show');
+      clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2800);
+    },
+    theme(t) {
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      else delete document.documentElement.dataset.theme;
+    },
+    copy(text, btn) {
+      const done = () => ui.toast('Copied ' + text);
+      try { navigator.clipboard.writeText(text).then(done, () => ui.toast(text)); } catch (e) { ui.toast(text); }
+    },
+  };
+  document.body.addEventListener('toast', e => ui.toast(e.detail.value));
+  document.body.addEventListener('set-theme', e => ui.theme(e.detail.value));
+  document.body.addEventListener('htmx:afterSwap', () => ui.menu(false));
+  document.addEventListener('click', e => {
+    const m = e.target.closest('[data-ui]');
+    if (m) {
+      const a = m.dataset.ui;
+      if (a === 'side-toggle') { if (innerWidth <= 900) ui.menu(false); else ui.toggleSide(); }
+      else ui.menu(a === 'menu-open');
+    }
+    const c = e.target.closest('[data-copy]');
+    if (c) ui.copy(c.dataset.copy, c);
+    // close the account menu after choosing an item
+    const um = e.target.closest('.umenu-list button');
+    if (um) um.closest('details').open = false;
+  });
+  /* Pop-ups: focus the first control when one opens; Escape closes it. */
+  new MutationObserver(() => {
+    const f = document.querySelector('#modal .modal input:not([type=hidden]), #modal .modal .btn.primary');
+    if (f) setTimeout(() => f.focus(), 30);
+  }).observe(document.getElementById('modal'), { childList: true, subtree: false });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { const x = document.querySelector('#modal .mclose'); if (x) x.click(); }
+  });
+</script>
+
+</body></html>
