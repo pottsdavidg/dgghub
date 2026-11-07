@@ -551,7 +551,7 @@ function T_header(u,page){
  return `<header class="hubhead"><div class="hubhead-in">
   <button class="iconbtn menubtn" data-ui="menu-open" aria-label="Open menu">${ic('menu')}</button>
   <button class="hbrand" ${nav('home')}>${HUB_NAME}</button>
-  <nav class="hlinks" aria-label="Site">${L('hub','Hub',nav('home'))}<span class="hsep" aria-hidden="true">-</span>${L('about','About us',nav('about'))}<span class="hsep" aria-hidden="true">-</span><a class="hlink" href="${DISCORD_URL}" target="_blank" rel="noopener">Discord${ic('ext')}</a></nav>
+  <nav class="hlinks" aria-label="Site">${L('hub','Home',nav('home'))}<span class="hsep" aria-hidden="true">-</span>${L('about','About us',nav('about'))}<span class="hsep" aria-hidden="true">-</span><a class="hlink" href="${DISCORD_URL}" target="_blank" rel="noopener">Discord${ic('ext')}</a></nav>
   <div class="hacts">
    <button class="hmail" ${nav('mailing')} aria-label="Join the mailing list" title="Join the mailing list">${ic('mail')}</button>
    <a class="btn sm red" href="${DONATE_URL}" target="_blank" rel="noopener">${ic('heart')}<span class="hide-sm">Donate</span></a>
