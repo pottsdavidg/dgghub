@@ -1,0 +1,4 @@
+/* Registration lookup. */
+/* registration privacy note */
+.privnote{display:flex;align-items:flex-start;gap:10px;margin:0;font-size:17px;line-height:1.5;color:var(--muted);max-width:70ch}
+.privnote svg{width:18px;height:18px;flex:none;margin-top:3px;color:var(--link)}

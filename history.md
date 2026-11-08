@@ -18,11 +18,11 @@ The team's real stack is **FastAPI + HTMX + SQLite + Jinja2**. The prototype was
 | Prototype file | Becomes in production |
 |---|---|
 | `index.html` | `templates/base.html` (root div, pop-up slot, toast, scripts) |
-| `css/dgg.css` | `static/css/dgg.css` |
+| `css/*.css` | `static/css/*.css` (`base.css` = brand tokens + shared components, `shell.css` = header/sidebar/pop-ups, then one file per feature) |
 | `js/mock-server.js` | **Deleted.** It stands in for FastAPI. |
-| `js/data.js` | SQLite seed data |
-| `js/views.js` | Jinja2 templates (each `V.page` / `T_partial` function becomes a template) |
-| `js/routes.js` | FastAPI routes (each `route('GET','/path/{id}', handler)` becomes `@app.get("/path/{id}", response_class=HTMLResponse)`) |
+| `js/data/*.js` | SQLite seed data (one file per area; `db.js` loads last) |
+| `js/views/*.js` | Jinja2 templates, one file per page/feature (each `V.page` / `T_partial` function becomes a template). `core.js` = icons + shared helpers, `shell.js` = header, sidebar, pop-ups. Democracy Lab pages are in `views/lab/`, team pages in `views/team/`. |
+| `js/routes/*.js` | FastAPI routers, one file per feature (each `route('GET','/path/{id}', handler)` becomes `@app.get("/path/{id}", response_class=HTMLResponse)`). `core.js` = session, access levels, `renderPage`. |
 | inline `<script>` in index.html | `static/js/ui.js` (small client glue that stays) |
 
 **Mock server conventions (`js/mock-server.js`):**
@@ -38,7 +38,9 @@ The team's real stack is **FastAPI + HTMX + SQLite + Jinja2**. The prototype was
 - `htmx:configRequest`;
 - `HX-Trigger` events named `toast` and `set-theme`.
 
-**Size:** about 3,200 lines total: views.js ~1,040, css ~1,190, data.js ~510, routes.js ~255 (about 80 routes), mock-server ~100, index.html ~90.
+**Size:** about 3,200 lines total, split into ~60 small files (the largest is ~250 lines) so two people can work in parallel without merge conflicts. Script and stylesheet order in `index.html` matters: see the comments there.
+
+**Working in parallel:** put a feature's markup in its `js/views/` file, its endpoints in the matching `js/routes/` file, and its styles in the matching `css/` file. Add new CSS next to the rules it belongs with, not at the end of a shared file. `css/legacy.css` holds rules no current markup uses (left from earlier builds); check and delete them in a cleanup pass.
 
 **Hosting constraints:**
 - The prototype is published as a claude.ai Artifact, where the CSP blocks outside fetches and inline `onclick`. All UI clicks use delegated listeners on `data-ui` / `data-copy` attributes instead.

@@ -1,0 +1,49 @@
+/* Democracy Lab: The Blue Book (wiki), Tracker Suite, Election Models, Rolodex. */
+.slider{display:flex;flex-direction:column;gap:6px}
+.slider input{accent-color:var(--blue);width:100%}
+.slider .top{display:flex;justify-content:space-between;font-size:14px}
+.slider .top b{font-family:var(--mono);font-weight:500}
+.prob{display:flex;height:36px;border:2px solid var(--ink)}
+.prob div{display:flex;align-items:center;padding:0 10px;font:700 14px var(--head);color:#fff;white-space:nowrap;overflow:hidden;transition:width .3s}
+tr.click{cursor:pointer}
+tr.click:hover td{background:var(--surface2)}
+/* module chrome */
+.modbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--black);color:var(--white);padding:12px 16px;border-radius:2px}
+.modbar .dot{width:8px;height:8px;border-radius:50%;background:#2fd47a;box-shadow:0 0 0 3px rgba(47,212,122,.25)}
+.modbar code{font:500 13px var(--mono);color:#b9bdd0}
+.modbar .btn{margin-left:auto;box-shadow:none;border-color:var(--white);background:transparent;color:var(--white)}
+.kanban{display:grid;grid-template-columns:repeat(4,minmax(220px,1fr));gap:12px;overflow-x:auto;padding-bottom:4px}
+.kcol{background:var(--surface2);border:1px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.kcol h3{font:700 13px var(--head);text-transform:uppercase;letter-spacing:.07em;display:flex;justify-content:space-between;color:var(--muted);padding:2px 4px 4px}
+.kcard{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--blue);padding:10px 12px;display:flex;flex-direction:column;gap:6px;text-align:left}
+.kcard.hi{border-left-color:var(--red)}
+.kcard.md{border-left-color:var(--yellow)}
+.kcard b{font:700 15px/1.25 var(--head)}
+.kcard .id{font:500 12px var(--mono);color:var(--muted)}
+.kcard:hover{border-color:var(--blue)}
+.wikigrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.wcard{text-align:left;border:1px solid var(--line);background:var(--surface);padding:16px;display:flex;flex-direction:column;gap:10px;border-radius:2px}
+.wcard:hover{border-color:var(--blue);box-shadow:4px 4px 0 var(--blue)}
+.wcard .h{display:flex;gap:10px;align-items:center}
+.wcard .h b{font:700 17px/1.15 var(--head);display:block}
+.wcard .h span{font:500 12px var(--mono);color:var(--muted)}
+.wcard p{margin:0;font-size:14px;color:var(--muted);line-height:1.4}
+.article{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+.article h2{font:700 20px var(--head);border-bottom:1px solid var(--line);padding-bottom:6px;margin:22px 0 10px}
+.article p{max-width:68ch;margin:0 0 12px}
+.infobox{border:2px solid var(--ink);background:var(--surface)}
+.infobox .ttl{background:var(--black);color:var(--white);padding:10px 14px;font:400 22px var(--display);letter-spacing:.03em}
+.infobox .kv{padding:4px 14px 10px;grid-template-columns:110px 1fr;font-size:14px}
+.cite{font:500 11px var(--mono);color:var(--link);vertical-align:super}
+.slider{display:flex;flex-direction:column;gap:6px}
+.slider input{accent-color:var(--blue);width:100%}
+.slider .top{display:flex;justify-content:space-between;font-size:14px}
+.slider .top b{font-family:var(--mono);font-weight:500}
+.prob{display:flex;height:34px;border:2px solid var(--ink)}
+.prob div{display:flex;align-items:center;padding:0 10px;font:700 14px var(--head);color:#fff;white-space:nowrap;overflow:hidden;transition:width .3s}
+@media (max-width:1100px){
+  .article{grid-template-columns:1fr}
+  .infobox{order:-1}
+}
+.wcard .chip svg{width:12px;height:12px}
+.wcard{min-width:0}

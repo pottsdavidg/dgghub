@@ -1,0 +1,20 @@
+/* Resources, Help and FAQ. */
+/* resources + help */
+.resgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.rescard{display:flex;flex-direction:column;gap:6px;border:2px solid var(--ink);background:var(--surface);padding:18px;text-decoration:none;color:var(--ink);box-shadow:4px 4px 0 var(--shadow);transition:transform .08s,box-shadow .08s}
+.rescard:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue)}
+.rescard b{font:700 18px var(--head);display:flex;gap:8px;align-items:center}
+.rescard b svg{width:15px;height:15px;color:var(--link)}
+.rescard span{color:var(--muted);font-size:14px;line-height:1.45}
+.rescard .rurl{font-size:12px;margin-top:auto}
+.helpcard{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;border:2px solid var(--ink);background:var(--yellowSoft);padding:14px 18px;text-align:left;color:inherit;cursor:pointer}
+.helpcard .ic{width:40px;height:40px;display:grid;place-items:center;background:var(--surface)}
+.helpcard .ic svg{width:20px;height:20px}
+.helpcard b{display:block;font:700 17px var(--head)}
+.faq{display:flex;flex-direction:column;gap:28px}
+.faqitem{border:1px solid var(--line);background:var(--surface);margin-top:-1px}
+.faqitem summary{list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:16px 18px;font:700 17px var(--head);cursor:pointer}
+.faqitem summary::-webkit-details-marker{display:none}
+.faqitem summary svg{width:18px;height:18px;flex:none;transition:transform .15s;color:var(--muted)}
+.faqitem[open] summary svg{transform:rotate(180deg)}
+.faqitem p{margin:0;padding:0 18px 18px;line-height:1.6;max-width:75ch;color:var(--muted)}
