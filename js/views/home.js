@@ -43,11 +43,41 @@ const DASH_TOOLS=[
  ['register','Check my registration','Status, polling place, and deadlines','badge',null],
  ['trackers','Tracker Suite','Legislation, courts, agendas, and executive orders','track','team'],
 ];
+/* ---------- upcoming dates timeline (next four months, horizontal) ---------- */
+const TL_MONTHS=4, TL_W=19, TL_CARD=72, TL_GAP=18, TL_LANE=84;   // TL_W = card width, % of the timeline
+const TL_COLOR={red:'var(--red)',blue:'var(--blue)',yel:'var(--yellow)',green:'var(--green)','':'var(--muted)'};
+function T_timeline(u,dates){
+ const now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),1),end=new Date(now.getFullYear(),now.getMonth()+TL_MONTHS,1);
+ const pct=t=>Math.max(0,Math.min(100,(t-start)/(end-start)*100)), day=iso=>new Date(iso+'T12:00:00');
+ const months=[...Array(TL_MONTHS)].map((_,i)=>{const a=new Date(start.getFullYear(),start.getMonth()+i,1),b=new Date(start.getFullYear(),start.getMonth()+i+1,1);
+  return {l:a.toLocaleDateString('en-US',{month:'short'})+(i===0||a.getMonth()===0?' '+a.getFullYear():''),x:pct(a),w:pct(b)-pct(a)}});
+ // Place each event in a lane above or below the axis, alternating sides, so cards never overlap.
+ const lanes={up:[],down:[]};
+ const evs=dates.filter(e=>day(e[0])<end).map((e,i)=>{const x=pct(day(e[0])),flip=x+TL_W>100,a=flip?x-TL_W:x,b=a+TL_W,sides=i%2?['down','up']:['up','down'];
+  for(let k=0;;k++){const side=sides[k%2],lane=k>>1,used=lanes[side][lane]||(lanes[side][lane]=[]);
+   if(!used.some(([p,q])=>a<q+2&&p<b+2)){used.push([a,b]);return {e,a,flip,side,lane}}}});
+ const h=n=>n?TL_GAP+(n-1)*TL_LANE+TL_CARD:0, upH=34+h(lanes.up.length), downH=Math.max(evs.length?12:64,h(lanes.down.length)+12);
+ const when=iso=>{const n=daysUntil(iso),f=fmtDate(iso);return `${f.m} ${f.d} · ${n===0?'Today':n===1?'Tomorrow':n+' days'}`};
+ const ev=({e:[d,l,k,c,st],a,flip,side,lane})=>`<div class="ut-ev ${side}${flip?' flip':''}" role="listitem" style="left:${a.toFixed(2)}%;width:${TL_W}%;height:${TL_GAP+lane*TL_LANE+TL_CARD}px;--c:${TL_COLOR[c]||TL_COLOR['']}" title="${esc(l)} · ${k}${st?' · '+st:''}"><div class="ut-card"><span class="ut-when tab-nums">${when(d)}</span><span class="ut-t">${l}</span></div></div>`;
+ const kinds=[...new Map(evs.map(v=>[v.e[2],v.e[3]])).entries()];
+ return `<section class="panel ut-panel">${ph('Upcoming dates',`<span class="chip">Next ${TL_MONTHS} months</span><a class="btn sm ghost" href="${DGG_CALENDAR}" target="_blank" rel="noopener">${ic('cal')}DGG calendar</a>`)}
+  <div class="ut-scroll"><div class="ut" role="list" aria-label="Upcoming dates, next ${TL_MONTHS} months">
+   ${months.slice(1).map(m=>`<i class="ut-grid" style="left:${m.x.toFixed(2)}%"></i>`).join('')}
+   <div class="ut-today" style="left:${pct(now).toFixed(2)}%"><b>Today</b></div>
+   <div class="ut-up" style="height:${upH}px">${evs.filter(v=>v.side==='up').map(ev).join('')}</div>
+   <div class="ut-axis">${months.map(m=>`<span style="width:${m.w.toFixed(2)}%">${m.l}</span>`).join('')}</div>
+   <div class="ut-down" style="height:${downH}px">${evs.filter(v=>v.side==='down').map(ev).join('')}${evs.length?'':`<p class="ut-empty">No key dates in the next ${TL_MONTHS} months.</p>`}</div>
+  </div></div>
+  ${(f=>f.trim()?`<div class="ut-foot">${f}</div>`:'')(`${kinds.map(([k,c])=>`<span class="ut-key" style="--c:${TL_COLOR[c]||TL_COLOR['']}">${k}</span>`).join('')}
+   ${isV(u)?`<span class="ut-note">${ic('pin')}Want dates for your state? <button class="linkbtn" hx-post="/prompt/account" ${vals({why:'dates'})} hx-swap="none">Create a free account</button></span>`
+    :!u.location?`<span class="ut-note">${ic('pin')}Want dates for your state? <button class="linkbtn" ${nav('settings')}>Add your location</button></span>`:''}`)}
+ </section>`;
+}
 V.home=u=>{
  const next=nextElection(u),loc=u.location;
  const greet=isV(u)?'Welcome!':`Welcome back, ${esc(u.first)}!`;
  const donate=!isMember(u)&&!u.donate_dismissed?`<div class="donate" id="donatebar"><button class="iconbtn close" hx-post="/dashboard/dismiss-donate" hx-target="#donatebar" hx-swap="outerHTML" aria-label="Dismiss">${ic('x')}</button><div class="msg"><b>Keep this hub free for every voter.</b> No ads, no paywall. If you can, chip in.</div><div class="give"><a class="btn red" href="${DONATE_URL}" target="_blank" rel="noopener">${ic('heart')}Donate</a></div></div>`:'';
- const dates=IMPORTANT_DATES.filter(x=>!x[4]||(loc&&!isV(u)&&x[4]===loc.state)).filter(x=>daysUntil(x[0])>=0).sort((a,b)=>a[0].localeCompare(b[0])).slice(0,5);
+ const dates=IMPORTANT_DATES.filter(x=>!x[4]||(loc&&!isV(u)&&x[4]===loc.state)).filter(x=>daysUntil(x[0])>=0).sort((a,b)=>a[0].localeCompare(b[0]));
  const tool=([p,t,d,i,lock])=>{const locked=lock&&!isMember(u);return `<button class="row" ${locked?`hx-post="/prompt/team" ${vals({why:'trackers'})} hx-swap="none"`:nav(p)}><span class="ic ${locked?'yel':''}">${ic(i)}</span><span><span class="t">${t}</span>${locked?ic('lock','inlock'):''}<br><span class="d">${d}</span></span>${arrow()}</button>`};
  return `<div class="dash-top"><h1 class="welcome">${greet}</h1>${donate}</div>
  ${loc?`<div class="locline">${ic('pin')}<span>Showing information for <b>${esc(loc.city||'')}${loc.city?', ':''}${esc(STATE_BY[loc.state]?.[1]||loc.state)}</b></span><button class="linkbtn" hx-get="/dash/locform" hx-target="#locbox">Change location</button></div><div id="locbox"></div>`
@@ -60,6 +90,7 @@ V.home=u=>{
    <button class="row" ${nav('inbox')}><span class="ic">${ic('mail')}</span><span><span class="t">${MESSAGES.filter(m=>m.unread).length} unread messages</span><br><span class="d">Inbox · latest from DGG Leadership</span></span><span class="chip blue">Inbox</span></button>
    <button class="row" ${nav('tasks')}><span class="ic yel">${ic('check')}</span><span><span class="t">${(n=>n+(n===1?' task':' tasks'))(DB.tasks.filter(t=>t.team===u.team&&t.who==='JE'&&t.status!=='Done').length)} assigned to you</span><br><span class="d">Tasks · ${TEAMS[u.team].n}</span></span><span class="chip yel">Tasks</span></button>
   </div></section>`:''}
+ ${T_timeline(u,dates)}
  <div class="dash-grid">
   <section class="panel">${ph('What changed this week',`<button class="btn sm ghost" ${nav('bills')}>All bills</button>`)}<div class="rows">
    <button class="row" ${nav('bill/hr2817')}><span class="ic">${ic('doc')}</span><span><span class="t">H.R. 2817 passed the House</span><br><span class="d">Rural Broadband Access Act · ${isV(u)?'251–178':'your representative voted Yea'}</span></span><span class="chip blue">Oct 20</span></button>
@@ -67,10 +98,6 @@ V.home=u=>{
    ${ALL_FED.slice(3,5).map(b=>`<button class="row" ${nav('bill/'+b.id)}><span class="ic">${ic('doc')}</span><span><span class="t">${b.num} · ${STAGES[b.stage]}</span><br><span class="d">${b.title}</span></span><span class="chip">${b.updated}</span></button>`).join('')}
   </div></section>
   <section class="panel">${ph('Explore tools')}<div class="rows">${DASH_TOOLS.map(tool).join('')}</div></section>
-  <section class="panel">${ph('Upcoming dates',`<a class="btn sm ghost" href="${DGG_CALENDAR}" target="_blank" rel="noopener">${ic('cal')}DGG calendar</a>`)}<div class="rows">
-   ${dates.map(([d,l,k,c,st])=>`<div class="row daterow"><div class="edate"><small>${fmtDate(d).m}</small><b class="tab-nums">${fmtDate(d).d}</b></div><span><span class="t">${l}</span><br><span class="chip ${c}">${k}${st?' · '+st:''}</span></span><span class="d tab-nums">${daysUntil(d)}d</span></div>`).join('')}
-   ${isV(u)||!loc?`<button class="row note-row" ${isV(u)?'hx-post="/prompt/account" '+vals({why:'dates'})+' hx-swap="none"':nav('settings')}><span class="ic yel">${ic('pin')}</span><span><span class="t">Want dates for your state?</span><br><span class="d">${isV(u)?'Create a free account to see deadlines where you live.':'Add your location in Settings.'}</span></span>${arrow()}</button>`:''}
-  </div></section>
  </div>
  <section class="cta ctabox"><div class="cta-h"><div><span class="label" style="color:#9a9ca6">Call to action · ${CTA.date} · ${CTA.by}</span><h2>${CTA.title.replace('Take back','<span>Take back').replace('Senate','Senate</span>')}</h2></div><a class="btn sm" href="${CTA.url}" target="_blank" rel="noopener">${ic('ext')}Read the full CTA</a></div>
   <ol class="ctasteps">${CTA.steps.map(([t,d,l])=>`<li><b>${t}</b><span>${d}</span>${l?(l[1].startsWith('#')?`<button class="btn sm primary" ${nav(l[1].slice(1))}>${l[0]}</button>`:`<a class="btn sm primary" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`):''}</li>`).join('')}</ol>
