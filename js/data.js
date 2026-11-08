@@ -424,7 +424,15 @@ const OH_BILLS=makeBills(STATE_BILL_TITLES,['HB','SB','HB'],'Ohio','oh');
 BILLS.forEach(b=>{b.party=b.party||({hr2817:'B',s904:'D',hb112:'B',sb58:'D',hr1450:'R',hb230:'D'}[b.id]||'B');b.ts=+new Date(2026,10,4)});
 const ALL_FED=[...BILLS.filter(b=>b.lvl==='Federal'),...FED_BILLS];
 const ALL_OH=[...BILLS.filter(b=>b.lvl!=='Federal'),...OH_BILLS];
-const findBill=id=>[...ALL_FED,...ALL_OH].find(b=>b.id===id);
+const STATE_BILL_CACHE={OH:ALL_OH};
+function billsForState(st){
+ if(STATE_BILL_CACHE[st])return STATE_BILL_CACHE[st];
+ const name=STATE_BY[st][1];
+ const titles=STATE_BILL_TITLES.map(t=>t.replace('Ohio',name).replace('Lake Erie Algae Prevention Act','Clean Lakes and Rivers Act'));
+ const list=makeBills(titles,['HB','SB','HB'],name,st.toLowerCase()).map(b=>({...b,id:st.toLowerCase()+'-'+b.id}));
+ return STATE_BILL_CACHE[st]=list;
+}
+const findBill=id=>[ALL_FED,...Object.values(STATE_BILL_CACHE)].flat().find(b=>b.id===id)||(()=>{const m=/^([a-z]{2})-/.exec(id);if(m&&STATE_BY[m[1].toUpperCase()])return billsForState(m[1].toUpperCase()).find(b=>b.id===id)})();
 
 /* DGG community ballot breakdowns (only some candidates have one, on purpose) */
 const BREAKDOWNS={
@@ -457,7 +465,7 @@ const PARTNERS=[['Swing Left','Ran the Bucks County, PA canvass with our Northea
 
 /* Help & FAQ */
 const FAQ=[
- ['The site','Do I need an account to use the Political Hub?','No. Anyone can look up registration, sample ballots, representatives, bills, and Civics 101. A free account saves your information so you don\'t re-enter it, and unlocks DGG Media, Local Chapter, and more.'],
+ ['The site','Do I need an account to use this site?','No. Anyone can look up registration, sample ballots, representatives, bills, and Civics 101. A free account saves your information so you don\'t re-enter it, and unlocks Political Media, Local Chapter, and more.'],
  ['The site','Where does the information come from?','Official public sources such as Congress.gov and state election offices, plus research from DGG\'s Research Team. Each section notes its source.'],
  ['The site','How do I pin something to my dashboard?','Look for the pin icon on any card, or the flag next to a bill. Pinned items show up at the top of your dashboard.'],
  ['The site','Is my voting history private?','Whether you voted is public record in most states. How you voted is always secret and is never collected here.'],

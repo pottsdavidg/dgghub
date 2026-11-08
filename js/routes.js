@@ -88,7 +88,7 @@ route('POST','/auth/signin',({form,res})=>{
 route('POST','/auth/signup',({form,res})=>{
  const v=SESSION.visitor,name=(form.name||'New Member').trim();
  const u={id:DB.users.length+1,name,first:name.split(' ')[0],email:form.email||'',account:'account',team:null,theme:v.theme,donate_dismissed:false,
-  pins:[...v.pins],location:v.location,lookups:{},noTeamPrompts:false};
+  pins:[...v.pins],location:STATE_BY[form.state]?{address:form.address||'',city:form.city||'',state:form.state,zip:form.zip||''}:v.location,lookups:{},noTeamPrompts:false};
  DB.users.push(u);SESSION.user_id=u.id;SESSION.visitor=newVisitor();toRoot(res);
  if(form.join){res.toast('Account created. Now let\'s find your team.');return renderPage('join',{res})}
  res.toast('Account created. Your info is saved.');return renderPage('home',{res});
@@ -96,6 +96,8 @@ route('POST','/auth/signup',({form,res})=>{
 route('POST','/auth/signout',({res})=>{SESSION.user_id=null;SESSION.quiz=null;SESSION.visitor=newVisitor();res.toast('Signed out');return renderPage('home',{res})});
 
 /* ---------- pop-ups ---------- */
+// sidebar light/dark switch: the browser sends the theme it's showing now as `current`
+route('POST','/ui/theme/toggle',({form,res})=>{const u=currentUser();u.theme=form.current==='dark'?'light':'dark';res.trigger('set-theme',u.theme);return ''});
 route('POST','/ui/modal/close',({form})=>{const u=currentUser();
  if(form.dont_show==='account')u.noPrompts=true;
  if(form.dont_show==='team')u.noTeamPrompts=true;
@@ -153,14 +155,16 @@ route('GET','/reps/search',({query})=>{const u=currentUser(),s=(query.q||'').tri
  const all=[...ALLREPS,...Object.values(REP_INDEX)],seen=new Set();
  const hits=all.filter(r=>!seen.has(r.id)&&seen.add(r.id)&&(r.name+' '+r.office+' '+r.scope).toLowerCase().includes(s)).slice(0,8);
  return hits.length?`<div class="represults">${hits.map(r=>repMini(u,r)).join('')}</div>`:`<p class="d" style="margin:8px 0 0">No politicians match "${esc(query.q)}".</p>`});
-route('GET','/bills/table',({query,res})=>{const u=currentUser();const scope=u.account==='visitor'?'federal':(query.scope==='state'?'state':'federal');
- return T_bills_table(u,scope,query.q,[10,25,50].includes(+query.limit)?+query.limit:10)});
+route('GET','/bills/table',({query})=>{const u=currentUser();let scope=u.account==='visitor'?'federal':(query.scope==='state'?'state':'federal');
+ // picking a different state in the dropdown switches the table to that state's bills
+ if(u.account!=='visitor'&&query.st&&STATE_BY[query.st]){if(query.st!==u.billState)scope='state';u.billState=query.st}
+ return T_bills_table(u,scope,query.q,[10,25,50].includes(+query.limit)?+query.limit:10)+T_scopeseg(u,scope,true)});
 route('GET','/bills/{id}/diff',({params,query})=>T_bill_diff(params.id,Math.max(0,Math.min(2,+query.ver||0))));
 
 /* ---------- civics, media, election data, resources ---------- */
 route('GET','/civics/tab',({query})=>T_civics_body(currentUser(),CIVICS_TABS.some(t=>t[0]===query.t)?query.t:'overview'));
 route('GET','/help/search',({query})=>T_faq(query.q));
-route('GET','/media/tab',({query})=>T_media_body2(currentUser(),MEDIA_TABS.some(t=>t[0]===query.t)?query.t:'videos'));
+route('GET','/media/tab',({query})=>T_media_body2(currentUser(),MEDIA_TABS.some(t=>t[0]===query.t)?query.t:'dgg'));
 route('GET','/media/list',({query})=>T_media_body(query.filter||'all'));
 route('POST','/elections/flip',({form})=>{const p=SESSION.mapPicks,cur=p[form.st]||'T';p[form.st]={T:'D',D:'R',R:'T'}[cur];return T_evmap('build',p)});
 route('POST','/elections/reset',()=>{SESSION.mapPicks={};return T_evmap('build',{})});

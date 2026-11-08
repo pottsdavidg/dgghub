@@ -1,12 +1,11 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Digital Ground Game</title>
+<title>Politics</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Staatliches&family=Roboto+Condensed:wght@400;500;700&family=Alexandria:wght@900&family=Roboto+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="css/dgg.css">
 
 <!--
-  Political Hub · HTMX prototype (Digital Ground Game)
+  Politics · HTMX prototype (Digital Ground Game)
   ─────────────────────────────────────────────────────
   index.html        → templates/base.html (root, pop-up slot, toast, scripts)
   css/dgg.css       → static/css/dgg.css
@@ -59,6 +58,11 @@
   document.body.addEventListener('toast', e => ui.toast(e.detail.value));
   document.body.addEventListener('set-theme', e => ui.theme(e.detail.value));
   document.body.addEventListener('htmx:afterSwap', () => ui.menu(false));
+  // Tell the server which theme is showing, so the sidebar switch flips the right way
+  document.body.addEventListener('htmx:configRequest', e => {
+    if (e.detail.path === '/ui/theme/toggle')
+      e.detail.parameters.current = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  });
   document.addEventListener('click', e => {
     const m = e.target.closest('[data-ui]');
     if (m) {
@@ -81,5 +85,3 @@
     if (e.key === 'Escape') { const x = document.querySelector('#modal .mclose'); if (x) x.click(); }
   });
 </script>
-
-</body></html>

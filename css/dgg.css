@@ -1109,3 +1109,77 @@ html[data-side="collapsed"] .navbtn{position:relative}
  .cand-toggle .party{display:none}
 }
 .cta-h a.btn{color:#fff!important;border-color:#fff;background:transparent}
+
+/* =====================================================================
+   Header + sidebar follow the theme: white with dark text in light mode
+   ===================================================================== */
+:root{--chrome:#FBFCFF;--chrome-fg:#242424;--chrome-muted:#596079;--chrome-hover:#EEF1FA;--chrome-line:#DCE1F0;--chrome-accent:#1144FF;--chrome-tag:#8A6A00;--chrome-shadow:#242424;--tile-bg:#1144FF;--tile-pat:.22}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--chrome:#242424;--chrome-fg:#FBFCFF;--chrome-muted:#9A9CA6;--chrome-hover:#2F2F2F;--chrome-line:#3A3A3A;--chrome-accent:#FFC800;--chrome-tag:#FFC800;--chrome-shadow:#000;--tile-bg:#242424;--tile-pat:.09}}
+:root[data-theme="dark"]{--chrome:#242424;--chrome-fg:#FBFCFF;--chrome-muted:#9A9CA6;--chrome-hover:#2F2F2F;--chrome-line:#3A3A3A;--chrome-accent:#FFC800;--chrome-tag:#FFC800;--chrome-shadow:#000;--tile-bg:#242424;--tile-pat:.09}
+
+.hubhead{background:var(--chrome);color:var(--chrome-fg)}
+.hbrand,.hlink,.hsep,.menubtn,.umenu>summary{color:var(--chrome-fg)}
+.hlink:hover{color:var(--chrome-accent)}
+.umenu>summary:hover,.menubtn:hover{background:var(--chrome-hover)}
+.hmail{border-color:var(--chrome-fg);box-shadow:3px 3px 0 var(--chrome-shadow)}
+.hmail:hover{box-shadow:4px 4px 0 var(--chrome-shadow)}
+.hubhead .btn{box-shadow:3px 3px 0 var(--chrome-shadow)}
+.side{background:var(--chrome);color:var(--chrome-fg);border-right:1px solid var(--chrome-line)}
+.side-head{background-color:var(--tile-bg);border-bottom-color:var(--chrome-line)}
+.side-head.tilebg.dark::before{opacity:var(--tile-pat);background-size:520px}
+.side-toggle{background:rgba(0,0,0,.35)}
+.side-toggle:hover{background:rgba(0,0,0,.55)}
+.side-expand{color:var(--chrome-fg)}
+.navgroup{color:var(--chrome-muted)}
+.navbtn,.navbtn[aria-current="page"]{color:var(--chrome-fg)}
+.navbtn:hover{background:var(--chrome-hover);color:var(--chrome-fg)}
+.navsub{border-left-color:var(--chrome-line)}
+.side-bottom{border-top-color:var(--chrome-line)}
+html[data-side="collapsed"] .navgroup{border-top-color:var(--chrome-line)}
+.teamtag{color:var(--chrome-accent)}
+.navbtn .freetag{border-color:var(--chrome-tag);color:var(--chrome-tag)}
+.jointeam{border-color:var(--chrome-fg)}
+
+/* sidebar light/dark switch shows the mode you'd switch to */
+.themetoggle .tt-light{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .themetoggle .tt-light{display:inline-grid}:root:not([data-theme="light"]) .themetoggle span.nlabel.tt-light{display:inline}:root:not([data-theme="light"]) .themetoggle .tt-dark{display:none}}
+:root[data-theme="dark"] .themetoggle .tt-light{display:inline-grid}
+:root[data-theme="dark"] .themetoggle span.nlabel.tt-light{display:inline}
+:root[data-theme="dark"] .themetoggle .tt-dark{display:none}
+html[data-side="collapsed"] .themetoggle .nlabel{display:none!important}
+
+/* registration privacy note */
+.privnote{display:flex;align-items:flex-start;gap:10px;margin:0;font-size:17px;line-height:1.5;color:var(--muted);max-width:70ch}
+.privnote svg{width:18px;height:18px;flex:none;margin-top:3px;color:var(--link)}
+
+/* sign-up address fields */
+.addrset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.addrset legend{margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:baseline}
+.addrset legend .d{font:400 13px var(--body);text-transform:none;letter-spacing:0}
+.addrrow{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,.8fr);gap:8px}
+.addrset input,.addrset select{width:100%}
+
+/* bills state picker */
+.scopeseg{align-items:stretch}
+.statesel{border:0;border-left:2px solid var(--ink);background:var(--surface);color:var(--ink);font:700 13px var(--head);padding:0 10px;max-width:180px;cursor:pointer}
+.statesel.on{background:var(--yellowSoft)}
+
+/* Political Media: three large centered tabs */
+.bigtabs{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.bigtabs button{display:inline-flex;align-items:center;gap:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);font:400 clamp(22px,2.2vw,30px)/1 var(--display);letter-spacing:.03em;padding:16px 28px;border-radius:2px;cursor:pointer;box-shadow:4px 4px 0 var(--shadow);transition:transform .08s,box-shadow .08s;min-width:220px;justify-content:center}
+.bigtabs button svg{width:22px;height:22px}
+.bigtabs button:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue)}
+.bigtabs button[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:5px 5px 0 var(--shadow)}
+.localhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:17px}
+.localhead>div{display:flex;gap:10px;align-items:center}
+.localhead svg{width:20px;height:20px;color:var(--red)}
+.newsrow{grid-template-columns:auto 1fr auto}
+@media (max-width:600px){.bigtabs button{min-width:0;flex:1 1 100%;padding:12px 16px}.addrrow{grid-template-columns:1fr}}
+
+/* Keep tags inside their cards at any width */
+.creatorcard .h{flex-wrap:wrap}
+.creatorcard .h>div:not(.avatar){flex:1 1 120px;min-width:0}
+.creatorcard .h>div:not(.avatar) span{display:block;overflow-wrap:anywhere}
+.creatorcard .h .chip{margin-left:auto;flex:none}
+.wcard,.regioncard{min-width:0}
+.rmeta .chip{max-width:100%;white-space:normal;line-height:1.25;text-align:left}

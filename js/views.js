@@ -425,7 +425,7 @@ V.about=()=>T_public('about',`${T_pubhero('About us','Vote loud, <span>lead loud
 
 V.regions=()=>T_public('regions',`${T_pubhero('Regions','Find your <span>squad</span>','Members organize through five regional squads. Each squad runs local events, canvasses, and news dispatches, then joins national mobilizations.')}
  <div class="pubwrap pubbody"><div class="regiongrid">${REGIONS.map(r=>`<button class="regioncard" hx-get="/site/regions/${r.slug}" hx-target="#root" hx-swap="innerHTML show:window:top"><span class="label">${r.slug==='international'?'Worldwide':r.states.length+' states'}</span><h2>${r.name}</h2><p>${r.tag}</p>
-  <div class="rmeta">${r.team.length?`<span class="chip">${r.team.length} leads & organizers</span>`:''}${r.cities.length?`<span class="chip blue">${r.cities.slice(0,3).join(' · ')}</span>`:''}</div>${arrow()}</button>`).join('')}</div></div>`);
+  <div class="rmeta">${r.team.length?`<span class="chip">${r.team.length} leads & organizers</span>`:''}${r.cities.slice(0,3).map(c=>`<span class="chip blue">${c}</span>`).join('')}</div>${arrow()}</button>`).join('')}</div></div>`);
 
 V.region=(u,q,slug)=>{const r=REGIONS.find(x=>x.slug===slug)||REGIONS[0];
  return T_public('regions',`${T_pubhero(r.slug==='international'?'International Squad':r.name+' Region',r.name,r.tag,`<div class="herobtns"><a class="btn" href="${DISCORD_URL}" target="_blank" rel="noopener">${ic('chat')}Join #${r.slug} on Discord</a>${r.next?`<a class="btn ghosty" href="${r.next[1]}" target="_blank" rel="noopener">${r.next[0]}</a>`:''}</div>`)}
@@ -538,7 +538,12 @@ function T_auth_modal(mode,join){
   ${su?`<div class="field"><label class="label" for="m-name">Full name</label><input id="m-name" name="name" value="Jordan Ellis" autocomplete="name"></div>`:''}
   <div class="field"><label class="label" for="m-email">Email</label><input id="m-email" name="email" type="email" value="jordan.ellis@example.org" autocomplete="email"></div>
   <div class="field"><label class="label" for="m-pw">Password</label><input id="m-pw" name="password" type="password" value="demo-password" autocomplete="${su?'new':'current'}-password"></div>
-  ${su?`<label class="checkrow"><input type="checkbox" name="join" value="1" ${join?'checked':''}>I want to join a Digital Ground Game team</label>`:''}
+  ${su?`<fieldset class="addrset"><legend class="label">Home address <span class="d">(fills in your ballot, representatives, and dates)</span></legend>
+   <div class="field"><label class="sr" for="m-addr">Street address</label><input id="m-addr" name="address" placeholder="Street address" autocomplete="street-address" value="${esc(CTX().location?.address||'1420 Neil Ave')}"></div>
+   <div class="addrrow"><div class="field"><label class="sr" for="m-city">City</label><input id="m-city" name="city" placeholder="City" autocomplete="address-level2" value="${esc(CTX().location?.city||'Columbus')}"></div>
+    <div class="field"><label class="sr" for="m-state">State</label><select id="m-state" name="state" autocomplete="address-level1"><option value="">State</option>${STATE_OPTS(CTX().location?.state||'OH')}</select></div>
+    <div class="field"><label class="sr" for="m-zip">ZIP</label><input id="m-zip" name="zip" placeholder="ZIP" inputmode="numeric" autocomplete="postal-code" value="${esc(CTX().location?.zip||'43201')}"></div></div></fieldset>
+  <label class="checkrow"><input type="checkbox" name="join" value="1" ${join?'checked':''}>I want to join a Digital Ground Game team</label>`:''}
   <button class="btn primary block" type="submit">${su?'Create account':'Sign in'}</button>
  </form><p class="demo-note" style="margin:0">Prototype: any email and password work.</p>`);
 }
@@ -574,10 +579,11 @@ function T_sidebar(u,page){
  let top,bottom='';
  if(isV(u)){
   top=group('Digital Hub')+item(['home','Dashboard','home'])+GOV.map(x=>item(x)).join('');
-  bottom=item(['resources','Resources','info'])+item(['help','Help','help']);
+  bottom=item(['resources','Resources','info'])+item(['help','Help','help'])
+   +`<button class="navbtn themetoggle" hx-post="/ui/theme/toggle" hx-swap="none" title="Switch between light and dark mode"><span class="nico tt-dark">${ic('moon')}</span><span class="nico tt-light">${ic('sun')}</span><span class="nlabel tt-dark">Dark mode</span><span class="nlabel tt-light">Light mode</span></button>`;
  } else {
   top=group('Digital Hub')+item(['home','Dashboard','home'])+drop('Your Government','scale',GOV)
-   +group('Digital Tools')+drop('Resources','info',[['resources','Resources','info'],['help','Help & FAQ','help']])+item(['media','DGG Media','play'])
+   +group('Digital Tools')+drop('Resources','info',[['resources','Resources','info'],['help','Help & FAQ','help']])+item(['media','Political Media','play'])
    +(isMember(u)?'':item(['chapter','Local Chapter','pin']))+item(['elections','Election Data','map'],{badge:'<span class="freetag">Soon</span>'})
    +drop('Democracy Lab','flask',LAB,{lock:!isMember(u)})
    +(isMember(u)?group('DGG Team')+TEAMNAV.map(x=>item(x,{badge:x[0]==='inbox'&&unread?`<span class="navcount">${unread}</span>`:''})).join(''):'');
@@ -689,7 +695,7 @@ const T_reg_form=(u,again)=>`<section class="panel"><div class="panel-h"><h2>${a
 V.register=u=>{
  const show=!isV(u)||u.lookups?.register;
  const top=head('Registration',show?'Your record as held by your state\'s election office. The live version checks it nightly.':'Enter your information to check your voter registration, polling place, and deadlines.','<span class="sample">Sample data</span>');
- if(!show)return top+T_reg_form(u)+`<p class="demo-note">${ic('lock')} We only use this to look up your public voter record. ${isV(u)?'With a free account, we save it so you won\'t need to enter it again.':''}</p>`;
+ if(!show)return top+T_reg_form(u)+`<p class="privnote">${ic('lock')}<span>We only use this to look up your public voter record. ${isV(u)?'With a free account, we save it so you won\'t need to enter it again.':''}</span></p>`;
  return `${top}<div class="grid g3">
   <section class="panel span2">${ph('Your record',`<span class="chip green">${ic('check')}Active</span>${pinBtn(u,'reg:record')}`)}<div class="panel-b"><div class="kv">
    <div class="k">Name</div><div class="v">${USER.name}</div><div class="k">Registered address</div><div class="v">${USER.addr}</div>
@@ -805,24 +811,27 @@ V.rep=(u,q,id)=>{
 };
 
 /* ---------- bills & laws ---------- */
+const defaultBillState=u=>(u.location&&STATE_BY[u.location.state]&&u.location.state!=='DC')?u.location.state:'OH';
+const T_scopeseg=(u,scope,oob)=>`<div class="seg scopeseg" id="scopeseg" role="radiogroup" aria-label="Federal or state bills" ${oob?'hx-swap-oob="true"':''}>
+   <label><input type="radio" name="scope" value="federal" ${scope==='federal'?'checked':''}>Federal</label>
+   ${isV(u)?`<button type="button" class="lockedopt" hx-post="/prompt/account" ${vals({why:'statebills'})} hx-swap="none">${ic('lock')}My state</button>`
+   :`<label class="stateopt"><input type="radio" name="scope" value="state" ${scope==='state'?'checked':''}>State</label><label class="sr" for="billst">Choose a state</label><select id="billst" name="st" class="statesel ${scope==='state'?'on':''}">${STATES.filter(x=>x[0]!=='DC').map(([c,n])=>`<option value="${c}" ${(u.billState||defaultBillState(u))===c?'selected':''}>${n}</option>`).join('')}</select>`}
+  </div>`;
 function T_bills_table(u,scope,q,limit){
- const s=(q||'').toLowerCase(),src=scope==='state'?ALL_OH:ALL_FED;
+ const st=u.billState||defaultBillState(u),s=(q||'').toLowerCase(),src=scope==='state'?billsForState(st):ALL_FED;
  const list=src.filter(b=>!s||(b.num+' '+b.title).toLowerCase().includes(s)).sort((a,b)=>b.ts-a.ts).slice(0,limit);
  const help=isV(u)?`hx-post="/prompt/account" ${vals({why:'contribute'})} hx-swap="none"`:isMember(u)?act('Would open the bill editor so you can fill in the missing details'):`hx-post="/prompt/team" ${vals({why:'contribute'})} hx-swap="none"`;
  return `<div id="bills-table"><div class="tbl-wrap"><table class="billtbl"><thead><tr><th style="width:44px"><span class="sr">Pin</span></th><th>Bill</th><th>Title</th><th>Progress</th><th>Introduced by</th></tr></thead><tbody>
  ${list.map(b=>`<tr><td>${flagBtn(u,'bill:'+b.id)}</td><td class="mono" style="white-space:nowrap;font-size:13px">${b.num}</td><td style="min-width:240px"><button class="linkbtn tlink" ${nav('bill/'+b.id)}>${b.title}</button><br><span class="d">Updated ${b.updated}</span></td>
   <td style="min-width:170px"><div style="display:flex;flex-direction:column;gap:6px"><span class="label" style="font-size:11px">${STAGES[b.stage]}</span>${pipe(b.stage)}</div></td>
   <td>${b.party?partyChip(b.party):`<button class="chip yel helpchip" ${help}>${ic('pen')}Missing · help fill in</button>`}</td></tr>`).join('')||'<tr><td colspan="5" style="color:var(--muted)">No bills match that search.</td></tr>'}
- </tbody></table></div><div class="tblfoot"><span class="d">Showing ${list.length} of ${src.length} ${scope==='state'?'Ohio':'federal'} bills, most recently updated first</span></div></div>`;
+ </tbody></table></div><div class="tblfoot"><span class="d">Showing ${list.length} of ${src.length} ${scope==='state'?STATE_BY[st][1]:'federal'} bills, most recently updated first</span></div></div>`;
 }
-V.bills=(u,q)=>{const scope=isV(u)?'federal':(q.scope==='state'?'state':'federal'),limit=[10,25,50].includes(+q.limit)?+q.limit:10;
+V.bills=(u,q)=>{u.billState=u.billState||defaultBillState(u);const scope=isV(u)?'federal':(q.scope==='state'?'state':'federal'),limit=[10,25,50].includes(+q.limit)?+q.limit:10;
  return `${head('Bills & Laws','Legislation sorted by latest activity. Flag a bill to pin it to your dashboard.','<span class="sample">Sample data</span>')}
  <form class="billctl" id="billctl" hx-get="/bills/table" hx-target="#bills-table" hx-swap="outerHTML" hx-trigger="change, keyup changed delay:250ms from:#billq, search from:#billq">
   <label class="search grow">${ic('search')}<input id="billq" name="q" type="search" value="${esc(q.q||'')}" placeholder="Search bills by number or title" aria-label="Search bills"></label>
-  <div class="seg scopeseg" role="radiogroup" aria-label="Federal or state bills">
-   <label><input type="radio" name="scope" value="federal" ${scope==='federal'?'checked':''}>Federal</label>
-   ${isV(u)?`<button type="button" class="lockedopt" hx-post="/prompt/account" ${vals({why:'statebills'})} hx-swap="none">${ic('lock')}My state</button>`:`<label><input type="radio" name="scope" value="state" ${scope==='state'?'checked':''}>${u.location?.state==='OH'||!u.location?'Ohio':STATE_BY[u.location.state][1]}</label>`}
-  </div>
+  ${T_scopeseg(u,scope)}
   <label class="field inline"><span class="label">Show</span><select name="limit">${[10,25,50].map(n=>`<option ${n===limit?'selected':''}>${n}</option>`).join('')}</select></label>
  </form>
  <section class="panel">${T_bills_table(u,scope,q.q,limit)}</section>`;
@@ -874,30 +883,63 @@ V.resources=u=>`${head('Resources','Trusted tools and partner organizations for 
  ${isMember(u)?`<section><div class="sechead"><h2>Team resources</h2></div><div class="resgrid"><a class="rescard" href="https://drive.google.com/" target="_blank" rel="noopener"><b>Shared Google Drive${ic('ext')}</b><span>Talking points, walk lists, graphics, and training videos for team members.</span></a></div></section>`:''}`;
 const T_faq=q=>{const s=(q||'').toLowerCase(),list=FAQ.filter(([g,qq,a])=>!s||(qq+' '+a).toLowerCase().includes(s)),groups=[...new Set(list.map(x=>x[0]))];
  return `<div id="faq-list" class="faq">${groups.map(g=>`<section><div class="sechead"><h2>${g}</h2></div>${list.filter(x=>x[0]===g).map(([,qq,a])=>`<details class="faqitem" ${s?'open':''}><summary>${qq}${ic('down')}</summary><p>${a}</p></details>`).join('')}</section>`).join('')||'<p class="d">No answers match that search. Ask the team on Discord.</p>'}</div>`};
-V.help=()=>`${head('Help','Answers about the Political Hub and Digital Ground Game.')}
+V.help=()=>`${head('Help','Answers about this site and Digital Ground Game.')}
  <section class="dcta discord"><div class="dicon">${ic('chat')}</div><div class="dtext"><span class="label" style="color:#9a9ca6">Real people, fast answers</span><b>Can't find what you need?</b><span>Our Welcome Team answers questions on Discord every day.</span></div><a class="btn" href="${DISCORD_URL}" target="_blank" rel="noopener">${ic('chat')}Ask on Discord</a></section>
  <label class="search" style="max-width:none">${ic('search')}<input name="q" type="search" placeholder="Search questions" aria-label="Search the FAQ" hx-get="/help/search" hx-trigger="keyup changed delay:200ms, search" hx-target="#faq-list" hx-swap="outerHTML"></label>
  ${T_faq('')}`;
 
-/* ---------- DGG Media (with Workshops and Approved Creators) ---------- */
-const MEDIA_TABS=[['videos','Videos & photos'],['workshops','Workshops'],['creators','Approved creators']];
-function T_media_tab(u,t){
- if(t==='workshops')return `<section class="wsfeat"><div class="wart"><span class="chip red" style="align-self:flex-start">Next live session · Nov 12</span><h2>Public comment: make your <span>three minutes</span> count</h2><span style="opacity:.8;font-size:14px">Local & State Government · Session 4 of 5</span></div>
+/* ---------- Political Media: DGG Media · Your Politics · Approved Creators ---------- */
+const MEDIA_TABS=[['dgg','DGG Media','play'],['local','Your Politics','pin'],['creators','Approved Creators','star']];
+const LOCAL_NEWS=[
+ ['City council approves $40M library bond for the November ballot','Capital City Ledger','Nov 6','Local government'],
+ ['What the statehouse\'s new redistricting proposal would change','Buckeye Civic Report','Nov 5','State legislature'],
+ ['School board weighs later start times for high schools','Northside Neighbor','Nov 4','Schools'],
+ ['County commissioners extend rental assistance through spring','Capital City Ledger','Nov 2','Housing'],
+ ['Turnout in your county topped 2022 by 6 points','Buckeye Civic Report','Nov 4','Elections'],
+];
+const LOCAL_MEETINGS=[['Nov 10','City Council regular meeting','6:00 p.m. · City Hall chambers'],['Nov 12','Board of Education work session','5:30 p.m. · District offices'],['Nov 17','County Commission hearing on the 2027 budget','10:00 a.m. · County building'],['Nov 19','Statehouse committee: Elections & Ethics','1:00 p.m. · Senate hearing room']];
+function T_media_dgg(u){
+ return `<section class="ppbanner"><div class="ppmark">${ic('doc')}</div><div class="pptext"><span class="label">From our community · Written by DGG members</span><h2>The Pragmatic Papers</h2><p>Combating misinformation with fact-based reporting. In-depth research on elections, policy, and global affairs from writers in the DGG community. Anyone can submit.</p></div>
+  <div class="ppbtns"><a class="btn primary" href="https://pragmaticpapers.com/" target="_blank" rel="noopener">${ic('ext')}Read the Papers</a><a class="btn" href="https://pragmaticpapers.com/writing-for-us" target="_blank" rel="noopener">${ic('pen')}Submit a piece</a></div></section>
+ <div class="sechead"><h2>Videos & photos</h2></div>
+ <section class="live"><button class="thumb r" style="border:0;cursor:pointer" ${act('Would open the live stream player')}><span class="ttag on"><span class="livedot"></span>Live now</span><span class="playbtn">${ic('play')}</span><span class="dur">1,204 watching</span></button>
+  <div class="side-info"><span class="label">Streaming from Columbus</span><h2>Post-Election Debrief</h2><p style="margin:0;color:var(--muted)">Organizers recap the midterm ground game and what's next for the Georgia runoff.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto"><button class="btn red sm" ${act('Would open the live stream player')}>${ic('play')}Watch live</button></div></div></section>
+ ${T_media_body('all')}
+ <div class="sechead" style="margin-top:12px"><h2>Workshops</h2><span class="label">Lecture series by DGG members</span></div>
+ <section class="wsfeat"><div class="wart"><span class="chip red" style="align-self:flex-start">Next live session · Nov 12</span><h2>Public comment: make your <span>three minutes</span> count</h2><span style="opacity:.8;font-size:14px">Local & State Government · Session 4 of 5</span></div>
   <div class="winfo"><div class="presenter"><div class="avatar" style="background:var(--blue)">JK</div><div><b style="font:700 16px var(--head)">Jasmine Kim</b><br><span style="color:var(--muted);font-size:14px">Volunteer coordinator, Columbus chapter</span></div></div>
    <p style="margin:0;color:var(--muted)">How to find your city council's agenda, sign up to speak, and write remarks that council members remember.</p>
-   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto"><button class="btn primary sm" ${act("You're registered. A calendar invite and Zoom link are on the way.")}>Register</button><span class="chip" style="align-self:center">86 registered</span></div></div></section>${T_ws_body('all')}`;
- if(t==='creators')return `<section class="panel panel-b creatorcrit"><span class="label">How a creator gets approved</span><ul>${CREATOR_CRITERIA.map(c=>`<li>${ic('check')}${c}</li>`).join('')}</ul></section>
-  <div class="wikigrid">${CREATORS.map(c=>`<div class="wcard"><div class="h"><div class="avatar" style="background:${c.c};${c.c==='#C99A00'?'color:#242424':''}">${c.ini}</div><div><b>${c.n}</b><span>${c.h}</span></div><span class="chip green" style="margin-left:auto">${ic('check')}Approved</span></div><p><b style="color:var(--ink)">${c.focus}.</b> ${c.why}</p><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip blue">${c.reach} reach</span><span class="chip">${c.plat}</span></div></div>`).join('')}</div>
-  <p class="demo-note">Sample profiles. The Media Team replaces these with real, vetted creators.</p>`;
- return `<section class="live"><button class="thumb r" style="border:0;cursor:pointer" ${act('Would open the live stream player')}><span class="ttag on"><span class="livedot"></span>Live now</span><span class="playbtn">${ic('play')}</span><span class="dur">1,204 watching</span></button>
-  <div class="side-info"><span class="label">Streaming from Columbus</span><h2>Post-Election Debrief</h2><p style="margin:0;color:var(--muted)">Organizers recap the midterm ground game and what's next for the Georgia runoff.</p>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto"><button class="btn red sm" ${act('Would open the live stream player')}>${ic('play')}Watch live</button></div></div></section>${T_media_body('all')}`;
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto"><button class="btn primary sm" ${act("You're registered. A calendar invite and Zoom link are on the way.")}>Register</button><span class="chip" style="align-self:center">86 registered</span></div></div></section>
+ ${T_ws_body('all')}`;
 }
-const T_media_body2=(u,t)=>`<div id="media-tabbody" style="display:flex;flex-direction:column;gap:20px"><div class="tabs" role="tablist">${MEDIA_TABS.map(([k,l])=>`<button role="tab" aria-selected="${t===k}" hx-get="/media/tab?t=${k}" hx-target="#media-tabbody" hx-swap="outerHTML">${l}</button>`).join('')}</div>${T_media_tab(u,t)}</div>`;
-V.media=(u,q)=>`${head('DGG Media','Event photos, live streams, interviews, workshops, and creators we trust.','<span class="sample">Sample content</span>')}
- <section class="ppbanner"><div class="ppmark">${ic('doc')}</div><div class="pptext"><span class="label">From our community · Written by DGG members</span><h2>The Pragmatic Papers</h2><p>Combating misinformation with fact-based reporting. In-depth research on elections, policy, and global affairs from writers in the DGG community. Anyone can submit.</p></div>
-  <div class="ppbtns"><a class="btn primary" href="https://pragmaticpapers.com/" target="_blank" rel="noopener">${ic('ext')}Read the Papers</a><a class="btn" href="https://pragmaticpapers.com/writing-for-us" target="_blank" rel="noopener">${ic('pen')}Submit a piece</a></div></section>
- ${T_media_body2(u,q.t||'videos')}`;
+function T_media_local(u){
+ const st=(u.location&&STATE_BY[u.location.state])?u.location.state:'OH',S=STATE_BY[st],city=(u.location&&u.location.city)||citiesOf(st)[0];
+ const legis=repsFor('state',{state:st,district:st==='OH'?15:1}).filter(r=>/State Senator|State Representative|Governor/.test(r.office));
+ const bills=billsForState(st).slice().sort((a,b)=>b.ts-a.ts).slice(0,4);
+ const next=ELECTIONS.filter(e=>e.states.includes(st)&&daysUntil(e.date)>=0)[0];
+ return `<div class="localhead"><div>${ic('pin')}<span>Your political scene in <b>${esc(city)}, ${S[1]}</b></span></div><button class="linkbtn" ${nav('settings')}>Change location</button></div>
+ <div class="grid g3">
+  <section class="panel span2">${ph('Local news','<span class="label">Sample headlines</span>')}<div class="rows">${LOCAL_NEWS.map(([t,src,d,tag])=>`<button class="row newsrow" ${act('Would open the full article')}><span class="ic">${ic('doc')}</span><span><span class="t">${t}</span><br><span class="d">${src} · ${d}</span></span><span class="chip">${tag}</span></button>`).join('')}</div></section>
+  <section class="panel">${ph('Your state legislators')}<div class="replist">${legis.map(r=>repMini(u,r)).join('')}</div></section>
+ </div>
+ <div class="grid g3">
+  <section class="panel">${ph('On the local agenda')}<div class="rows">${LOCAL_MEETINGS.map(([d,t,w])=>`<div class="row" style="grid-template-columns:64px 1fr"><b class="mono" style="font-size:13px">${d}</b><span><span class="t" style="font-size:15px">${t}</span><br><span class="d">${w}</span></span></div>`).join('')}</div></section>
+  <section class="panel">${ph('Moving in your statehouse',`<button class="btn sm ghost" ${nav('bills','?scope=state')}>All</button>`)}<div class="rows">${bills.map(b=>`<button class="row" ${nav('bill/'+b.id)} style="grid-template-columns:1fr auto"><span><span class="t" style="font-size:15px">${b.num} · ${b.title}</span><br><span class="d">${STAGES[b.stage]} · ${b.updated}</span></span>${partyChip(b.party)}</button>`).join('')}</div></section>
+  <section class="panel">${ph('Next on your ballot')}<div class="panel-b" style="display:flex;flex-direction:column;gap:10px">${next?`<div class="edate" style="width:60px"><small>${fmtDate(next.date).m}</small><b class="tab-nums">${fmtDate(next.date).d}</b></div><b style="font:700 17px var(--head)">${next.name}</b><span class="d">${fmtDate(next.date).long} · ${daysUntil(next.date)} days away</span>`:`<span class="d">No elections scheduled in ${S[1]} yet. We'll add them as dates are set.</span>`}<button class="btn sm" style="align-self:flex-start" ${nav('register')}>Check my registration</button></div></section>
+ </div>
+ <p class="demo-note">Sample content. The live version pulls local news, meeting agendas, and statehouse activity for your address.</p>`;
+}
+function T_media_creators(u){
+ return `<section class="panel panel-b creatorcrit"><span class="label">How a creator gets approved</span><ul>${CREATOR_CRITERIA.map(c=>`<li>${ic('check')}${c}</li>`).join('')}</ul></section>
+  <div class="wikigrid">${CREATORS.map(c=>`<div class="wcard creatorcard"><div class="h"><div class="avatar" style="background:${c.c};${c.c==='#C99A00'?'color:#242424':''}">${c.ini}</div><div><b>${c.n}</b><span>${c.h}</span></div></div><p><b style="color:var(--ink)">${c.focus}.</b> ${c.why}</p><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto"><span class="chip green">${ic('check')}Approved</span><span class="chip blue">${c.reach} reach</span><span class="chip">${c.plat}</span></div></div>`).join('')}</div>
+  <p class="demo-note">Sample profiles. The Media Team replaces these with real, vetted creators.</p>`;
+}
+const T_media_body2=(u,t)=>`<div id="media-tabbody" style="display:flex;flex-direction:column;gap:22px">
+ <div class="bigtabs" role="tablist" aria-label="Political Media sections">${MEDIA_TABS.map(([k,l,i])=>`<button role="tab" aria-selected="${t===k}" hx-get="/media/tab?t=${k}" hx-target="#media-tabbody" hx-swap="outerHTML">${ic(i)}${l}</button>`).join('')}</div>
+ ${t==='local'?T_media_local(u):t==='creators'?T_media_creators(u):T_media_dgg(u)}</div>`;
+V.media=(u,q)=>`${head('Political Media','DGG videos and workshops, your local political scene, and creators we trust.','<span class="sample">Sample content</span>')}
+ ${T_media_body2(u,MEDIA_TABS.some(x=>x[0]===q.t)?q.t:'dgg')}`;
 
 /* ---------- election data (future feature preview) ---------- */
 function T_evmap(mode,picks){
@@ -986,7 +1028,7 @@ V.settings=u=>`${head('Settings','Manage your profile, location, team, and pop-u
  <section class="panel panel-b" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><b style="font:700 17px var(--head)">Support Digital Ground Game</b><br><span style="color:var(--muted)">Donations go through ActBlue and keep the hub free.</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn red" href="${DONATE_URL}" target="_blank" rel="noopener">${ic('heart')}Donate</a><button class="btn ghost" hx-post="/auth/signout" hx-target="#root">${ic('logout')}Sign out</button></div></section>`;
 
 /* ---------- sign-in required (visitor opening an account page) ---------- */
-V.needaccount=(u,q,page)=>`${head('Create a free account','This section is part of a free Political Hub account.')}
+V.needaccount=(u,q,page)=>`${head('Create a free account','This section is part of a free account.')}
  <section class="panel panel-b" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;max-width:720px">
   <ul class="mbenefits">${BENEFITS.map(([i,t,d])=>`<li>${ic(i)}<span><b>${t}</b>${d}</span></li>`).join('')}</ul>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" hx-get="/auth/modal/signup" hx-swap="none">Create free account</button><button class="btn ghost" hx-get="/auth/modal/signin" hx-swap="none">Sign in</button></div></section>`;
