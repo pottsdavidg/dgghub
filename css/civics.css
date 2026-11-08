@@ -36,13 +36,21 @@
 .game .gart{height:130px;font-size:54px}
 .daily .art{min-height:280px}
 /* civics */
-.civgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.civcard{text-align:left;border:2px solid var(--ink);background:var(--surface);padding:20px;display:flex;flex-direction:column;gap:8px;box-shadow:4px 4px 0 var(--shadow);cursor:pointer;color:inherit;transition:transform .08s,box-shadow .08s}
-.civcard:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue)}
-.civcard .ic{width:44px;height:44px;display:grid;place-items:center;background:var(--blueSoft);color:var(--link)}
-.civcard .ic svg{width:22px;height:22px}
-.civcard b{font:400 30px/1 var(--display);letter-spacing:.02em}
-.civcard span:last-child{color:var(--muted);font-size:14px;line-height:1.4}
+.civgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
+.civcard{--c:var(--blue);--cf:#fff;grid-column:span 2;min-height:210px;text-align:left;border:2px solid var(--ink);background:var(--surface);padding:24px;display:flex;flex-direction:column;gap:10px;box-shadow:4px 4px 0 var(--shadow);cursor:pointer;color:inherit;transition:transform .08s,box-shadow .08s}
+.civcard:nth-child(-n+2){grid-column:span 3;min-height:240px}
+.civcard:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--c)}
+.civcard .ic{width:60px;height:60px;display:grid;place-items:center;background:var(--c);color:var(--cf);margin-bottom:auto}
+.civcard .ic svg{width:30px;height:30px}
+.civcard b{font:400 38px/1 var(--display);letter-spacing:.02em;margin-top:18px}
+.civcard span:last-child{color:var(--muted);font-size:16px;line-height:1.45}
+/* one brand color per topic (icon tile + hover shadow) */
+.civcard.c-red{--c:var(--red)}
+.civcard.c-yel{--c:var(--yellow);--cf:#242424}
+.civcard.c-green{--c:#13824A}
+.civcard.c-ink{--c:var(--ink);--cf:var(--surface)}
+@media (max-width:1100px){.civgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.civcard,.civcard:nth-child(-n+2){grid-column:auto;min-height:220px}.civcard:last-child{grid-column:1/-1}}
+@media (max-width:600px){.civgrid{grid-template-columns:1fr;gap:16px}.civcard,.civcard:nth-child(-n+2),.civcard:last-child{grid-column:auto;min-height:200px;padding:24px 22px}.civcard .ic{width:64px;height:64px}.civcard .ic svg{width:32px;height:32px}.civcard b{font-size:42px}.civcard span:last-child{font-size:17px}}
 .branches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .bwho{font:700 15px var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--link)}
 .civh{font:400 28px/1 var(--display);margin-bottom:8px}

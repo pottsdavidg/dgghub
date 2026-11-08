@@ -53,7 +53,8 @@ function T_header(u,page){
 
 /* ---------- sidebar ---------- */
 const PARENT={rep:'reps',bill:'bills',article:'wiki',region:'about',regions:'about'};
-const GOV=[['register','Registration','badge'],['ballot','Sample Ballot','ballot'],['reps','Representation','users'],['bills','Bills & Laws','doc'],['history','Voting History','history'],['civics','Civics 101','cap']];
+const GOV=[['register','Registration','badge'],['ballot','Sample Ballot','ballot'],['reps','Representation','users'],['bills','Bills & Laws','doc'],['history','Voting History','history']];
+const CIVICS_NAV=['civics','Civics 101','cap'];
 const LAB=[['wiki','The Blue Book','book'],['model','Election Models','chart'],['trackers','Tracker Suite','track'],['rolodex','Rolodex','phone']];
 const TEAMNAV=[['contact','Contact','idcard'],['inbox','Inbox','mail'],['tasks','Tasks','check'],['chapter','Local Chapter','pin'],['ops','Operations','target']];
 function T_sidebar(u,page){
@@ -64,11 +65,11 @@ function T_sidebar(u,page){
  const unread=MESSAGES.filter(m=>m.unread).length;
  let top,bottom='';
  if(isV(u)){
-  top=group('Digital Hub')+item(['home','Dashboard','home'])+GOV.map(x=>item(x)).join('');
+  top=group('Digital Hub')+item(['home','Dashboard','home'])+GOV.map(x=>item(x)).join('')+item(CIVICS_NAV);
   bottom=item(['resources','Resources','info'])+item(['help','Help','help'])
    +`<button class="navbtn themetoggle" hx-post="/ui/theme/toggle" hx-swap="none" title="Switch between light and dark mode"><span class="nico tt-dark">${ic('moon')}</span><span class="nico tt-light">${ic('sun')}</span><span class="nlabel tt-dark">Dark mode</span><span class="nlabel tt-light">Light mode</span></button>`;
  } else {
-  top=group('Digital Hub')+item(['home','Dashboard','home'])+drop('Your Government','scale',GOV)
+  top=group('Digital Hub')+item(['home','Dashboard','home'])+drop('Your Government','scale',GOV)+item(CIVICS_NAV)
    +group('Digital Tools')+drop('Resources','info',[['resources','Resources','info'],['help','Help & FAQ','help']])+item(['media','Political Media','play'])
    +(isMember(u)?'':item(['chapter','Local Chapter','pin']))+item(['elections','Election Data','map'],{badge:'<span class="freetag">Soon</span>'})
    +drop('Democracy Lab','flask',LAB,{lock:!isMember(u)})
