@@ -1,0 +1,37 @@
+/* Team inbox. */
+.inbox{display:grid;grid-template-columns:minmax(280px,380px) minmax(0,1fr);border:1px solid var(--line);background:var(--surface);min-height:560px}
+.inlist{border-right:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.inbox-f{padding:12px;border-bottom:1px solid var(--line);gap:6px}
+.inbox-f .fbtn{padding:5px 9px;font-size:12px}
+.threads{display:flex;flex-direction:column;overflow-y:auto}
+.thread{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:14px 16px;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;color:inherit;cursor:pointer;position:relative}
+.thread:hover{background:var(--surface2)}
+.thread[aria-current="true"]{background:var(--blueSoft);box-shadow:inset 4px 0 0 var(--blue)}
+.thread.unread::after{content:"";position:absolute;right:14px;bottom:16px;width:9px;height:9px;border-radius:50%;background:var(--red)}
+.tmain{display:flex;flex-direction:column;gap:3px;min-width:0}
+.trow{display:flex;justify-content:space-between;gap:8px}
+.trow b{font:700 15px var(--head);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thread.unread .trow b,.thread.unread .tsubj{color:var(--ink)}
+.ttime{font:500 12px var(--mono);color:var(--muted);white-space:nowrap}
+.tsubj{font-size:14px;font-weight:600;display:flex;gap:6px;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tsubj svg{width:14px;height:14px;color:var(--red);flex:none}
+.tprev{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;padding-right:16px}
+.reader{padding:24px 28px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.rhead{display:flex;gap:14px;align-items:flex-start;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.rhead h2{font:400 32px/1.05 var(--display);letter-spacing:.02em;margin:8px 0 4px}
+.rhead .d{font-size:14px;color:var(--muted)}
+.rbody p{margin:0 0 14px;line-height:1.65;max-width:70ch;font-size:16px}
+.rstats{display:flex;gap:8px;flex-wrap:wrap}
+.rstats .chip svg{width:12px;height:12px}
+.rreply{margin-top:auto;display:flex;gap:10px;align-items:flex-end;border:2px solid var(--line);padding:10px;background:var(--surface2);flex-wrap:wrap;justify-content:space-between}
+.rreply textarea{flex:1;min-width:200px;border:0;background:transparent;resize:vertical;min-height:60px;font:inherit;color:inherit;outline:0}
+.compose .field textarea,.compose select,.compose input{border:2px solid var(--line);background:var(--surface);padding:10px 12px;border-radius:2px;font:inherit;color:inherit}
+.radioseg{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;font:700 13px var(--head);text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.radioseg input{accent-color:var(--blue)}
+.radioseg:has(input:checked){background:var(--ink);color:var(--bg)}
+@media (max-width:900px){
+  .inbox{grid-template-columns:1fr}
+  .inlist{border-right:0;border-bottom:2px solid var(--line)}
+  .threads{max-height:340px}
+  .reader{padding:18px}
+}

@@ -1,0 +1,52 @@
+/* Civics 101 and the Know Your Stuff games. */
+.daily{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);border:2px solid var(--ink);background:var(--surface);box-shadow:5px 5px 0 var(--yellow)}
+.daily .art{background:var(--black) url(../img/pattern-tile.png) center/420px;background-blend-mode:screen;position:relative;padding:26px;color:#fff;display:flex;flex-direction:column;gap:12px;justify-content:flex-end;min-height:220px}
+.daily .art::before{content:"";position:absolute;inset:0;background:rgba(17,68,255,.84)}
+.daily .art>*{position:relative}
+.daily .art h2{font:400 clamp(40px,5vw,60px)/.88 var(--display);letter-spacing:.02em;text-shadow:4px 4px 0 var(--black)}
+.daily .art h2 span{color:var(--yellow)}
+.daily .meta{padding:22px;display:flex;flex-direction:column;gap:12px}
+.streak{display:flex;gap:6px}
+.streak i{flex:1;height:30px;border:2px solid var(--ink);display:grid;place-items:center;font:700 11px var(--head);font-style:normal;color:var(--muted)}
+.streak i.on{background:var(--yellow);color:var(--black)}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.game{text-align:left;border:2px solid var(--ink);background:var(--surface);padding:0;display:flex;flex-direction:column;border-radius:2px;box-shadow:4px 4px 0 var(--shadow);transition:transform .08s,box-shadow .08s}
+.game:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue)}
+.game .gart{height:96px;display:grid;place-items:center;font:400 44px/1 var(--display);color:#fff;letter-spacing:.03em}
+.game .gi{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px}
+.game .gi b{font:400 24px/1 var(--display);letter-spacing:.03em}
+.game .gi span{font-size:14px;color:var(--muted);line-height:1.35}
+.qcard{border:2px solid var(--ink);background:var(--surface);padding:22px;box-shadow:5px 5px 0 var(--blue);display:flex;flex-direction:column;gap:14px}
+.qcard h2{font:700 22px/1.25 var(--head)}
+.tlrow{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:2px solid var(--ink);background:var(--surface);padding:10px 12px}
+.tlrow.right{border-color:var(--green);background:var(--greenSoft)}
+.tlrow.wrong{border-color:var(--red);background:var(--redSoft)}
+.tlrow .yr{font:400 24px/1 var(--display);width:56px;text-align:center;color:var(--link)}
+.tlrow .mv{display:flex;gap:4px}
+.tlrow .mv button{border:2px solid var(--line);background:var(--surface2);width:34px;height:34px;display:grid;place-items:center;border-radius:2px}
+.tlrow .mv button svg{width:16px;height:16px}
+@media (max-width:600px){
+  .daily{grid-template-columns:1fr}
+}
+.qcard{padding:28px}
+.qcard h2{font-size:clamp(22px,2.4vw,30px)}
+.qcard .opt{font-size:18px;padding:16px 18px}
+.tlrow{padding:14px 16px}
+.games{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.game .gart{height:130px;font-size:54px}
+.daily .art{min-height:280px}
+/* civics */
+.civgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.civcard{text-align:left;border:2px solid var(--ink);background:var(--surface);padding:20px;display:flex;flex-direction:column;gap:8px;box-shadow:4px 4px 0 var(--shadow);cursor:pointer;color:inherit;transition:transform .08s,box-shadow .08s}
+.civcard:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue)}
+.civcard .ic{width:44px;height:44px;display:grid;place-items:center;background:var(--blueSoft);color:var(--link)}
+.civcard .ic svg{width:22px;height:22px}
+.civcard b{font:400 30px/1 var(--display);letter-spacing:.02em}
+.civcard span:last-child{color:var(--muted);font-size:14px;line-height:1.4}
+.branches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.bwho{font:700 15px var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--link)}
+.civh{font:400 28px/1 var(--display);margin-bottom:8px}
+.civprog{display:flex;flex-direction:column;gap:4px;min-width:180px}
+@media (max-width:900px){
+  .branches{grid-template-columns:1fr}
+}

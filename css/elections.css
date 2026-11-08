@@ -1,0 +1,22 @@
+/* Election Data: electoral vote tile map. */
+/* election data */
+.evwrap{display:flex;flex-direction:column;gap:12px}
+.evbar{position:relative;display:flex;height:46px;border:2px solid var(--ink)}
+.evbar>div{display:flex;align-items:center;gap:8px;padding:0 12px;color:#fff;font:700 15px var(--head);white-space:nowrap;overflow:hidden;transition:width .25s}
+.evbar b{font:400 30px/1 var(--display)}
+.evD{background:var(--blue)}
+.evR{background:var(--red);justify-content:flex-end}
+.evT{background:var(--muted);justify-content:center}
+.ev270{position:absolute;left:50.18%;top:-8px;bottom:-8px;width:3px;background:var(--ink)}
+.evmid{text-align:center}
+.evsvg{width:100%;min-width:560px;height:auto;display:block}
+.evtile rect{stroke:var(--surface);stroke-width:2}
+.evtile.D rect{fill:var(--blue)}
+.evtile.R rect{fill:var(--red)}
+.evtile.T rect{fill:var(--line)}
+.evtile text{fill:#fff;font-family:var(--head);pointer-events:none}
+.evtile.T text{fill:var(--ink)}
+.evst{font-weight:700;font-size:16px}
+.evn{font-size:12px;opacity:.9}
+.evtile[role="button"]{cursor:pointer}
+.evtile[role="button"]:hover rect{stroke:var(--yellow);stroke-width:3}

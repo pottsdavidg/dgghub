@@ -1,0 +1,18 @@
+/* Local Chapter. */
+.lead{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.lead .portrait{width:84px;height:84px;font-size:38px;background:var(--blue);box-shadow:4px 4px 0 var(--black)}
+.lead h2{font:400 32px/1 var(--display);letter-spacing:.02em}
+.contact{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:15px}
+.contact .mono{background:var(--surface2);border:1px solid var(--line);padding:5px 8px;user-select:all}
+.nochap{border:2px solid var(--ink);background:var(--surface);box-shadow:6px 6px 0 var(--yellow);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.nochap .pitch{background:var(--black);color:var(--white);padding:28px;display:flex;flex-direction:column;gap:14px}
+.nochap .pitch h2{font:400 clamp(34px,4vw,48px)/.92 var(--display);letter-spacing:.02em}
+.nochap .pitch h2 span{color:var(--yellow)}
+.nochap .pitch ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.nochap .pitch li{display:flex;gap:8px;font-size:15px}
+.nochap .pitch li svg{width:18px;height:18px;flex:none;color:var(--yellow);margin-top:2px}
+.nochap form{padding:24px;display:flex;flex-direction:column;gap:14px}
+.portrait{width:52px;height:52px;border-radius:2px;display:grid;place-items:center;font:400 24px var(--display);color:#fff;flex:none;background:var(--black)}
+@media (max-width:600px){
+  .nochap{grid-template-columns:1fr}
+}

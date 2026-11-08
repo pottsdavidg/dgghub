@@ -3,17 +3,35 @@
 <link rel="icon" href="img/logo.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Staatliches&family=Roboto+Condensed:wght@400;500;700&family=Alexandria:wght@900&family=Roboto+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="css/dgg.css">
+<!-- Styles: base.css (brand tokens + shared components) and shell.css load first, then one file per feature. -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/shell.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/register.css">
+<link rel="stylesheet" href="css/ballot.css">
+<link rel="stylesheet" href="css/reps.css">
+<link rel="stylesheet" href="css/bills.css">
+<link rel="stylesheet" href="css/civics.css">
+<link rel="stylesheet" href="css/resources.css">
+<link rel="stylesheet" href="css/media.css">
+<link rel="stylesheet" href="css/chapter.css">
+<link rel="stylesheet" href="css/elections.css">
+<link rel="stylesheet" href="css/lab.css">
+<link rel="stylesheet" href="css/team.css">
+<link rel="stylesheet" href="css/inbox.css">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/legacy.css">
 
 <!--
   Politics · HTMX prototype (Digital Ground Game)
   ─────────────────────────────────────────────────────
   index.html        → templates/base.html (root, pop-up slot, toast, scripts)
-  css/dgg.css       → static/css/dgg.css
+  css/*.css         → static/css/*.css
   js/mock-server.js → DELETE in production (stands in for FastAPI)
-  js/data.js        → SQLite seed data
-  js/views.js       → Jinja2 templates
-  js/routes.js      → FastAPI routes
+  js/data/*.js      → SQLite seed data
+  js/views/*.js     → Jinja2 templates (one file per page/feature)
+  js/routes/*.js    → FastAPI routers (one file per feature)
 -->
 <script>
   /* Apply the saved sidebar state before first paint so it doesn't flash. */
@@ -25,9 +43,54 @@
 
 <script src="js/mock-server.js"></script>
 <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js"></script>
-<script src="js/data.js"></script>
-<script src="js/views.js"></script>
-<script src="js/routes.js"></script>
+<!-- Seed data (becomes SQLite seed data). Order matters: voting.js before bills.js (bills use LOREM); db.js last (it gathers the tables above). -->
+<script src="js/data/core.js"></script>
+<script src="js/data/reps.js"></script>
+<script src="js/data/voting.js"></script>
+<script src="js/data/bills.js"></script>
+<script src="js/data/lab.js"></script>
+<script src="js/data/media.js"></script>
+<script src="js/data/civics.js"></script>
+<script src="js/data/resources.js"></script>
+<script src="js/data/team.js"></script>
+<script src="js/data/site.js"></script>
+<script src="js/data/db.js"></script>
+<!-- Views (become Jinja2 templates). core.js and shell.js load first: shared helpers, header, sidebar. -->
+<script src="js/views/core.js"></script>
+<script src="js/views/shell.js"></script>
+<script src="js/views/home.js"></script>
+<script src="js/views/register.js"></script>
+<script src="js/views/ballot.js"></script>
+<script src="js/views/reps.js"></script>
+<script src="js/views/bills.js"></script>
+<script src="js/views/history.js"></script>
+<script src="js/views/civics.js"></script>
+<script src="js/views/resources.js"></script>
+<script src="js/views/media.js"></script>
+<script src="js/views/chapter.js"></script>
+<script src="js/views/elections.js"></script>
+<script src="js/views/lab/wiki.js"></script>
+<script src="js/views/lab/trackers.js"></script>
+<script src="js/views/lab/model.js"></script>
+<script src="js/views/lab/rolodex.js"></script>
+<script src="js/views/team/join.js"></script>
+<script src="js/views/team/team.js"></script>
+<script src="js/views/team/inbox.js"></script>
+<script src="js/views/site.js"></script>
+<script src="js/views/settings.js"></script>
+<!-- Routes (become FastAPI routers). core.js loads first: session, access levels, renderPage. -->
+<script src="js/routes/core.js"></script>
+<script src="js/routes/auth.js"></script>
+<script src="js/routes/ui.js"></script>
+<script src="js/routes/lookups.js"></script>
+<script src="js/routes/government.js"></script>
+<script src="js/routes/content.js"></script>
+<script src="js/routes/games.js"></script>
+<script src="js/routes/lab.js"></script>
+<script src="js/routes/quiz.js"></script>
+<script src="js/routes/team.js"></script>
+<script src="js/routes/settings.js"></script>
+<script src="js/routes/site.js"></script>
 <script>
   /* Client-side glue that stays in production (static/js/ui.js). */
   if (window.htmx) htmx.config.historyEnabled = false;
