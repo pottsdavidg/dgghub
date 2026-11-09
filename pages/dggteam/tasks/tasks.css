@@ -1,0 +1,15 @@
+/* Team tasks: styles. */
+.task td{vertical-align:middle}
+.task.done .tt{text-decoration:line-through;color:var(--muted)}
+.task select,.newtask input,.newtask select{border:2px solid var(--line);background:var(--surface);padding:6px 8px;border-radius:2px;font-size:14px;max-width:100%}
+.chk{width:22px;height:22px;border:2px solid var(--ink);background:var(--surface);display:grid;place-items:center;border-radius:2px;padding:0}
+.chk svg{width:14px;height:14px}
+.chk[aria-checked="true"]{background:var(--green);border-color:var(--green);color:#fff}
+.newtask{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px;align-items:end;padding:16px 18px;border-bottom:1px solid var(--line);background:var(--surface2)}
+@media (max-width:600px){
+  .newtask{grid-template-columns:1fr}
+}
+.projgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;padding:16px 18px}
+.proj{display:flex;flex-direction:column;gap:8px}
+.projh{display:flex;justify-content:space-between;gap:8px}
+.projh b{font:700 15px var(--head)}

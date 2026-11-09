@@ -1,0 +1,14 @@
+/* Team contact: styles. */
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.person{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:16px 18px;border-top:1px solid var(--line)}
+.person .pinfo{display:flex;flex-direction:column;gap:2px;min-width:0}
+.person .pinfo b{font:700 17px var(--head)}
+.person .pacts{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.person.big{border-top:0;grid-template-columns:auto 1fr auto;padding:0}
+.person.big .avatar{width:64px;height:64px;font-size:22px}
+.person.big .pinfo b{font:400 32px/1 var(--display)}
+.person.big .pacts{grid-column:auto}
+@media (max-width:900px){
+  .person.big{grid-template-columns:auto 1fr}
+  .person.big .pacts{grid-column:1/-1}
+}

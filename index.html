@@ -5,35 +5,46 @@
 <link rel="icon" href="img/logo.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Staatliches&family=Roboto+Condensed:wght@400;500;700&family=Alexandria:wght@900&family=Roboto+Mono:wght@500&display=swap">
-<!-- Styles: base.css (brand tokens + shared components) and shell.css load first, then one file per feature. -->
+<!-- Styles. Shared first (css/base.css = brand tokens + shared components, css/shell.css = header, sidebar, pop-ups), then each page's own
+     stylesheet from its folder under pages/, then css/legacy.css. Order matters: later files win ties. -->
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/shell.css">
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/register.css">
-<link rel="stylesheet" href="css/ballot.css">
-<link rel="stylesheet" href="css/reps.css">
-<link rel="stylesheet" href="css/bills.css">
-<link rel="stylesheet" href="css/civics.css">
-<link rel="stylesheet" href="css/resources.css">
-<link rel="stylesheet" href="css/media.css">
-<link rel="stylesheet" href="css/chapter.css">
-<link rel="stylesheet" href="css/elections.css">
-<link rel="stylesheet" href="css/lab.css">
-<link rel="stylesheet" href="css/team.css">
-<link rel="stylesheet" href="css/inbox.css">
-<link rel="stylesheet" href="css/site.css">
-<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="pages/dashboard/dashboard.css">
+<link rel="stylesheet" href="pages/registration/registration.css">
+<link rel="stylesheet" href="pages/sampleballot/sampleballot.css">
+<link rel="stylesheet" href="pages/representation/representation.css">
+<link rel="stylesheet" href="pages/billsandlaws/billsandlaws.css">
+<link rel="stylesheet" href="pages/civics101/civics101.css">
+<link rel="stylesheet" href="pages/resources/resources.css">
+<link rel="stylesheet" href="pages/politicalmedia/politicalmedia.css">
+<link rel="stylesheet" href="pages/localchapter/localchapter.css">
+<link rel="stylesheet" href="pages/electiondata/electiondata.css">
+<link rel="stylesheet" href="pages/democracylab/democracylab.css">
+<link rel="stylesheet" href="pages/democracylab/thebluebook/thebluebook.css">
+<link rel="stylesheet" href="pages/democracylab/electionmodels/electionmodels.css">
+<link rel="stylesheet" href="pages/democracylab/trackersuite/trackersuite.css">
+<link rel="stylesheet" href="pages/democracylab/rolodex/rolodex.css">
+<link rel="stylesheet" href="pages/dggteam/jointeam/jointeam.css">
+<link rel="stylesheet" href="pages/dggteam/contact/contact.css">
+<link rel="stylesheet" href="pages/dggteam/tasks/tasks.css">
+<link rel="stylesheet" href="pages/dggteam/operations/operations.css">
+<link rel="stylesheet" href="pages/dggteam/inbox/inbox.css">
+<link rel="stylesheet" href="pages/publicpages/publicpages.css">
+<link rel="stylesheet" href="pages/publicpages/aboutus/aboutus.css">
+<link rel="stylesheet" href="pages/publicpages/regions/regions.css">
+<link rel="stylesheet" href="pages/publicpages/mailinglist/mailinglist.css">
+<link rel="stylesheet" href="pages/settings/settings.css">
 <link rel="stylesheet" href="css/legacy.css">
 
 <!--
   Politics · HTMX prototype (Digital Ground Game)
   ─────────────────────────────────────────────────────
   index.html        → templates/base.html (root, pop-up slot, toast, scripts)
-  css/*.css         → static/css/*.css
-  js/mock-server.js → DELETE in production (stands in for FastAPI)
-  js/data/*.js      → SQLite seed data
-  js/views/*.js     → Jinja2 templates (one file per page/feature)
-  js/routes/*.js    → FastAPI routers (one file per feature)
+  pages/<page>/      → one folder per page: <page>.view.js (Jinja2 template), <page>.routes.js
+                       (FastAPI router), <page>.data.js (SQLite seed data), <page>.css (static/css)
+  pages/democracylab|dggteam|publicpages → page groups; a group-level file holds what its pages share
+  css/, js/          → shared across the whole site (not tied to one page)
+  js/mock-server.js  → DELETE in production (stands in for FastAPI)
 -->
 <script>
   /* Apply the saved sidebar state before first paint so it doesn't flash. */
@@ -45,54 +56,85 @@
 
 <script src="js/mock-server.js"></script>
 <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js"></script>
-<!-- Seed data (becomes SQLite seed data). Order matters: voting.js before bills.js (bills use LOREM); db.js last (it gathers the tables above). -->
+<!-- Seed data (becomes SQLite seed data). Order matters: js/data/core.js first; ballot before bills (bills use LOREM); js/data/db.js last (it gathers the tables). -->
 <script src="js/data/core.js"></script>
-<script src="js/data/reps.js"></script>
-<script src="js/data/voting.js"></script>
-<script src="js/data/bills.js"></script>
-<script src="js/data/lab.js"></script>
-<script src="js/data/media.js"></script>
-<script src="js/data/civics.js"></script>
-<script src="js/data/resources.js"></script>
-<script src="js/data/team.js"></script>
-<script src="js/data/site.js"></script>
+<script src="pages/dggteam/dggteam.data.js"></script>
+<script src="pages/publicpages/publicpages.data.js"></script>
+<script src="pages/dashboard/dashboard.data.js"></script>
+<script src="pages/representation/representation.data.js"></script>
+<script src="pages/sampleballot/sampleballot.data.js"></script>
+<script src="pages/billsandlaws/billsandlaws.data.js"></script>
+<script src="pages/votinghistory/votinghistory.data.js"></script>
+<script src="pages/electiondata/electiondata.data.js"></script>
+<script src="pages/democracylab/trackersuite/trackersuite.data.js"></script>
+<script src="pages/democracylab/thebluebook/thebluebook.data.js"></script>
+<script src="pages/democracylab/electionmodels/electionmodels.data.js"></script>
+<script src="pages/democracylab/rolodex/rolodex.data.js"></script>
+<script src="pages/politicalmedia/politicalmedia.data.js"></script>
+<script src="pages/civics101/civics101.data.js"></script>
+<script src="pages/resources/resources.data.js"></script>
+<script src="pages/publicpages/aboutus/aboutus.data.js"></script>
+<script src="pages/publicpages/regions/regions.data.js"></script>
+<script src="pages/dggteam/tasks/tasks.data.js"></script>
+<script src="pages/dggteam/jointeam/jointeam.data.js"></script>
+<script src="pages/dggteam/inbox/inbox.data.js"></script>
+<script src="pages/dggteam/operations/operations.data.js"></script>
 <script src="js/data/db.js"></script>
-<!-- Views (become Jinja2 templates). core.js and shell.js load first: shared helpers, header, sidebar. -->
+<!-- Views (become Jinja2 templates). Shared helpers, header and sidebar load first. -->
 <script src="js/views/core.js"></script>
 <script src="js/views/shell.js"></script>
-<script src="js/views/home.js"></script>
-<script src="js/views/register.js"></script>
-<script src="js/views/ballot.js"></script>
-<script src="js/views/reps.js"></script>
-<script src="js/views/bills.js"></script>
-<script src="js/views/history.js"></script>
-<script src="js/views/civics.js"></script>
-<script src="js/views/resources.js"></script>
-<script src="js/views/media.js"></script>
-<script src="js/views/chapter.js"></script>
-<script src="js/views/elections.js"></script>
-<script src="js/views/lab/wiki.js"></script>
-<script src="js/views/lab/trackers.js"></script>
-<script src="js/views/lab/model.js"></script>
-<script src="js/views/lab/rolodex.js"></script>
-<script src="js/views/team/join.js"></script>
-<script src="js/views/team/team.js"></script>
-<script src="js/views/team/inbox.js"></script>
-<script src="js/views/site.js"></script>
-<script src="js/views/settings.js"></script>
-<!-- Routes (become FastAPI routers). core.js loads first: session, access levels, renderPage. -->
+<script src="pages/dashboard/dashboard.view.js"></script>
+<script src="pages/registration/registration.view.js"></script>
+<script src="pages/sampleballot/sampleballot.view.js"></script>
+<script src="pages/representation/representation.view.js"></script>
+<script src="pages/billsandlaws/billsandlaws.view.js"></script>
+<script src="pages/votinghistory/votinghistory.view.js"></script>
+<script src="pages/civics101/civics101.view.js"></script>
+<script src="pages/resources/resources.view.js"></script>
+<script src="pages/politicalmedia/politicalmedia.view.js"></script>
+<script src="pages/localchapter/localchapter.view.js"></script>
+<script src="pages/electiondata/electiondata.view.js"></script>
+<script src="pages/democracylab/thebluebook/thebluebook.view.js"></script>
+<script src="pages/democracylab/trackersuite/trackersuite.view.js"></script>
+<script src="pages/democracylab/electionmodels/electionmodels.view.js"></script>
+<script src="pages/democracylab/rolodex/rolodex.view.js"></script>
+<script src="pages/dggteam/jointeam/jointeam.view.js"></script>
+<script src="pages/dggteam/tasks/tasks.view.js"></script>
+<script src="pages/dggteam/contact/contact.view.js"></script>
+<script src="pages/dggteam/operations/operations.view.js"></script>
+<script src="pages/dggteam/inbox/inbox.view.js"></script>
+<script src="pages/publicpages/publicpages.view.js"></script>
+<script src="pages/publicpages/aboutus/aboutus.view.js"></script>
+<script src="pages/publicpages/regions/regions.view.js"></script>
+<script src="pages/publicpages/mailinglist/mailinglist.view.js"></script>
+<script src="pages/settings/settings.view.js"></script>
+<!-- Routes (become FastAPI routers). js/routes/core.js loads first: session, access levels, renderPage. -->
 <script src="js/routes/core.js"></script>
 <script src="js/routes/auth.js"></script>
 <script src="js/routes/ui.js"></script>
-<script src="js/routes/lookups.js"></script>
-<script src="js/routes/government.js"></script>
-<script src="js/routes/content.js"></script>
-<script src="js/routes/games.js"></script>
-<script src="js/routes/lab.js"></script>
-<script src="js/routes/quiz.js"></script>
-<script src="js/routes/team.js"></script>
-<script src="js/routes/settings.js"></script>
-<script src="js/routes/site.js"></script>
+<script src="pages/dashboard/dashboard.routes.js"></script>
+<script src="pages/registration/registration.routes.js"></script>
+<script src="pages/sampleballot/sampleballot.routes.js"></script>
+<script src="pages/votinghistory/votinghistory.routes.js"></script>
+<script src="pages/representation/representation.routes.js"></script>
+<script src="pages/billsandlaws/billsandlaws.routes.js"></script>
+<script src="pages/civics101/civics101.routes.js"></script>
+<script src="pages/resources/resources.routes.js"></script>
+<script src="pages/politicalmedia/politicalmedia.routes.js"></script>
+<script src="pages/electiondata/electiondata.routes.js"></script>
+<script src="pages/localchapter/localchapter.routes.js"></script>
+<script src="pages/democracylab/thebluebook/thebluebook.routes.js"></script>
+<script src="pages/democracylab/trackersuite/trackersuite.routes.js"></script>
+<script src="pages/democracylab/electionmodels/electionmodels.routes.js"></script>
+<script src="pages/democracylab/rolodex/rolodex.routes.js"></script>
+<script src="pages/dggteam/jointeam/jointeam.routes.js"></script>
+<script src="pages/dggteam/tasks/tasks.routes.js"></script>
+<script src="pages/dggteam/operations/operations.routes.js"></script>
+<script src="pages/dggteam/inbox/inbox.routes.js"></script>
+<script src="pages/settings/settings.routes.js"></script>
+<script src="pages/publicpages/aboutus/aboutus.routes.js"></script>
+<script src="pages/publicpages/regions/regions.routes.js"></script>
+<script src="pages/publicpages/mailinglist/mailinglist.routes.js"></script>
 <script>
   /* Client-side glue that stays in production (static/js/ui.js). */
   if (window.htmx) htmx.config.historyEnabled = false;

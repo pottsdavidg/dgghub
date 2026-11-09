@@ -1,0 +1,16 @@
+/* Regions (list + region detail): styles. */
+.regiongrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.regioncard{position:relative;text-align:left;border:2px solid var(--ink);background:var(--surface);padding:22px 48px 22px 22px;display:flex;flex-direction:column;gap:8px;box-shadow:5px 5px 0 var(--shadow);transition:transform .08s,box-shadow .08s;color:inherit;cursor:pointer}
+.regioncard:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--blue)}
+.regioncard h2{font:400 44px/1 var(--display);letter-spacing:.02em}
+.regioncard p{margin:0;color:var(--muted)}
+.regioncard>svg{position:absolute;right:18px;top:24px;color:var(--link)}
+.rmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.statechips{display:flex;flex-wrap:wrap;gap:8px}
+.statechips .chip{font-size:13px;padding:7px 10px}
+.leadgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.leadcard{display:flex;gap:12px;align-items:center;padding:14px 18px;border-top:1px solid var(--line)}
+.leadcard b{display:block;font:700 16px var(--head)}
+.leadcard span{font-size:14px;color:var(--muted)}
+.regioncard{min-width:0}
+.rmeta .chip{max-width:100%;white-space:normal;line-height:1.25;text-align:left}

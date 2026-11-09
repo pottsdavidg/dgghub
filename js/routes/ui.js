@@ -1,13 +1,18 @@
 /* ---------- pop-ups ---------- */
 // sidebar light/dark switch: the browser sends the theme it's showing now as `current`
 route('POST','/ui/theme/toggle',({form,res})=>{const u=currentUser();u.theme=form.current==='dark'?'light':'dark';res.trigger('set-theme',u.theme);return ''});
+
 route('POST','/ui/modal/close',({form})=>{const u=currentUser();
  if(form.dont_show==='account')u.noPrompts=true;
  if(form.dont_show==='team')u.noTeamPrompts=true;
  return T_modal_clear()});
+
 route('POST','/ui/modal/join',({res})=>{toRoot(res);return renderPage('join',{res})});
+
 const quietNote=(res,why)=>{res.toast((PROMPTS[why]||PROMPTS.location)[0]+': sign in or create a free account to use this.');return T_modal_clear()};
+
 route('POST','/prompt/account',({form,res})=>promptAccount(form.why)||quietNote(res,form.why));
+
 route('POST','/prompt/team',({form,res})=>{const u=currentUser();
  if(u.account==='visitor')return promptAccount(form.why)||quietNote(res,form.why);
  if(u.account==='member'){toRoot(res);return renderPage('trackers',{res})}
@@ -23,15 +28,4 @@ route('POST','/pins/toggle',({form,res})=>{
  return btn+(on?promptAccount('pin'):'');
 });
 
-/* ---------- dashboard ---------- */
-route('POST','/dash/location',({form,res})=>{
- const u=currentUser();
- if(!form.state){res.toast('Choose your state to continue');return renderPage(u.account==='visitor'?'home':'settings',{res})}
- u.location={address:form.address||'',city:form.city||'',state:form.state,zip:form.zip||''};
- res.toast('Location saved for this visit');
- const from=u.account!=='visitor'&&form.address!==undefined&&false;
- return renderPage('home',{res,modal:promptAccount('location')});
-});
-route('GET','/dash/locform',()=>T_locform(currentUser(),true));
-route('POST','/dashboard/dismiss-donate',()=>{currentUser().donate_dismissed=true;return ''});
 route('POST','/actions/notify',({form,res})=>{res.toast(form.msg||'Done');return ''});   // placeholder for future real actions
