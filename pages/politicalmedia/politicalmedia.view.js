@@ -20,14 +20,26 @@ V.workshops=(u,q)=>`${head('Workshops','A lecture series by DGG members on how g
 
 /* ---------- Political Media: DGG Media · Your Politics · Approved Creators ---------- */
 const MEDIA_TABS=[['dgg','DGG Media','play'],['local','Your Politics','pin'],['creators','Approved Creators','star']];
-const LOCAL_NEWS=[
- ['City council approves $40M library bond for the November ballot','Capital City Ledger','Nov 6','Local government'],
- ['What the statehouse\'s new redistricting proposal would change','Buckeye Civic Report','Nov 5','State legislature'],
- ['School board weighs later start times for high schools','Northside Neighbor','Nov 4','Schools'],
- ['County commissioners extend rental assistance through spring','Capital City Ledger','Nov 2','Housing'],
- ['Turnout in your county topped 2022 by 6 points','Buckeye Civic Report','Nov 4','Elections'],
+/* Your Politics sample content. Videos and posts are attributed only to the invented sample state officials from repsFor('state'). */
+const LOCAL_VIDEOS=[
+ ['Town hall recap: what I heard about rent and housing','Town hall','18:42','Nov 6',''],
+ ['Floor speech on school funding','Floor speech','4:15','Nov 5','k'],
+ ['Answering your questions about the state budget','Q&A','11:03','Nov 3','r'],
+ ['Touring the new community health clinic','Campaign video','2:37','Oct 30','y'],
 ];
-const LOCAL_MEETINGS=[['Nov 10','City Council regular meeting','6:00 p.m. · City Hall chambers'],['Nov 12','Board of Education work session','5:30 p.m. · District offices'],['Nov 17','County Commission hearing on the 2027 budget','10:00 a.m. · County building'],['Nov 19','Statehouse committee: Elections & Ethics','1:00 p.m. · Senate hearing room']];
+const LOCAL_POSTS=[
+ ['Threads','Thanks to everyone who came out to last night\'s town hall. Your questions on housing costs are going straight into next session\'s priorities.','2h','1.2K'],
+ ['Instagram','Spent the morning with bus drivers and aides at our local schools. They told me exactly what they need from the statehouse.','1d','846'],
+ ['Facebook','Reminder: public comment on the 2027 budget is open this month. Tell us what your community needs.','2d','312'],
+];
+const LOCAL_NEWS=[
+ ['City council approves $40M library bond for the November ballot',0,'Nov 6','Local government'],
+ ['What the statehouse\'s new redistricting proposal would change',1,'Nov 5','State legislature'],
+ ['School board weighs later start times for high schools',2,'Nov 4','Schools'],
+ ['County commissioners extend rental assistance through spring',0,'Nov 2','Housing'],
+ ['Turnout in your county topped 2022 by 6 points',1,'Nov 4','Elections'],
+];
+const localOutlets=(city,state)=>[[`${city} Ledger`,'Daily newspaper','doc'],[`${state} Civic Report`,'Statehouse news site','doc'],['Northside Neighbor','Community newspaper','doc'],[`${city} Public Radio`,'Public radio and podcasts','play']];
 function T_media_dgg(u){
  return `<section class="ppbanner"><div class="ppmark">${ic('doc')}</div><div class="pptext"><span class="label">From our community · Written by DGG members</span><h2>The Pragmatic Papers</h2><p>Combating misinformation with fact-based reporting. In-depth research on elections, policy, and global affairs from writers in the DGG community. Anyone can submit.</p></div>
   <div class="ppbtns"><a class="btn primary" href="https://pragmaticpapers.com/" target="_blank" rel="noopener">${ic('ext')}Read the Papers</a><a class="btn" href="https://pragmaticpapers.com/writing-for-us" target="_blank" rel="noopener">${ic('pen')}Submit a piece</a></div></section>
@@ -45,20 +57,20 @@ function T_media_dgg(u){
 }
 function T_media_local(u){
  const st=(u.location&&STATE_BY[u.location.state])?u.location.state:'OH',S=STATE_BY[st],city=(u.location&&u.location.city)||citiesOf(st)[0];
- const legis=repsFor('state',{state:st,district:st==='OH'?15:1}).filter(r=>/State Senator|State Representative|Governor/.test(r.office));
- const bills=billsForState(st).slice().sort((a,b)=>b.ts-a.ts).slice(0,4);
- const next=ELECTIONS.filter(e=>e.states.includes(st)&&daysUntil(e.date)>=0)[0];
- return `<div class="localhead"><div>${ic('pin')}<span>Your political scene in <b>${esc(city)}, ${S[1]}</b></span></div><button class="linkbtn" ${nav('settings')}>Change location</button></div>
+ const pols=repsFor('state',{state:st,district:st==='OH'?15:1}).filter(r=>/State Senator|State Representative|Governor/.test(r.office));
+ const pol=i=>pols[i%pols.length],outlets=localOutlets(city,S[1]);
+ const handle=r=>'@'+r.name.toLowerCase().replace(/[^a-z]/g,'');
+ return `<div class="localhead"><div>${ic('pin')}<span>Political media from <b>${esc(city)}, ${S[1]}</b></span></div><button class="linkbtn" ${nav('settings')}>Change location</button></div>
+ <div class="sechead"><h2>Videos from your politicians</h2></div>
+ <div class="mgrid">${LOCAL_VIDEOS.map(([t,type,dur,d,tint],i)=>`<button class="mcard" ${act('Would open the video player')}><div class="thumb ${tint}"><span class="ttag">${type}</span><span class="playbtn">${ic('play')}</span><span class="dur">${dur}</span></div><div class="mi"><b>${t}</b><span class="d">${pol(i).name} · ${pol(i).office} · ${d}</span></div></button>`).join('')}</div>
+ <div class="sechead"><h2>Social media posts</h2></div>
+ <div class="postgrid">${LOCAL_POSTS.map(([plat,text,when,likes],i)=>`<button class="postcard" ${act('Would open the post on '+plat)}><span class="post-h"><span class="avatar" style="background:${candColor(pol(i).party)}">${pol(i).ini}</span><span class="post-who"><b>${pol(i).name}</b><span class="d">${handle(pol(i))}</span></span><span class="chip">${plat}</span></span><span class="post-t">${text}</span><span class="d">${pol(i).office} · ${when} ago · ${likes} likes</span></button>`).join('')}</div>
+ <div class="sechead"><h2>Local news organizations</h2></div>
  <div class="grid g3">
-  <section class="panel span2">${ph('Local news','<span class="label">Sample headlines</span>')}<div class="rows">${LOCAL_NEWS.map(([t,src,d,tag])=>`<button class="row newsrow" ${act('Would open the full article')}><span class="ic">${ic('doc')}</span><span><span class="t">${t}</span><br><span class="d">${src} · ${d}</span></span><span class="chip">${tag}</span></button>`).join('')}</div></section>
-  <section class="panel">${ph('Your state legislators')}<div class="replist">${legis.map(r=>repMini(u,r)).join('')}</div></section>
+  <section class="panel span2">${ph('Latest stories','<span class="label">Sample headlines</span>')}<div class="rows">${LOCAL_NEWS.map(([t,o,d,tag])=>`<button class="row newsrow" ${act('Would open the full article')}><span class="ic">${ic('doc')}</span><span><span class="t">${t}</span><br><span class="d">${outlets[o][0]} · ${d}</span></span><span class="chip">${tag}</span></button>`).join('')}</div></section>
+  <section class="panel">${ph('Outlets near you')}<div class="rows">${outlets.map(([n,type,i])=>`<button class="row" style="grid-template-columns:auto 1fr" ${act('Would open '+n)}><span class="ic">${ic(i)}</span><span><span class="t" style="font-size:15px">${n}</span><br><span class="d">${type}</span></span></button>`).join('')}</div></section>
  </div>
- <div class="grid g3">
-  <section class="panel">${ph('On the local agenda')}<div class="rows">${LOCAL_MEETINGS.map(([d,t,w])=>`<div class="row" style="grid-template-columns:64px 1fr"><b class="mono" style="font-size:13px">${d}</b><span><span class="t" style="font-size:15px">${t}</span><br><span class="d">${w}</span></span></div>`).join('')}</div></section>
-  <section class="panel">${ph('Moving in your statehouse',`<button class="btn sm ghost" ${nav('bills','?scope=state')}>All</button>`)}<div class="rows">${bills.map(b=>`<button class="row" ${nav('bill/'+b.id)} style="grid-template-columns:1fr auto"><span><span class="t" style="font-size:15px">${b.num} · ${b.title}</span><br><span class="d">${STAGES[b.stage]} · ${b.updated}</span></span>${partyChip(b.party)}</button>`).join('')}</div></section>
-  <section class="panel">${ph('Next on your ballot')}<div class="panel-b" style="display:flex;flex-direction:column;gap:10px">${next?`<div class="edate" style="width:60px"><small>${fmtDate(next.date).m}</small><b class="tab-nums">${fmtDate(next.date).d}</b></div><b style="font:700 17px var(--head)">${next.name}</b><span class="d">${fmtDate(next.date).long} · ${daysUntil(next.date)} days away</span>`:`<span class="d">No elections scheduled in ${S[1]} yet. We'll add them as dates are set.</span>`}<button class="btn sm" style="align-self:flex-start" ${nav('register')}>Check my registration</button></div></section>
- </div>
- <p class="demo-note">Sample content. The live version pulls local news, meeting agendas, and statehouse activity for your address.</p>`;
+ <p class="demo-note">Sample content. The live version pulls videos and posts from your elected officials and stories from news outlets near your address.</p>`;
 }
 function T_media_creators(u){
  return `<section class="panel panel-b creatorcrit"><span class="label">How a creator gets approved</span><ul>${CREATOR_CRITERIA.map(c=>`<li>${ic('check')}${c}</li>`).join('')}</ul></section>
@@ -68,5 +80,5 @@ function T_media_creators(u){
 const T_media_body2=(u,t)=>`<div id="media-tabbody" style="display:flex;flex-direction:column;gap:22px">
  <div class="bigtabs" role="tablist" aria-label="Political Media sections">${MEDIA_TABS.map(([k,l,i])=>`<button role="tab" aria-selected="${t===k}" hx-get="/media/tab?t=${k}" hx-target="#media-tabbody" hx-swap="outerHTML">${ic(i)}${l}</button>`).join('')}</div>
  ${t==='local'?T_media_local(u):t==='creators'?T_media_creators(u):T_media_dgg(u)}</div>`;
-V.media=(u,q)=>`${head('Political Media','DGG videos and workshops, your local political scene, and creators we trust.','<span class="sample">Sample content</span>')}
+V.media=(u,q)=>`${head('Political Media','DGG videos and workshops, media from your local politicians and news outlets, and creators we trust.','<span class="sample">Sample content</span>')}
  ${T_media_body2(u,MEDIA_TABS.some(x=>x[0]===q.t)?q.t:'dgg')}`;

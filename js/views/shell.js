@@ -63,19 +63,20 @@ function T_sidebar(u,page){
  const drop=(label,icon,items,o={})=>{const inside=items.some(x=>x[0]===cur);return `<details class="navdetails" ${inside||o.open?'open':''}><summary class="navbtn navdrop" title="${label}" ${inside?'data-inside="1"':''}><span class="nico">${ic(icon)}</span><span class="nlabel">${label}</span>${ic('back','chev')}</summary><div class="navsub">${items.map(x=>item(x,{sub:1,lock:o.lock})).join('')}</div></details>`};
  const group=n=>`<div class="navgroup"><span class="nlabel">${n}</span></div>`;
  const unread=MESSAGES.filter(m=>m.unread).length;
+ const helpItem=item(['help','Help & FAQ','help']);   // always the last sidebar item
  let top,bottom='';
  if(isV(u)){
-  top=group('Digital Hub')+item(['home','Dashboard','home'])+GOV.map(x=>item(x)).join('')+item(CIVICS_NAV);
-  bottom=item(['resources','Resources','info'])+item(['help','Help','help'])
-   +`<button class="navbtn themetoggle" hx-post="/ui/theme/toggle" hx-swap="none" title="Switch between light and dark mode"><span class="nico tt-dark">${ic('moon')}</span><span class="nico tt-light">${ic('sun')}</span><span class="nlabel tt-dark">Dark mode</span><span class="nlabel tt-light">Light mode</span></button>`;
+  top=group('Digital Hub')+item(['home','Dashboard','home'])+GOV.map(x=>item(x)).join('')+item(CIVICS_NAV)
+   +group('Digital Tools')+item(['resources','Resources','info']);
+  bottom=`<button class="navbtn themetoggle" hx-post="/ui/theme/toggle" hx-swap="none" title="Switch between light and dark mode"><span class="nico tt-dark">${ic('moon')}</span><span class="nico tt-light">${ic('sun')}</span><span class="nlabel tt-dark">Dark mode</span><span class="nlabel tt-light">Light mode</span></button>`+helpItem;
  } else {
   top=group('Digital Hub')+item(['home','Dashboard','home'])+drop('Your Government','scale',GOV)+item(CIVICS_NAV)
-   +group('Digital Tools')+drop('Resources','info',[['resources','Resources','info'],['help','Help & FAQ','help']])+item(['media','Political Media','play'])
+   +group('Digital Tools')+item(['resources','Resources','info'])+item(['media','Political Media','play'])
    +(isMember(u)?'':item(['chapter','Local Chapter','pin']))+item(['elections','Election Data','map'],{badge:'<span class="freetag">Soon</span>'})
    +drop('Democracy Lab','flask',LAB,{lock:!isMember(u)})
    +(isMember(u)?group('DGG Team')+TEAMNAV.map(x=>item(x,{badge:x[0]==='inbox'&&unread?`<span class="navcount">${unread}</span>`:''})).join(''):'');
-  bottom=isMember(u)?`<div class="teamtag" title="${TEAMS[u.team].n}"><span class="nico">${ic(TEAMS[u.team].icon)}</span><span class="nlabel">${TEAMS[u.team].n}</span></div>`
-   :`<button class="jointeam" ${nav('join')} title="Join team"><span class="nico">${ic('users')}</span><span class="nlabel">Join Team</span></button>`;
+  bottom=isMember(u)?`<div class="teamtag" title="${TEAMS[u.team].n}"><span class="nico">${ic(TEAMS[u.team].icon)}</span><span class="nlabel">${TEAMS[u.team].n}</span></div>${helpItem}`
+   :`<button class="jointeam" ${nav('join')} title="Join team"><span class="nico">${ic('users')}</span><span class="nlabel">Join Team</span></button>${helpItem}`;
  }
  return `<aside class="side" id="side">
   <div class="side-head patwrap tilebg dark"><button class="side-logo-btn" ${nav('home')} aria-label="Dashboard"><img class="side-logo" src="img/logo-white.png" alt="Digital Ground Game"></button>
