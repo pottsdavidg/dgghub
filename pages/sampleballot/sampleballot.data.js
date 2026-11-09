@@ -27,10 +27,11 @@ const BALLOT=[
  {race:'Columbus City Schools Board',kind:'Local',vote:'Vote for up to 2',cands:[mkC('Hannah Cho','N',{inc:1,job:'School board member',raised:62}),mkC('Marcus Webb','N',{job:'Parent and PTA president',raised:41}),mkC('Elena Ruiz','N',{job:'Former principal',raised:58}),mkC('Victor Ullamco','N',{job:'Accountant',raised:20})]},
 ];
 
+/* [title, summary, what a yes/no vote means, level: 'Federal' | 'State' | 'Local'] */
 const ISSUES=[
- ['Issue 1 · Columbus Parks Levy','A 0.5-mill property tax renewal for 10 years to maintain parks and recreation centers.','A YES vote renews the levy. A NO vote ends it when the current levy expires in 2027. Estimated cost: $17.50 per year per $100,000 of home value.'],
- ['Issue 2 · Library Bond','Authorizes $40M in bonds for two new branch libraries and renovations to five branches.','A YES vote approves the bonds. A NO vote rejects them. Estimated cost: $9 per year per $100,000 of home value.'],
- ['Issue 3 · Lorem Ipsum Charter Amendment','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.','A YES vote lorem ipsum dolor sit amet. A NO vote consectetur adipiscing elit. Sample text for layout only.'],
+ ['Issue 1 · Columbus Parks Levy','A 0.5-mill property tax renewal for 10 years to maintain parks and recreation centers.','A YES vote renews the levy. A NO vote ends it when the current levy expires in 2027. Estimated cost: $17.50 per year per $100,000 of home value.','Local'],
+ ['Issue 2 · Library Bond','Authorizes $40M in bonds for two new branch libraries and renovations to five branches.','A YES vote approves the bonds. A NO vote rejects them. Estimated cost: $9 per year per $100,000 of home value.','Local'],
+ ['Issue 3 · Lorem Ipsum Charter Amendment','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.','A YES vote lorem ipsum dolor sit amet. A NO vote consectetur adipiscing elit. Sample text for layout only.','Local'],
 ];
 
 /* DGG community ballot breakdowns (only some candidates have one, on purpose) */

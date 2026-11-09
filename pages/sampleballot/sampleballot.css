@@ -1,5 +1,12 @@
 /* Sample ballot: races, candidates, community breakdowns. */
 .ballot-legend{display:flex;gap:8px;flex-wrap:wrap}
+/* Category tags keep their colored background but use the normal text color; each card gets a subtle outline in its tag's color. */
+.ballot-legend .chip,.ballot .panel-h .chip{color:var(--ink)}
+.kc-yel{--kc:var(--yellow)}
+.kc-blue{--kc:var(--link)}
+.kc-green{--kc:var(--green)}
+.kc-red{--kc:var(--red)}
+.ballot .panel[class*="kc-"]{border-color:color-mix(in srgb,var(--kc) 55%,var(--line))}
 .cand{border-top:1px solid var(--line)}
 .cand-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;width:100%;padding:13px 18px;border:0;background:none;text-align:left;color:inherit}
 .cand-row:hover{background:var(--surface2)}
