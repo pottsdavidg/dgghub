@@ -112,7 +112,7 @@ There are three levels. The page allow-lists are in `routes.js`: `VISITOR_PAGES`
   - Flags pin bills; the H.R. 2817 detail page shows a text diff demo.
 - **Political Media:** three large centered tabs.
   1. **DGG Media** (default): Pragmatic Papers banner, Videos & photos, Workshops.
-  2. **Your Politics:** local news, the user's state legislators, local meeting agendas, statehouse bills, next election.
+  2. **Your Politics:** political media near the user: videos from politicians, social media posts, and local news organizations.
   3. **Approved Creators:** approval criteria plus creator cards.
 - **Civics 101:** branches, Constitution articles, Bill of Rights, key amendments, Congress history, lectures, and quiz games.
 - **Representation:** federal / state / local columns, rep detail pages, and a search box.

@@ -8,7 +8,7 @@ function pinCard(u,k){
   const D={
    'reg:record':['Your registration','register',`<span class="chip green">${ic('check')}Active</span><span class="d">${USER.name} · ${USER.precinct}</span><span class="d">Registered since Sept 14, 2018</span>`],
    'reg:polling':['Polling place','register',`<b class="pc-t">Northwood Recreation Center</b><span class="d">2000 N High St, Columbus, OH 43201</span>`],
-   'reg:dates':['Key election dates','register',IMPORTANT_DATES.filter(x=>!x[4]||x[4]==='OH').slice(0,3).map(([d,l])=>`<span class="d"><b class="mono">${fmtDate(d).m} ${fmtDate(d).d}</b> · ${l}</span>`).join('')],
+   'reg:dates':['Key election dates','register',voterDates('OH').slice(0,3).map(([d,l])=>`<span class="d"><b class="mono">${fmtDate(d).m} ${fmtDate(d).d}</b> · ${l}</span>`).join('')],
    'hist:stats':['Turnout record','history',`<div class="pc-stats"><span><b class="disp">80%</b><small>turnout</small></span><span><b class="disp">3</b><small>in a row</small></span><span><b class="disp">4/4</b><small>generals</small></span></div>`],
    'hist:table':['Recent elections','history',HISTORY.slice(1,4).map(([d,e,s])=>`<span class="d"><b>${d}</b> · ${e} · <span class="chip ${s==='Voted'?'green':'red'}">${s}</span></span>`).join('')],
    'civics:progress':['Civics 101 progress','civics',`<div class="bar" style="height:10px"><i style="width:40%;background:var(--blue)"></i></div><span class="d">2 of 5 units · 4-day game streak</span>`],

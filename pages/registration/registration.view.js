@@ -23,7 +23,7 @@ V.register=u=>{
    <div class="chip blue" style="align-self:flex-start">0.6 mi · 12 min walk</div><button class="btn sm" ${act('Would open directions in your maps app')}>Get directions</button></div></section>
  </div>
  <section class="panel">${ph('Key dates',pinBtn(u,'reg:dates'))}<div class="tbl-wrap"><table><thead><tr><th>Date</th><th>What</th><th>Days away</th></tr></thead><tbody>
-  ${IMPORTANT_DATES.filter(x=>(!x[4]||x[4]==='OH')&&x[2]!=='Civic').sort((a,b)=>a[0].localeCompare(b[0])).map(([d,l,k,c])=>`<tr><td class="tab-nums" style="white-space:nowrap">${fmtDate(d).long}</td><td>${l} <span class="chip ${c}">${k}</span></td><td class="tab-nums">${daysUntil(d)}</td></tr>`).join('')}
+  ${voterDates('OH').map(([d,l,k,c])=>`<tr><td class="tab-nums" style="white-space:nowrap">${fmtDate(d).long}</td><td>${l} <span class="chip ${c}">${k}</span></td><td class="tab-nums">${daysUntil(d)}</td></tr>`).join('')}
  </tbody></table></div></section>
  ${T_reg_form(u,true)}`;
 };
