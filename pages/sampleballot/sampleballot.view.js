@@ -1,4 +1,5 @@
 /* ---------- sample ballot ---------- */
+const KIND_CHIP={Federal:'yel',State:'blue',Local:'green',Judicial:'red',Issues:''};   // chip color per ballot category ('' = the default grey chip)
 const candColor=p=>p==='D'?'var(--blue)':p==='R'?'var(--red)':p==='G'?'#13824A':p==='L'?'#C99A00':'#596079';
 const T_candidate=(c,open)=>{
  const ini=c.name.replace('Hon. ','').split(/[ /]+/).filter(Boolean).map(x=>x[0]).slice(0,2).join('');
@@ -25,7 +26,7 @@ V.ballot=u=>{
  const show=!isV(u)||u.lookups?.ballot;
  const top=head('Sample Ballot',show?`Sample ballot for ${USER.precinct}, Nov 3, 2026 general election. Tap a candidate for their background; tap ${ic('info').replace('<svg','<svg style="width:15px;vertical-align:-2px"')} for the DGG community breakdown.`:'Enter your address to see the races and issues on your ballot.','<span class="sample">Sample data</span>');
  if(!show)return top+`<section class="panel"><div class="panel-h"><h2>Find your ballot</h2></div><div class="panel-b">${T_locform(u).replace('hx-post="/dash/location"','hx-post="/ballot/lookup"').replace('Get info','See my ballot')}</div></section>`;
- return `${top}<div class="ballot-legend">${['Federal','State','Judicial','Local'].map(k=>`<span class="chip">${BALLOT.filter(r=>r.kind===k).length} ${k}</span>`).join('')}<span class="chip">${ISSUES.length} issues</span></div>
- <div class="ballot">${BALLOT.map((r,i)=>`<section class="panel">${ph(r.race,`<span class="label">${r.kind} · ${r.vote}</span>${pinBtn(u,'race:'+i)}`)}<div class="rows">${r.cands.map(c=>T_candidate(c,false)).join('')}</div></section>`).join('')}
- ${ISSUES.map(([t,a,b])=>`<section class="panel">${ph(t,'<span class="chip">Local</span>')}<div class="panel-b"><p style="margin:0 0 8px">${a}</p><p style="margin:0;color:var(--muted);font-size:14px">${b}</p></div></section>`).join('')}</div>`;
+ return `${top}<div class="ballot-legend">${['Federal','State','Judicial','Local'].map(k=>`<span class="chip ${KIND_CHIP[k]}">${BALLOT.filter(r=>r.kind===k).length} ${k}</span>`).join('')}<span class="chip ${KIND_CHIP.Issues}">${ISSUES.length} issues</span></div>
+ <div class="ballot">${BALLOT.map((r,i)=>`<section class="panel kc-${KIND_CHIP[r.kind]}">${ph(r.race,`<span class="chip ${KIND_CHIP[r.kind]}">${r.kind}</span><span class="label">${r.vote}</span>${pinBtn(u,'race:'+i)}`)}<div class="rows">${r.cands.map(c=>T_candidate(c,false)).join('')}</div></section>`).join('')}
+ ${ISSUES.map(([t,a,b,level])=>`<section class="panel kc-${KIND_CHIP[level]}">${ph(t,`<span class="chip ${KIND_CHIP[level]}">${level}</span>`)}<div class="panel-b"><p style="margin:0 0 8px">${a}</p><p style="margin:0;color:var(--muted);font-size:14px">${b}</p></div></section>`).join('')}</div>`;
 };
