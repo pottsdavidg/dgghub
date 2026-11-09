@@ -103,6 +103,7 @@
 .locform.compact .lf-go{height:46px;font-size:20px}
 .locline{display:flex;align-items:center;gap:10px;font-size:16px;flex-wrap:wrap}
 .locline svg{width:18px;height:18px;color:var(--red)}
+.dash-flow{display:flex;flex-direction:column;gap:24px}
 .dash-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
 .inlock{width:13px;height:13px;margin-left:6px;vertical-align:-1px;color:var(--muted)}
 .countdown{grid-template-columns:auto 1fr auto}
@@ -128,10 +129,16 @@
 .cta-h a.btn{color:#fff!important;border-color:#fff;background:transparent}
 /* Upcoming dates: horizontal timeline. Cards sit in lanes above/below the month axis (lanes are computed in T_timeline). */
 .ut-scroll{overflow-x:auto;padding:4px 18px 8px}
-.ut{position:relative;min-width:720px}
+/* 300% of the panel = about 4 of the 12 months visible; the rest scroll sideways. */
+.ut{position:relative;width:300%;min-width:2160px}
+/* Keep the scrollbar visible so it's clear there are more months to the right. */
+.ut-scroll::-webkit-scrollbar{height:10px}
+.ut-scroll::-webkit-scrollbar-track{background:var(--surface2)}
+.ut-scroll::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+@supports not selector(::-webkit-scrollbar){.ut-scroll{scrollbar-color:var(--muted) var(--surface2)}}
 .ut-grid{position:absolute;top:34px;bottom:0;width:1px;background:var(--line)}
 .ut-up,.ut-down{position:relative}
-.ut-axis{position:relative;display:flex;height:36px;border-block:2px solid var(--ink);background:var(--surface)}
+.ut-axis{position:relative;z-index:2;display:flex;height:36px;border-block:2px solid var(--ink);background:var(--surface)}
 .ut-axis span{display:flex;align-items:center;justify-content:center;font:700 12px/1 var(--head);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);white-space:nowrap}
 .ut-axis span:nth-child(odd){background:var(--surface2)}
 .ut-axis span+span{border-left:1px solid var(--line)}
@@ -160,3 +167,27 @@
 .ut-key::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--c)}
 .ut-note{display:inline-flex;align-items:center;gap:6px;margin-left:auto;color:var(--muted);font-size:14px}
 .ut-note svg{width:16px;height:16px}
+/* Upcoming dates on phones: vertical timeline (same breakpoint as the rest of the phone layout). */
+.utv{display:none}
+@media (max-width:600px){
+  .ut-scroll{display:none}
+  .utv{display:block;padding:14px 18px 16px}
+  .utv-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+  .utv-nav .btn:disabled{opacity:.4;cursor:default}
+  .utv-range{font:700 12px/1.2 var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center}
+  .utv-body{position:relative}
+  .utv-body::before{content:"";position:absolute;left:6px;top:16px;bottom:8px;width:2px;background:var(--line)}
+  .utv-today,.utv-m,.utv-list{position:relative}
+  .utv-today b{display:inline-block;font:700 11px/1 var(--head);text-transform:uppercase;letter-spacing:.08em;background:var(--yellow);color:#242424;padding:5px 7px;border-radius:2px}
+  .utv-m{margin:14px 0 8px;padding-left:24px;font:700 12px/1 var(--head);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .utv-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .utv-ev{position:relative;margin-left:24px;display:flex;flex-direction:column;gap:3px;padding:7px 10px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:2px}
+  .utv-ev::before{content:"";position:absolute;left:-29px;top:12px;width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px var(--surface)}
+  .utv .ut-t{display:block;overflow:visible}
+  .utv-k{font-size:13px;color:var(--muted)}
+  .utv .ut-empty{position:static;padding-top:12px}
+  .ut-note{margin-left:0}
+  /* Phones: Explore tools moves above Upcoming dates. */
+  .dash-flow .dash-grid{display:contents}
+  .dash-tools{order:-1}
+}
