@@ -1,0 +1,5 @@
+/* Democracy Lab (shared by its pages): styles. */
+.modbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--black);color:var(--white);padding:12px 16px;border-radius:2px}
+.modbar .dot{width:8px;height:8px;border-radius:50%;background:#2fd47a;box-shadow:0 0 0 3px rgba(47,212,122,.25)}
+.modbar code{font:500 13px var(--mono);color:#b9bdd0}
+.modbar .btn{margin-left:auto;box-shadow:none;border-color:var(--white);background:transparent;color:var(--white)}

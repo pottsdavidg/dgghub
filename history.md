@@ -18,11 +18,11 @@ The team's real stack is **FastAPI + HTMX + SQLite + Jinja2**. The prototype was
 | Prototype file | Becomes in production |
 |---|---|
 | `index.html` | `templates/base.html` (root div, pop-up slot, toast, scripts) |
-| `css/*.css` | `static/css/*.css` (`base.css` = brand tokens + shared components, `shell.css` = header/sidebar/pop-ups, then one file per feature) |
+| `pages/<page>/` | One folder per page, named after the page's full name (e.g. `pages/civics101/`). `<page>.view.js` = Jinja2 template(s) (each `V.page` / `T_partial` function becomes a template), `<page>.routes.js` = FastAPI router (each `route('GET','/path/{id}', handler)` becomes `@app.get("/path/{id}", response_class=HTMLResponse)`), `<page>.data.js` = SQLite seed data, `<page>.css` = `static/css/`. Page groups: `pages/democracylab/` (Democracy Lab), `pages/dggteam/` (DGG Team), `pages/publicpages/` (public About us / Regions / Mailing list); a group-level file (e.g. `pages/democracylab/democracylab.css`, `pages/dggteam/dggteam.data.js`) holds what that group's pages share. |
 | `js/mock-server.js` | **Deleted.** It stands in for FastAPI. |
-| `js/data/*.js` | SQLite seed data (one file per area; `db.js` loads last) |
-| `js/views/*.js` | Jinja2 templates, one file per page/feature (each `V.page` / `T_partial` function becomes a template). `core.js` = icons + shared helpers, `shell.js` = header, sidebar, pop-ups. Democracy Lab pages are in `views/lab/`, team pages in `views/team/`. |
-| `js/routes/*.js` | FastAPI routers, one file per feature (each `route('GET','/path/{id}', handler)` becomes `@app.get("/path/{id}", response_class=HTMLResponse)`). `core.js` = session, access levels, `renderPage`. |
+| `js/data/core.js`, `js/data/db.js` | Shared seed data (user, elections, states, links) and the `DB` object (`db.js` loads last). |
+| `js/views/core.js`, `js/views/shell.js` | Shared templates: icons + helpers; header, sidebar, pop-ups. |
+| `js/routes/core.js`, `auth.js`, `ui.js` | Shared routes: session, access levels, `renderPage`; sign-in/sign-up; pop-ups and pins. `css/base.css`, `css/shell.css`, `css/legacy.css` are the shared stylesheets. |
 | inline `<script>` in index.html | `static/js/ui.js` (small client glue that stays) |
 
 **Mock server conventions (`js/mock-server.js`):**
@@ -38,9 +38,9 @@ The team's real stack is **FastAPI + HTMX + SQLite + Jinja2**. The prototype was
 - `htmx:configRequest`;
 - `HX-Trigger` events named `toast` and `set-theme`.
 
-**Size:** about 3,200 lines total, split into ~60 small files (the largest is ~250 lines) so two people can work in parallel without merge conflicts. Script and stylesheet order in `index.html` matters: see the comments there.
+**Size:** about 3,300 lines total in ~105 small files (the largest is ~250 lines), grouped by page so two people can work in parallel without merge conflicts. Script and stylesheet order in `index.html` matters: see the comments there.
 
-**Working in parallel:** put a feature's markup in its `js/views/` file, its endpoints in the matching `js/routes/` file, and its styles in the matching `css/` file. Add new CSS next to the rules it belongs with, not at the end of a shared file. `css/legacy.css` holds rules no current markup uses (left from earlier builds); check and delete them in a cleanup pass.
+**Working in parallel:** work on a page inside its folder under `pages/`: markup in `<page>.view.js`, endpoints in `<page>.routes.js`, sample data in `<page>.data.js`, styles in `<page>.css`. A new file must also be added to `index.html`. Shared code lives in `js/` and `css/`; change it with care, since every page uses it. `css/legacy.css` holds rules no current markup uses (left from earlier builds); check and delete them in a cleanup pass.
 
 **Hosting constraints:**
 - The prototype is published as a claude.ai Artifact, where the CSP blocks outside fetches and inline `onclick`. All UI clicks use delegated listeners on `data-ui` / `data-copy` attributes instead.

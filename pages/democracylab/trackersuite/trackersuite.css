@@ -1,0 +1,10 @@
+/* Tracker Suite: styles. */
+.kanban{display:grid;grid-template-columns:repeat(4,minmax(220px,1fr));gap:12px;overflow-x:auto;padding-bottom:4px}
+.kcol{background:var(--surface2);border:1px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.kcol h3{font:700 13px var(--head);text-transform:uppercase;letter-spacing:.07em;display:flex;justify-content:space-between;color:var(--muted);padding:2px 4px 4px}
+.kcard{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--blue);padding:10px 12px;display:flex;flex-direction:column;gap:6px;text-align:left}
+.kcard.hi{border-left-color:var(--red)}
+.kcard.md{border-left-color:var(--yellow)}
+.kcard b{font:700 15px/1.25 var(--head)}
+.kcard .id{font:500 12px var(--mono);color:var(--muted)}
+.kcard:hover{border-color:var(--blue)}

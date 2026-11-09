@@ -1,0 +1,30 @@
+/* Team tasks: data. */
+let TID=100;
+
+const TASKS=[
+ ['dev','Wire "Open full app" buttons to the live tracker URLs','Hub prototype','In progress','SO','Oct 28'],
+ ['dev','Add sign-in with Discord','Hub prototype','To do',null,'Nov 6'],
+ ['dev','Fix role sync bug in the welcome bot','Discord bots','In progress','KW','Oct 27'],
+ ['dev','Move the website to the new host','Website','To do','RG','Nov 15'],
+ ['dev','Write setup docs for new developers','Website','Done','NB','Oct 20'],
+ ['research','Update early voting talking points for Ohio','Talking points','In progress','MJ','Oct 27'],
+ ['research','Summarize HB 301 drop box restrictions','Bill analysis','To do',null,'Oct 28'],
+ ['research','Fact-check this week\'s top 10 viral claims','Talking points','In progress','DP','Oct 26'],
+ ['research','Load early vote returns into the Election Model','Election Model','To do','EH','Oct 29'],
+ ['research','Brief on Ohio redistricting oral argument','Bill analysis','Done','PD','Oct 21'],
+ ['media','Edit recap video from the Goodale Park canvass','Event coverage','In progress','BA','Oct 27'],
+ ['media','Design "Make a plan to vote" carousel','Final weekend push','To do',null,'Oct 28'],
+ ['media','Send talking points to 12 partner creators','Creator outreach','In progress','ZM','Oct 29'],
+ ['media','Schedule final weekend posts','Final weekend push','To do','LP','Oct 30'],
+ ['media','Photo album from the Dayton phone bank','Event coverage','Done','CT','Oct 19'],
+ ['events','Confirm Goodale Park shelter house for Oct 31','Final weekend canvass','In progress','AF','Oct 26'],
+ ['events','Build volunteer shift sign-up for election day','Final weekend canvass','To do',null,'Oct 30'],
+ ['events','Book venue for election night watch party','Election night watch party','To do','JK','Oct 28'],
+ ['events','Set up Zoom and slides for public comment workshop','Workshops','In progress','GS','Nov 3'],
+ ['events','Order clipboards and walk list printing','Final weekend canvass','Done','TR','Oct 22'],
+ ['welcome','Host Tuesday new member call','New member calls','In progress','HO','Oct 27'],
+ ['welcome','Update the server guide for the new hub','Server guide','To do',null,'Nov 1'],
+ ['welcome','Pair 14 new members with buddies','Team matching','In progress','YN','Oct 28'],
+ ['welcome','Clean up stale channels in Discord','Server guide','To do','WB','Nov 4'],
+ ['welcome','Write FAQ for the team matching quiz','Team matching','Done','LC','Oct 23'],
+].map(([team,t,project,status,who,due])=>({id:TID++,team,t,project,status,who,due}));

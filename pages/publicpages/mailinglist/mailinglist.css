@@ -1,0 +1,3 @@
+/* Mailing list: styles. */
+.mailbox{background:var(--surface);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--blue);padding:24px;display:flex;flex-direction:column;gap:14px}
+.mailbox h2{font:400 34px/1 var(--display)}

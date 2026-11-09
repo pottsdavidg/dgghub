@@ -1,0 +1,26 @@
+/* About us: styles. */
+.statrow .stat .v{font-size:48px;color:var(--link)}
+.wins{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.teamgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.teamcard{display:grid;grid-template-columns:auto 1fr;gap:14px;background:var(--surface);border:1px solid var(--line);padding:18px}
+.teamcard h3{font:700 20px var(--head)}
+.teamcard .tsub{font:700 13px var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--link);margin-top:2px}
+.teamcard p{margin:8px 0 0;line-height:1.5}
+.benefits{background:var(--black);color:var(--white);padding:28px}
+.benefit{display:flex;flex-direction:column;gap:6px}
+.benefit svg{width:26px;height:26px;color:var(--yellow)}
+.benefit b{font:400 26px/1 var(--display);letter-spacing:.03em}
+.benefit span{color:#c8cad4}
+.joinband{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;border:2px solid var(--ink);background:var(--yellowSoft);padding:24px}
+.joinband h2{font:400 34px/1 var(--display)}
+.joinband p{margin:6px 0 0}
+@media (max-width:1100px){
+  .wins{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .teamgrid{grid-template-columns:1fr}
+  .wins{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){
+  .wins{grid-template-columns:1fr}
+}
