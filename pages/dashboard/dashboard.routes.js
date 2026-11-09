@@ -10,4 +10,6 @@ route('POST','/dash/location',({form,res})=>{
 
 route('GET','/dash/locform',()=>T_locform(currentUser(),true));
 
+route('GET','/dash/dates',({query})=>T_utv(tlDates(currentUser()),query.page));
+
 route('POST','/dashboard/dismiss-donate',()=>{currentUser().donate_dismissed=true;return ''});
