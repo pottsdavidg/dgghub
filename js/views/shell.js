@@ -11,7 +11,7 @@ function T_prompt_account(title,text){
 }
 function T_prompt_team(title,text){
  return modalWrap(`${mclose}<span class="label">DGG Team</span><h2 id="mtitle">${title}</h2><p class="mtext">${text}</p>
- <ul class="mbenefits">${[['flask','The Democracy Lab','The Blue Book, Election Models, the Tracker Suite, and the Rolodex.'],['users','Your own team','Tasks, an inbox, and contacts for the people you organize with.'],['target','Real-world impact','Help run canvasses and write the community ballot breakdowns.']].map(([i,t,d])=>`<li>${ic(i)}<span><b>${t}</b>${d}</span></li>`).join('')}</ul>
+ <ul class="mbenefits">${[['flask','The Democracy Lab','The Blue Book, Election Models, and the Tracker Suite.'],['users','Your own team','Tasks, an inbox, the Rolodex, and contacts for the people you organize with.'],['target','Real-world impact','Help run canvasses and write the community ballot breakdowns.']].map(([i,t,d])=>`<li>${ic(i)}<span><b>${t}</b>${d}</span></li>`).join('')}</ul>
  <form class="mfoot" hx-post="/ui/modal/close" hx-swap="none"><label class="checkrow"><input type="checkbox" name="dont_show" value="team">Don't show me these pop-ups again</label>
   <div class="mbtns"><button type="submit" class="btn ghost">Not now</button><button type="button" class="btn primary" hx-post="/ui/modal/join" hx-swap="none">Find my team · 2 min</button></div></form>`);
 }
@@ -41,11 +41,11 @@ function T_header(u,page){
  const init=(u.name||'').split(' ').map(x=>x[0]).join('').slice(0,2);
  return `<header class="hubhead"><div class="hubhead-in">
   <button class="iconbtn menubtn" data-ui="menu-open" aria-label="Open menu">${ic('menu')}</button>
-  <button class="hbrand" ${nav('home')}>${HUB_NAME}</button>
+  <button class="hmail" ${nav('home')} aria-label="Home" title="Home">${ic('home')}</button>
   <nav class="hlinks" aria-label="Site">${L('hub','Home',nav('home'))}<span class="hsep" aria-hidden="true">-</span>${L('about','About us',nav('about'))}<span class="hsep" aria-hidden="true">-</span><a class="hlink" href="${DISCORD_URL}" target="_blank" rel="noopener">Discord${ic('ext')}</a></nav>
   <div class="hacts">
    <button class="hmail" ${nav('mailing')} aria-label="Join the mailing list" title="Join the mailing list">${ic('mail')}</button>
-   <a class="btn sm red" href="${DONATE_URL}" target="_blank" rel="noopener">${ic('heart')}<span class="hide-sm">Donate</span></a>
+   <a class="hmail hdonate" href="${DONATE_URL}" target="_blank" rel="noopener" aria-label="Donate" title="Donate">${ic('heart')}<span class="hide-sm">Donate</span></a>
    ${isV(u)?`<button class="btn sm primary" hx-get="/auth/modal/signin" hx-swap="none">Sign in</button>`
    :`<details class="umenu"><summary aria-label="Account menu"><span class="avatar av-sm">${init}</span><span class="hide-sm">${esc(u.first)}</span>${ic('down')}</summary><div class="umenu-list"><div class="umenu-who"><b>${esc(u.name)}</b><span>${isMember(u)&&u.team?TEAMS[u.team].n:'Account'}</span></div><button ${nav('settings')}>${ic('gear')}Settings</button><button hx-post="/auth/signout" hx-target="#root">${ic('logout')}Sign out</button></div></details>`}
   </div></div></header>`;
@@ -55,8 +55,8 @@ function T_header(u,page){
 const PARENT={rep:'reps',bill:'bills',article:'wiki',region:'about',regions:'about'};
 const GOV=[['register','Registration','badge'],['ballot','Sample Ballot','ballot'],['reps','Representation','users'],['bills','Bills & Laws','doc'],['history','Voting History','history']];
 const CIVICS_NAV=['civics','Civics 101','cap'];
-const LAB=[['wiki','The Blue Book','book'],['model','Election Models','chart'],['trackers','Tracker Suite','track'],['rolodex','Rolodex','phone']];
-const TEAMNAV=[['contact','Contact','idcard'],['inbox','Inbox','mail'],['tasks','Tasks','check'],['chapter','Local Chapter','pin'],['ops','Operations','target']];
+const LAB=[['wiki','The Blue Book','book'],['model','Election Models','chart'],['trackers','Tracker Suite','track']];
+const TEAMNAV=[['contact','Contact','idcard'],['inbox','Inbox','mail'],['tasks','Tasks','check'],['chapter','Local Chapter','pin'],['ops','Operations','target'],['rolodex','Rolodex','phone']];
 function T_sidebar(u,page){
  const cur=PARENT[page]||page;
  const item=([p,l,i],o={})=>`<button class="navbtn${o.sub?' sub':''}" ${nav(p)} ${cur===p?'aria-current="page"':''} title="${l}"><span class="nico">${ic(i)}</span><span class="nlabel">${l}</span>${o.lock?ic('lock','lk'):''}${o.badge||''}</button>`;

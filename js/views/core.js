@@ -81,14 +81,14 @@ const crumb=(page,l)=>`<button class="crumb" ${nav(page)}>${ic('back')}${l}</but
 const PARTY={D:'Democrat',R:'Republican',I:'Independent',N:'Nonpartisan',L:'Libertarian',G:'Green'};
 const party=p=>`<span class="party ${p}" title="${PARTY[p]}">${p==='N'?'NP':p}</span>`;
 const pipe=s=>`<div class="pipe" aria-label="${STAGES[s]}">${STAGES.map((_,i)=>`<i class="${i<=s?'on':''}"></i>`).join('')}</div>`;
-const modbar=(name,host)=>`<div class="modbar"><span class="dot"></span><b class="label" style="color:#fff">Connected module</b><span>${name}</span><code>${host}</code><button class="btn sm" ${act('Would open the full '+name+' app in a new tab')}>${ic('ext')}Open full app</button></div>`;
-const sampleBar=(u,n)=>u.account==='member'?'':`<div class="samplebar"><span class="pro">Open preview</span><span class="msg"><b>${n} is open to everyone.</b> Join a team to unlock the rest of the Democracy Lab: four trackers, the Election Model, and the Rolodex.</span><button class="btn primary" ${nav('join')}>Join a team</button></div>`;
+const modbar=(name,host,url)=>`<div class="modbar"><span class="dot"></span><b class="label" style="color:#fff">Connected module</b><span>${name}</span><code>${host}</code>${url?`<a class="btn sm" href="${url}" target="_blank" rel="noopener">${ic('ext')}Open full app</a>`:`<button class="btn sm" ${act('Would open the full '+name+' app in a new tab')}>${ic('ext')}Open full app</button>`}</div>`;
+const sampleBar=(u,n)=>u.account==='member'?'':`<div class="samplebar"><span class="pro">Open preview</span><span class="msg"><b>${n} is open to everyone.</b> Join a team to unlock the rest of the Democracy Lab: four trackers and the Election Model.</span><button class="btn primary" ${nav('join')}>Join a team</button></div>`;
 function gate(u,title,inner){
  if(u.account==='member')return inner;
  const v=u.account==='visitor';
  return `<div class="locked"><div class="ghost" aria-hidden="true" inert>${inner}</div><div class="lockcard"><div>
   <span class="chip yel">${ic('flask')}Democracy Lab</span><h2>${title} is for team members</h2>
-  <p>${v?'Create a free account, then join a DGG team':'Join a DGG team'} to unlock the Democracy Lab: The Blue Book, Election Models, the Tracker Suite, and the Rolodex. A two-minute quiz finds where you fit.</p>
+  <p>${v?'Create a free account, then join a DGG team':'Join a DGG team'} to unlock the Democracy Lab: The Blue Book, Election Models, and the Tracker Suite. A two-minute quiz finds where you fit.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap">${v?`<button class="btn primary" hx-get="/auth/modal/signup" hx-swap="none">Create free account</button>`:`<button class="btn primary" ${nav('join')}>Join a team</button>`}</div></div></div></div>`;
 }
 
