@@ -78,7 +78,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:700 14px var(--head);background:var(--red);color:#fff;flex:none}
 .iconbtn{border:0;background:transparent;color:inherit;padding:6px;display:grid;place-items:center;border-radius:2px}
 .iconbtn:hover{background:#3a3a3a}
-.iconbtn svg{width:18px;height:18px}
+.iconbtn svg{width:30px;height:30px}
 .search{flex:1;max-width:520px;display:flex;align-items:center;gap:8px;border:2px solid var(--line);padding:7px 10px;background:var(--surface2);border-radius:2px}
 .search input{border:0;background:transparent;flex:1;min-width:0;outline:0}
 .search svg{width:16px;height:16px;color:var(--muted)}
@@ -206,7 +206,7 @@ tbody tr:last-child td{border-bottom:0}
 a.btn{text-decoration:none}
 a.btn:not(.primary):not(.red):not(.discordbtn):not(.ghosty){color:var(--ink)}
 :root{--headh:76px;--sidew:272px;--sidec:68px}
-body{overflow-x:hidden}
+body{overflow-x:hidden;margin:0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .pagehead h1{font:400 clamp(44px,5vw,64px)/.95 var(--display)}
 .panel-h h2{font:400 24px/1.05 var(--display);letter-spacing:.03em;text-transform:none}

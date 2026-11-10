@@ -37,12 +37,12 @@ function T_auth_modal(mode,join){
 /* ---------- header ---------- */
 const PUBLIC_PAGES=['about','regions','region','mailing'];
 function T_header(u,page){
- const L=(k,l,a)=>`<button class="hlink" ${a} ${k===(PUBLIC_PAGES.includes(page)?(page==='mailing'?'':'about'):'hub')?'aria-current="page"':''}>${l}</button>`;
  const init=(u.name||'').split(' ').map(x=>x[0]).join('').slice(0,2);
+ const aboutCurrent=PUBLIC_PAGES.includes(page)&&page!=='mailing';
  return `<header class="hubhead"><div class="hubhead-in">
   <button class="iconbtn menubtn" data-ui="menu-open" aria-label="Open menu">${ic('menu')}</button>
-  <button class="hmail" ${nav('home')} aria-label="Home" title="Home">${ic('home')}</button>
-  <nav class="hlinks" aria-label="Site">${L('hub','Home',nav('home'))}<span class="hsep" aria-hidden="true">-</span>${L('about','About us',nav('about'))}<span class="hsep" aria-hidden="true">-</span><a class="hlink" href="${DISCORD_URL}" target="_blank" rel="noopener">Discord${ic('ext')}</a></nav>
+  <img class="header-logo" src="img/dgg-logo.png" alt="Digital Ground Game">
+  <nav class="header-links" aria-label="Site"><button class="header-site-link" ${nav('about')} ${aboutCurrent?'aria-current="page"':''}>About us</button><span class="header-sep" aria-hidden="true">•</span><a class="header-site-link" href="${DISCORD_URL}" target="_blank" rel="noopener">Discord${ic('ext')}</a></nav>
   <div class="hacts">
    <button class="hmail" ${nav('mailing')} aria-label="Join the mailing list" title="Join the mailing list">${ic('mail')}</button>
    <a class="hmail hdonate" href="${DONATE_URL}" target="_blank" rel="noopener" aria-label="Donate" title="Donate">${ic('heart')}<span class="hide-sm">Donate</span></a>
@@ -63,6 +63,7 @@ function T_sidebar(u,page){
  const drop=(label,icon,items,o={})=>{const inside=items.some(x=>x[0]===cur);return `<details class="navdetails" ${inside||o.open?'open':''}><summary class="navbtn navdrop" title="${label}" ${inside?'data-inside="1"':''}><span class="nico">${ic(icon)}</span><span class="nlabel">${label}</span>${ic('back','chev')}</summary><div class="navsub">${items.map(x=>item(x,{sub:1,lock:o.lock})).join('')}</div></details>`};
  const group=n=>`<div class="navgroup"><span class="nlabel">${n}</span></div>`;
  const unread=MESSAGES.filter(m=>m.unread).length;
+ const aboutCurrent=PUBLIC_PAGES.includes(page)&&page!=='mailing';
  const helpItem=item(['help','Help & FAQ','help']);   // always the last sidebar item
  let top,bottom='';
  if(isV(u)){
@@ -80,8 +81,9 @@ function T_sidebar(u,page){
  }
  return `<aside class="side" id="side">
   <div class="side-head patwrap tilebg dark"><button class="side-logo-btn" ${nav('home')} aria-label="Dashboard"><img class="side-logo" src="img/logo-white.png" alt="Digital Ground Game"></button>
+   <nav class="side-head-links" aria-label="Site"><button class="side-site-link" ${nav('about')} ${aboutCurrent?'aria-current="page"':''}>About us</button><span class="header-sep" aria-hidden="true">•</span><a class="side-site-link" href="${DISCORD_URL}" target="_blank" rel="noopener">Discord${ic('ext')}</a></nav>
    <button class="side-toggle" data-ui="side-toggle" aria-label="Collapse sidebar" title="Collapse sidebar">${ic('back')}</button></div>
-  <button class="side-expand" data-ui="side-toggle" aria-label="Expand sidebar" title="Expand sidebar">${ic('menu')}<span>DGG</span></button>
+  <button class="side-expand" data-ui="side-toggle" aria-label="Expand sidebar" title="Expand sidebar">${ic('menu')}</button>
   <nav class="side-nav" aria-label="Main">${top}</nav>
   <div class="side-bottom">${bottom}</div>
  </aside>`;
