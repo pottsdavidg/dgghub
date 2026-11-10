@@ -65,7 +65,6 @@ a.navbtn{text-decoration:none}
 /* header */
 .hubhead{position:sticky;top:0;z-index:30;background:var(--black);color:var(--white);border-bottom:4px solid var(--blue)}
 .hubhead-in{display:flex;align-items:center;gap:28px;min-height:var(--headh);padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
-.hbrand{border:0;background:none;color:#fff;font:400 44px/1 var(--display);letter-spacing:.02em;padding:0;cursor:pointer;white-space:nowrap}
 .hlinks{display:flex;align-items:center;gap:12px;flex:1}
 .hlink{border:0;background:none;color:#fff;font:400 26px/1 var(--display);letter-spacing:.03em;padding:6px 2px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:inset 0 -3px 0 transparent}
 .hlink svg{width:18px;height:18px;opacity:.75}
@@ -73,9 +72,12 @@ a.navbtn{text-decoration:none}
 .hlink[aria-current="page"]{box-shadow:inset 0 -3px 0 var(--yellow)}
 .hsep{color:#fff;font:400 22px var(--display);opacity:.8}
 .hacts{display:flex;align-items:center;gap:12px;margin-left:auto}
-.hmail{width:40px;height:40px;display:grid;place-items:center;background:var(--red);color:#fff;border:2px solid #fff;box-shadow:3px 3px 0 #000;cursor:pointer;border-radius:2px}
+.hmail{width:40px;height:40px;display:grid;place-items:center;background:var(--chrome-hover);color:var(--chrome-fg);border:2px solid #fff;box-shadow:3px 3px 0 #000;cursor:pointer;border-radius:2px}
 .hmail svg{width:20px;height:20px}
 .hmail:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}
+/* Donate: same frame as the other header icons, plus its label where there's room. */
+.hdonate{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;padding:0 12px;font:700 13px/1 var(--head);text-transform:uppercase;letter-spacing:.06em;text-decoration:none}
+@media (max-width:900px){.hdonate{width:40px;padding:0}}
 .hubhead .btn{box-shadow:3px 3px 0 #000}
 .menubtn{display:none;color:#fff}
 .umenu{position:relative}
@@ -152,12 +154,10 @@ html[data-side="collapsed"] .navbtn{position:relative}
 .pubpage .pubbody{padding-inline:0}
 @media (max-width:1200px){
   .hlink{font-size:22px}
-  .hbrand{font-size:36px}
 }
 @media (max-width:900px){
   .hubhead-in{gap:12px;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
   .menubtn{display:grid}
-  .hbrand{font-size:28px}
   .hlinks{display:none}
   .hide-sm{display:none}
   .side{position:fixed;left:0;top:0;bottom:0;height:100%;width:280px!important;transform:translateX(-100%);transition:transform .2s;z-index:50;padding-top:env(safe-area-inset-top,0px)}
@@ -178,7 +178,7 @@ html[data-side="collapsed"] .navbtn{position:relative}
   .hacts .btn.sm{padding:7px 9px}
 }
 .hubhead{background:var(--chrome);color:var(--chrome-fg)}
-.hbrand,.hlink,.hsep,.menubtn,.umenu>summary{color:var(--chrome-fg)}
+.hlink,.hsep,.menubtn,.umenu>summary{color:var(--chrome-fg)}
 .hlink:hover{color:var(--chrome-accent)}
 .umenu>summary:hover,.menubtn:hover{background:var(--chrome-hover)}
 .hmail{border-color:var(--chrome-fg);box-shadow:3px 3px 0 var(--chrome-shadow)}

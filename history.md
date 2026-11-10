@@ -79,7 +79,7 @@ There are three levels. The page allow-lists are in `routes.js`: `VISITOR_PAGES`
    - Saved location, saved lookups, pins, and a state picker in Bills & Laws.
 3. **Team Member:**
    - Adds a "DGG Team" sidebar section: Contact, Inbox, Tasks, Local Chapter, Operations.
-   - Democracy Lab unlocks: **The Blue Book** (wiki), **Election Models**, **Tracker Suite** (LegisTracker / Court Tracker / Agenda Tracker [Project 2025] / ExecuTracker), **Rolodex**.
+   - Democracy Lab unlocks: **The Blue Book** (wiki), **Election Models**, **Tracker Suite** (LegisTracker / Court Tracker / Agenda Tracker [Project 2025] / ExecuTracker). The **Rolodex** is under DGG Team.
    - Teams: Dev, Research, Media, Events, Welcome. A short team-matching quiz runs at join.
 
 **Settings** (account users) has:

@@ -14,7 +14,6 @@ const DISCORD_URL='https://discord.gg/digitalgroundgame';
 /* =====================================================================
    POLITICAL HUB v3 DATA  (sample data unless noted)
    ===================================================================== */
-const HUB_NAME='Politics';
 
 /* Elections + important dates. The dashboard shows a countdown only when
    an election is within 100 days of today. */

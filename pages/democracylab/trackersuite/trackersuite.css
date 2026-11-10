@@ -8,3 +8,24 @@
 .kcard b{font:700 15px/1.25 var(--head)}
 .kcard .id{font:500 12px var(--mono);color:var(--muted)}
 .kcard:hover{border-color:var(--blue)}
+/* Overview tab: one card per tracker (icon color per tracker, like the Civics 101 cards) */
+.trkgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.trkcard{--c:var(--blue);--cf:#fff;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:230px;padding:24px;text-align:left;color:inherit;cursor:pointer;background:var(--surface);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--shadow);transition:transform .08s,box-shadow .08s}
+.trkcard:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--c)}
+.trkcard.c-red{--c:var(--red)}
+.trkcard.c-yel{--c:var(--yellow);--cf:#242424}
+.trkcard.c-green{--c:#13824A}
+.trkcard .ic{width:56px;height:56px;display:grid;place-items:center;background:var(--c);color:var(--cf);margin-bottom:6px}
+.trkcard .ic svg{width:28px;height:28px}
+.trk-name{font:400 36px/1 var(--display);letter-spacing:.02em}
+.trk-desc{color:var(--muted);font-size:16px;line-height:1.45;max-width:52ch}
+.trk-foot{margin-top:auto;width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--line)}
+.trk-stat{font:700 13px/1.2 var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.trk-stat b{color:var(--ink);font-size:15px}
+.trk-open{display:inline-flex;align-items:center;gap:6px;font:700 13px/1 var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--link)}
+@media (max-width:600px){
+  .trkgrid{grid-template-columns:1fr;gap:16px}
+  .trkcard{min-height:0;padding:22px 20px}
+  .trk-name{font-size:40px}
+  .trk-desc{font-size:17px}
+}
