@@ -8,3 +8,6 @@ const RACES=[
 ];
 
 const rateOf=p=>p>=85?['Safe D','blue']:p>=65?['Likely D','blue']:p>=55?['Lean D','blue']:p>45?['Toss-up','yel']:p>35?['Lean R','red']:p>15?['Likely R','red']:['Safe R','red'];
+
+/* Election Models credits. ANGEL_RAMOS and EMILY_CAPPER are defined in trackersuite.data.js (they're on the trackers too). */
+const MODEL_CREDITS=[EMILY_CAPPER,ANGEL_RAMOS];
