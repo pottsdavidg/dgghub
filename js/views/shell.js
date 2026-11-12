@@ -17,6 +17,7 @@ function T_prompt_team(title,text){
 }
 function T_auth_modal(mode,join){
  const su=mode==='signup';
+ const loc=su?CTX().location:undefined;
  return modalWrap(`${mclose}<div class="seg mtabs" role="tablist"><button role="tab" aria-selected="${!su}" aria-pressed="${!su}" hx-get="/auth/modal/signin" hx-swap="none">Sign in</button><button role="tab" aria-selected="${su}" aria-pressed="${su}" hx-get="/auth/modal/signup" hx-swap="none">Create account</button></div>
  <h2 id="mtitle">${su?'Create your free account':'Welcome back'}</h2>
  ${su?`<p class="mtext">Your location, lookups, and pins are saved, so you won't have to enter them again.</p>`:''}
@@ -25,10 +26,10 @@ function T_auth_modal(mode,join){
   <div class="field"><label class="label" for="m-email">Email</label><input id="m-email" name="email" type="email" value="jordan.ellis@example.org" autocomplete="email"></div>
   <div class="field"><label class="label" for="m-pw">Password</label><input id="m-pw" name="password" type="password" value="demo-password" autocomplete="${su?'new':'current'}-password"></div>
   ${su?`<fieldset class="addrset"><legend class="label">Home address <span class="d">(fills in your ballot, representatives, and dates)</span></legend>
-   <div class="field"><label class="sr" for="m-addr">Street address</label><input id="m-addr" name="address" placeholder="Street address" autocomplete="street-address" value="${esc(CTX().location?.address||'1420 Neil Ave')}"></div>
-   <div class="addrrow"><div class="field"><label class="sr" for="m-city">City</label><input id="m-city" name="city" placeholder="City" autocomplete="address-level2" value="${esc(CTX().location?.city||'Columbus')}"></div>
-    <div class="field"><label class="sr" for="m-state">State</label><select id="m-state" name="state" autocomplete="address-level1"><option value="">State</option>${STATE_OPTS(CTX().location?.state||'OH')}</select></div>
-    <div class="field"><label class="sr" for="m-zip">ZIP</label><input id="m-zip" name="zip" placeholder="ZIP" inputmode="numeric" autocomplete="postal-code" value="${esc(CTX().location?.zip||'43201')}"></div></div></fieldset>
+  <div class="field"><label class="sr" for="m-addr">Street address</label><input id="m-addr" name="address" placeholder="Street address" autocomplete="street-address" value="${esc((loc == null ? undefined : loc.address)||'1420 Neil Ave')}"></div>
+  <div class="addrrow"><div class="field"><label class="sr" for="m-city">City</label><input id="m-city" name="city" placeholder="City" autocomplete="address-level2" value="${esc((loc == null ? undefined : loc.city)||'Columbus')}"></div>
+   <div class="field"><label class="sr" for="m-state">State</label><select id="m-state" name="state" autocomplete="address-level1"><option value="">State</option>${STATE_OPTS((loc == null ? undefined : loc.state)||'OH')}</select></div>
+   <div class="field"><label class="sr" for="m-zip">ZIP</label><input id="m-zip" name="zip" placeholder="ZIP" inputmode="numeric" autocomplete="postal-code" value="${esc((loc == null ? undefined : loc.zip)||'43201')}"></div></div></fieldset>
   <label class="checkrow"><input type="checkbox" name="join" value="1" ${join?'checked':''}>I want to join a Digital Ground Game team</label>`:''}
   <button class="btn primary block" type="submit">${su?'Create account':'Sign in'}</button>
  </form><p class="demo-note" style="margin:0">Prototype: any email and password work.</p>`);

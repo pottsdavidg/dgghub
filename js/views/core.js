@@ -67,7 +67,7 @@ const V={};
 /* =====================================================================
    HTMX helpers  (become Jinja macros)
    ===================================================================== */
-const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const esc=s=>String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 // Full-page navigation inside the app: swaps the whole shell so the sidebar state stays in sync.
 const nav=(page,qs='')=>`hx-get="/app/${page}${qs}" hx-target="#root" hx-swap="innerHTML show:window:top"`;
 // Placeholder for actions that will become real endpoints (RSVP, follow, message...). Shows a toast.

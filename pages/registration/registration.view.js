@@ -9,7 +9,7 @@ const T_reg_form=(u,again)=>`<section class="panel"><div class="panel-h"><h2>${a
   <button class="btn primary" type="submit">Look up</button>
  </form></section>`;
 V.register=u=>{
- const show=!isV(u)||u.lookups?.register;
+ const show=!isV(u)||(u.lookups == null ? undefined : u.lookups.register);
  const top=head('Registration',show?'Your record as held by your state\'s election office. The live version checks it nightly.':'Enter your information to check your voter registration, polling place, and deadlines.','<span class="sample">Sample data</span>');
  if(!show)return top+T_reg_form(u)+`<p class="privnote">${ic('lock')}<span>We only use this to look up your public voter record. ${isV(u)?'With a free account, we save it so you won\'t need to enter it again.':''}</span></p>`;
  return `${top}<div class="grid g3">

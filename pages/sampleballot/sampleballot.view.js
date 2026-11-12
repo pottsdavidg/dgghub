@@ -23,7 +23,7 @@ function T_breakdown(u,c){
   <p class="d">Community breakdowns reflect DGG members' views, not official endorsements.</p></div>`;
 }
 V.ballot=u=>{
- const show=!isV(u)||u.lookups?.ballot;
+ const show=!isV(u)||(u.lookups == null ? undefined : u.lookups.ballot);
  const top=head('Sample Ballot',show?`Sample ballot for ${USER.precinct}, Nov 3, 2026 general election. Tap a candidate for their background; tap ${ic('info').replace('<svg','<svg style="width:15px;vertical-align:-2px"')} for the DGG community breakdown.`:'Enter your address to see the races and issues on your ballot.','<span class="sample">Sample data</span>');
  if(!show)return top+`<section class="panel"><div class="panel-h"><h2>Find your ballot</h2></div><div class="panel-b">${T_locform(u).replace('hx-post="/dash/location"','hx-post="/ballot/lookup"').replace('Get info','See my ballot')}</div></section>`;
  return `${top}<div class="ballot-legend">${['Federal','State','Judicial','Local'].map(k=>`<span class="chip ${KIND_CHIP[k]}">${BALLOT.filter(r=>r.kind===k).length} ${k}</span>`).join('')}<span class="chip ${KIND_CHIP.Issues}">${ISSUES.length} issues</span></div>

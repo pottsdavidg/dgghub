@@ -1,6 +1,6 @@
 /* ---------- voting history ---------- */
 V.history=u=>{
- const show=!isV(u)||u.lookups?.history;
+ const show=!isV(u)||(u.lookups == null ? undefined : u.lookups.history);
  const top=head('Voting History','Whether you voted is public record in most states. How you voted is always secret and never stored here.','<span class="sample">Sample data</span>');
  if(!show)return top+`<section class="panel"><div class="panel-h"><h2>Look up your voting history</h2></div><form class="panel-b lookupform" hx-post="/history/lookup" hx-target="#root" hx-swap="innerHTML show:window:top">
   <div class="field"><label class="label" for="vh-first">First name</label><input id="vh-first" name="first" value="Jordan"></div><div class="field"><label class="label" for="vh-last">Last name</label><input id="vh-last" name="last" value="Ellis"></div>
