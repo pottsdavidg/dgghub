@@ -41,7 +41,7 @@ function T_header(u,page){
  const aboutCurrent=PUBLIC_PAGES.includes(page)&&page!=='mailing';
  return `<header class="hubhead"><div class="hubhead-in">
   <button class="iconbtn menubtn" data-ui="menu-open" aria-label="Open menu">${ic('menu')}</button>
-  <img class="header-logo" src="img/hub-logo.png" alt="Digital Ground Game">
+  <img class="header-logo" src="img/dgg-logo.png" alt="Digital Ground Game">
   <nav class="header-links" aria-label="Site"><button class="header-site-link" ${nav('about')} ${aboutCurrent?'aria-current="page"':''}>About us</button><span class="header-sep" aria-hidden="true">•</span><a class="header-site-link" href="${DISCORD_URL}" target="_blank" rel="noopener">Discord${ic('ext')}</a></nav>
   <div class="hacts">
    <button class="hmail" ${nav('mailing')} aria-label="Join the mailing list" title="Join the mailing list">${ic('mail')}</button>
