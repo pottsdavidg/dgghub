@@ -25,6 +25,7 @@ menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',
 search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
 star:'<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
 bell:'<path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/>',
+linkedin:'<rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-7M11 13a3 3 0 016 0v4"/>',
 ext:'<path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>',
 back:'<path d="M15 18l-6-6 6-6"/>',
 pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>',
@@ -107,3 +108,14 @@ const isPinned=(u,k)=>(u.pins||[]).includes(k);
 const pinBtn=(u,k)=>`<button class="pinbtn" aria-pressed="${isPinned(u,k)}" title="${isPinned(u,k)?'Unpin from dashboard':'Pin to dashboard'}" hx-post="/pins/toggle" ${vals({key:k})} hx-swap="outerHTML">${ic('pin')}<span>${isPinned(u,k)?'Pinned':'Pin'}</span></button>`;
 const flagBtn=(u,k)=>`<button class="flagbtn" aria-pressed="${isPinned(u,k)}" aria-label="${isPinned(u,k)?'Unpin':'Pin'} this bill" title="${isPinned(u,k)?'Unpin from dashboard':'Pin to dashboard'}" hx-post="/pins/toggle" ${vals({key:k,style:'flag'})} hx-swap="outerHTML">${ic('flag')}</button>`;
 const ph=(title,right='')=>`<div class="panel-h"><h2>${title}</h2><div class="ph-r">${right}</div></div>`;
+
+/* Module credits: small cards crediting the people who built a module. */
+const credits=(list,heading='Built by')=>`<section class="credits" aria-label="${heading}">
+ <h2 class="label">${heading}</h2>
+ <div class="creditgrid">${list.map(p=>`<article class="ccard">
+  <div class="ccard-h">${p.img?`<img class="cphoto" src="${p.img}" alt="">`:`<span class="cphoto" style="background:${p.c}" aria-hidden="true">${p.ini}</span>`}
+   <div><b>${p.n}</b><span>${p.title}</span></div></div>
+  ${p.blurb.length>160?`<p class="cblurb clamp">${p.blurb}</p><button type="button" class="cmore" aria-expanded="false" onclick="const o=this.previousElementSibling.classList.toggle('clamp');this.setAttribute('aria-expanded',!o);this.textContent=o?'Read more':'Show less'">Read more</button>`:`<p class="cblurb">${p.blurb}</p>`}
+  ${p.links.length?`<div class="clinks">${p.links.map(([l,u,i])=>`<a href="${u}" target="_blank" rel="noopener">${ic(i||'ext')}${l}</a>`).join('')}</div>`:''}
+ </article>`).join('')}</div>
+</section>`;

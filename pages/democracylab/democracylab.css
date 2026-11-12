@@ -3,3 +3,23 @@
 .modbar .dot{width:8px;height:8px;border-radius:50%;background:#2fd47a;box-shadow:0 0 0 3px rgba(47,212,122,.25)}
 .modbar code{font:500 13px var(--mono);color:#b9bdd0}
 .modbar .btn{margin-left:auto;box-shadow:none;border-color:var(--white);background:transparent;color:var(--white)}
+
+/* Module credits */
+.credits{margin-top:18px}
+.credits h2{margin:0 0 10px}
+.creditgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.ccard{border:1px solid var(--line);background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:8px;border-radius:2px;min-width:0}
+.ccard-h{display:flex;gap:10px;align-items:center}
+.ccard-h b{font:700 15px/1.15 var(--head);display:block}
+.ccard-h span:not(.cphoto){font:700 11px var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.ccard-h{gap:12px}
+.cphoto{width:80px;height:80px;border-radius:10px;flex:none;object-fit:cover;display:grid;place-items:center;font:700 24px var(--head);color:#fff;border:2px solid var(--ink)}
+.ccard p{margin:0;font-size:13px;line-height:1.4;color:var(--muted)}
+.ccard .cblurb.clamp{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden}
+.cmore{align-self:flex-start;border:0;background:none;padding:0;margin-top:-4px;color:var(--link);font:700 12px var(--head);text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.cmore:hover{text-decoration:underline}
+.creditgrid{align-items:start}
+.clinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:6px;border-top:1px solid var(--line)}
+.clinks a{display:inline-flex;align-items:center;gap:4px;font:700 12px var(--head);text-transform:uppercase;letter-spacing:.05em;text-decoration:none}
+.clinks a:hover{text-decoration:underline}
+.clinks svg{width:13px;height:13px}
