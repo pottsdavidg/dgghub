@@ -1,5 +1,5 @@
 /* ---------- Democracy Lab ---------- */
-V.wiki=(u,q)=>`${head('The Blue Book','A community-edited reference on the online voices shaping political conversation, with sourced claims and accuracy records.')}${sampleBar(u,'The Blue Book')}${modbar('The Blue Book','bluebook.digitalgroundgame.org','https://bluebook.digitalgroundgame.org/')}`;
+V.wiki=(u,q)=>`${head('The Blue Book','A community-edited reference on the online voices shaping political conversation, with sourced claims and accuracy records.')}${sampleBar(u,'The Blue Book')}${modbar('The Blue Book','bluebook.digitalgroundgame.org','https://bluebook.digitalgroundgame.org/')}${credits(BLUEBOOK_CREDITS)}`;
 V.article=(u,q,id)=>{const w=WIKI.find(x=>x.id===id)||WIKI[0];
  return `${head(w.name,w.h,`<button class="btn" ${act('Would open the editor with revision history')}>Edit article</button>`,crumb('wiki','The Blue Book'))}
  <div class="article">
