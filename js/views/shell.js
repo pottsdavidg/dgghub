@@ -55,7 +55,7 @@ function T_header(u,page){
 const PARENT={rep:'reps',bill:'bills',article:'wiki',region:'about',regions:'about'};
 const GOV=[['register','Registration','badge'],['ballot','Sample Ballot','ballot'],['reps','Representation','users'],['bills','Bills & Laws','doc'],['history','Voting History','history']];
 const CIVICS_NAV=['civics','Civics 101','cap'];
-const LAB=[['wiki','The Blue Book','book'],['model','Election Models','chart'],['trackers','Tracker Suite','track']];
+const LAB=[['lab','The Lab','flask'],['wiki','The Blue Book','book'],['model','Election Models','chart'],['trackers','Tracker Suite','track'],['dggapp','DGG App','code']];
 const TEAMNAV=[['contact','Contact','idcard'],['inbox','Inbox','mail'],['tasks','Tasks','check'],['chapter','Local Chapter','pin'],['ops','Operations','target'],['rolodex','Rolodex','phone']];
 function T_sidebar(u,page){
  const cur=PARENT[page]||page;

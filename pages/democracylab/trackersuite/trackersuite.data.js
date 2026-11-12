@@ -44,3 +44,11 @@ const AGENDA=[
 ];
 
 const AGCLS={'Implemented':'green','In progress':'blue','Blocked':'red','Proposed':''};
+
+/* Tracker credits. img: photo path (DGGPlaceholder.jpg until a real photo arrives). links: [label, url, icon]. */
+const ANGEL_RAMOS={n:'Angel Ramos',ini:'AR',c:'#1144FF',img:'OrgMemberPics/DGGPlaceholder.jpg',title:'Tracker Project Lead',blurb:'Texan PhD candidate in Political Theory. BA in political science from the University of Pittsburgh at Johnstown, graduating magna cum laude with a double minor in philosophy and sociology. Interested in pushing the boundaries of what one can do without paywalled data. Advocate for centralized, standardized and cleaned data. Vita Activa &gt; Vita Contemplativa.',links:[['GitHub','https://github.com/My-Name2','code'],['Hugging Face','https://huggingface.co/My-Name1/spaces','ext'],['Email','mailto:aramos33@cougarnet.uh.edu','mail']]};
+const LEG_CREDITS=[ANGEL_RAMOS];
+const EXEC_CREDITS=[ANGEL_RAMOS];
+const AGENDA_CREDITS=[ANGEL_RAMOS];
+const EMILY_CAPPER={n:'Emily Capper',ini:'EC',c:'#FF0F43',img:'OrgMemberPics/EmilyCapper.jpg',title:'Coordinator of Research',blurb:'B.S. Biology. Data science, elections, and American history hobbyist. At Digital Ground Game I work on the court tracker and state election models.',links:[['Email','mailto:emily.ln2.77k@gmail.com','mail']]};
+const COURTS_CREDITS=[EMILY_CAPPER];

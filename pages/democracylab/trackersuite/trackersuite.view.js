@@ -1,9 +1,9 @@
 /* Live app links. A tracker missing from this list shows "Not Finished" on the Overview. */
 const TRACKER_URL={leg:'https://huggingface.co/spaces/My-Name1/CongressionalReport',courts:'https://digitalgroundgame.github.io/court-tracker/',exec:'https://huggingface.co/spaces/My-Name1/CongressionalReport'};
-V.leg=u=>`${head('LegisTracker',"Your organization's watchlist, priorities, and testimony calendar.")}${gate(u,'LegisTracker',modbar('LegisTracker','huggingface.co/spaces/My-Name1',TRACKER_URL.leg))}`;
-V.courts=u=>`${head('Court Tracker','Litigation that affects voting, housing, and open government in the states we work in.')}${gate(u,'Court Tracker',modbar('Court Tracker','digitalgroundgame.github.io/court-tracker',TRACKER_URL.courts))}`;
-V.agenda=u=>`${head('Agenda Tracker',"Item-by-item progress on an administration's published agenda, scored from orders, rules, budgets, and court rulings.")}${gate(u,'Agenda Tracker',modbar('Agenda Tracker','agendatracker.digitalgroundgame.org',TRACKER_URL.agenda))}`;
-V.exec=u=>`${head('ExecuTracker','Executive branch appointments and orders, the agencies carrying them out, and the lawsuits against them.')}${gate(u,'ExecuTracker',modbar('ExecuTracker','huggingface.co/spaces/My-Name1',TRACKER_URL.exec))}`;
+V.leg=u=>`${head('LegisTracker',"Your organization's watchlist, priorities, and testimony calendar.")}${gate(u,'LegisTracker',modbar('LegisTracker','huggingface.co/spaces/My-Name1',TRACKER_URL.leg)+credits(LEG_CREDITS))}`;
+V.courts=u=>`${head('Court Tracker','Litigation that affects voting, housing, and open government in the states we work in.')}${gate(u,'Court Tracker',modbar('Court Tracker','digitalgroundgame.github.io/court-tracker',TRACKER_URL.courts)+credits(COURTS_CREDITS))}`;
+V.agenda=u=>`${head('Agenda Tracker',"Item-by-item progress on an administration's published agenda, scored from orders, rules, budgets, and court rulings.")}${gate(u,'Agenda Tracker',modbar('Agenda Tracker','agendatracker.digitalgroundgame.org',TRACKER_URL.agenda)+credits(AGENDA_CREDITS))}`;
+V.exec=u=>`${head('ExecuTracker','Executive branch appointments and orders, the agencies carrying them out, and the lawsuits against them.')}${gate(u,'ExecuTracker',modbar('ExecuTracker','huggingface.co/spaces/My-Name1',TRACKER_URL.exec)+credits(EXEC_CREDITS))}`;
 
 const TRACKER_TABS=[['overview','Overview'],['leg','LegisTracker'],['courts','Court Tracker'],['agenda','Agenda Tracker'],['exec','ExecuTracker']];
 /* Overview: the Tracker Suite's landing tab, one card per tracker. [tab, name, icon, color, description, stat] */

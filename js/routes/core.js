@@ -19,7 +19,7 @@ DB.users.forEach(u=>{u.account=u.account==='member'?'member':'account';u.pins=u.
 
 /* Which pages each access level can open */
 const VISITOR_PAGES=['home','register','ballot','reps','rep','bills','bill','history','civics','resources','help','about','regions','region','mailing'];
-const ACCOUNT_PAGES=[...VISITOR_PAGES,'media','chapter','elections','wiki','article','model','trackers','rolodex','settings','join'];
+const ACCOUNT_PAGES=[...VISITOR_PAGES,'media','chapter','elections','lab','wiki','article','model','trackers','dggapp','rolodex','settings','join'];
 const MEMBER_PAGES=[...ACCOUNT_PAGES,'contact','inbox','tasks','ops'];
 const ALLOWED={visitor:VISITOR_PAGES,account:ACCOUNT_PAGES,member:MEMBER_PAGES};
 
