@@ -39,7 +39,7 @@ function T_rep_col(u,kind,p){
 }
 function repDefaults(u){
  if(!isV(u)&&u.location&&u.location.state==='OH')return {federal:{branch:'legislative',state:'OH',district:3},state:{state:'OH',district:15},local:{state:'OH',city:'Columbus'}};
- const st=(!isV(u)&&u.location?.state)||STATES[0][0];
+ const st=(!isV(u)&&(u.location == null ? undefined : u.location.state))||STATES[0][0];
  return {federal:{branch:'legislative',state:st,district:1},state:{state:st,district:1},local:{state:st,city:citiesOf(st)[0]}};
 }
 V.reps=u=>{const d=repDefaults(u);

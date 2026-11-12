@@ -25,7 +25,7 @@
     return {
       headers, triggers, status: 200,
       toast(msg) { triggers.toast = msg; },
-      trigger(name, value) { triggers[name] = value ?? true; },
+      trigger(name, value) { triggers[name] = value == null ? true : value; },
       retarget(sel, swap) { headers['HX-Retarget'] = sel; if (swap) headers['HX-Reswap'] = swap; },
     };
   }
@@ -41,7 +41,7 @@
       const params = Object.fromEntries(r.keys.map((k, i) => [k, decodeURIComponent(m[i + 1])]));
       const res = makeRes();
       let html = '';
-      try { html = r.handler({ params, query, form, res }) ?? ''; }
+      try { html = r.handler({ params, query, form, res }); if (html == null) html = ''; }
       catch (e) { console.error('[mock-server]', method, u.pathname, e); res.status = 500; html = ''; res.toast('Something went wrong: ' + e.message); }
       if (Object.keys(res.triggers).length) res.headers['HX-Trigger'] = JSON.stringify(res.triggers);
       return { status: res.status, headers: res.headers, body: html, path: u.pathname + u.search };

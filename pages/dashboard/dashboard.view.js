@@ -30,12 +30,12 @@ function nextElection(u){
  return ELECTIONS.filter(e=>!st||e.states.includes(st)).map(e=>({...e,days:daysUntil(e.date)})).find(e=>e.days>=0&&e.days<=100)||null;
 }
 const STATE_OPTS=sel=>STATES.map(([c,n])=>`<option value="${c}" ${sel===c?'selected':''}>${n}</option>`).join('');
-const T_locform=(u,compact)=>`<form class="locform ${compact?'compact':''}" hx-post="/dash/location" hx-target="#root" hx-swap="innerHTML show:window:top">
- <div class="field lf-addr"><label class="sr" for="lf-addr">Street address</label><input id="lf-addr" name="address" placeholder="Address" autocomplete="street-address" value="${esc(u.location?.address||'')}"></div>
- <div class="field"><label class="sr" for="lf-city">City</label><input id="lf-city" name="city" placeholder="City" autocomplete="address-level2" value="${esc(u.location?.city||'')}"></div>
- <div class="field"><label class="sr" for="lf-state">State</label><select id="lf-state" name="state" required><option value="">State</option>${STATE_OPTS(u.location?.state)}</select></div>
- <div class="field lf-zip"><label class="sr" for="lf-zip">ZIP</label><input id="lf-zip" name="zip" placeholder="ZIP" inputmode="numeric" autocomplete="postal-code" value="${esc(u.location?.zip||'')}"></div>
- <button class="btn primary lf-go" type="submit">Get info</button></form>`;
+const T_locform=(u,compact)=>{const loc=u.location;return `<form class="locform ${compact?'compact':''}" hx-post="/dash/location" hx-target="#root" hx-swap="innerHTML show:window:top">
+ <div class="field lf-addr"><label class="sr" for="lf-addr">Street address</label><input id="lf-addr" name="address" placeholder="Address" autocomplete="street-address" value="${esc((loc == null ? undefined : loc.address)||'')}"></div>
+ <div class="field"><label class="sr" for="lf-city">City</label><input id="lf-city" name="city" placeholder="City" autocomplete="address-level2" value="${esc((loc == null ? undefined : loc.city)||'')}"></div>
+ <div class="field"><label class="sr" for="lf-state">State</label><select id="lf-state" name="state" required><option value="">State</option>${STATE_OPTS(loc == null ? undefined : loc.state)}</select></div>
+ <div class="field lf-zip"><label class="sr" for="lf-zip">ZIP</label><input id="lf-zip" name="zip" placeholder="ZIP" inputmode="numeric" autocomplete="postal-code" value="${esc((loc == null ? undefined : loc.zip)||'')}"></div>
+ <button class="btn primary lf-go" type="submit">Get info</button></form>`};
 const DASH_TOOLS=[
  ['ballot','See my ballot','Every race and issue on your ballot','ballot',null],
  ['civics','Civics 101','How government works, games, and lectures','cap',null],
@@ -94,7 +94,7 @@ V.home=u=>{
  const dates=tlDates(u);
  const tool=([p,t,d,i,lock])=>{const locked=lock&&!isMember(u);return `<button class="row" ${locked?`hx-post="/prompt/team" ${vals({why:'trackers'})} hx-swap="none"`:nav(p)}><span class="ic ${locked?'yel':''}">${ic(i)}</span><span><span class="t">${t}</span>${locked?ic('lock','inlock'):''}<br><span class="d">${d}</span></span>${arrow()}</button>`};
  return `<div class="dash-top"><h1 class="welcome">${greet}</h1>${donate}</div>
- ${loc?`<div class="locline">${ic('pin')}<span>Showing information for <b>${esc(loc.city||'')}${loc.city?', ':''}${esc(STATE_BY[loc.state]?.[1]||loc.state)}</b></span><button class="linkbtn" hx-get="/dash/locform" hx-target="#locbox">Change location</button></div><div id="locbox"></div>`
+ ${loc?`<div class="locline">${ic('pin')}<span>Showing information for <b>${esc(loc.city||'')}${loc.city?', ':''}${esc((STATE_BY[loc.state] == null ? undefined : STATE_BY[loc.state][1])||loc.state)}</b></span><button class="linkbtn" hx-get="/dash/locform" hx-target="#locbox">Change location</button></div><div id="locbox"></div>`
   :`<p class="locprompt">Please enter your location for the most accurate and relevant information to you!</p>${T_locform(u)}`}
  ${next?`<section class="hero patwrap tilebg countdown"><div class="big tab-nums">${next.days}<small>day${next.days===1?'':'s'} to go</small></div><div><h2>${next.name}</h2><p>${fmtDate(next.date).long}. Check your registration and make a plan to vote.</p></div><div style="display:flex;flex-direction:column;gap:10px"><button class="btn" ${nav('ballot')}>See my ballot</button><button class="btn" ${nav('register')}>Check registration</button></div></section>`:''}
  ${T_pins(u)}
